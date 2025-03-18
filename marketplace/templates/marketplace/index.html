@@ -50,13 +50,13 @@
        <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto main-nav">
          <li class="nav-item active">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="{% url 'main' %}">
            Home
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="">
-           Shop
+          <a class="nav-link" href="{% url 'store' %}">
+           Store
           </a>
 		 </li>
          <li class="nav-item dropdown dropdown-slide @@pages">
@@ -109,7 +109,7 @@
           </ul>
          </li>
 		 <li class="nav-item">
-			<a class="nav-link" href="about-us.html">
+			<a class="nav-link" href="{% url 'about' %}">
 				About
 			</a>
 		 </li>
@@ -117,12 +117,12 @@
 		
         <ul class="navbar-nav ml-auto mt-10">
          <li class="nav-item">
-          <a class="nav-link login-button" href="login.html">
+          <a class="nav-link login-button" href="{% url 'login' %}">
            Login
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link text-white add-button"> <!-- href="ad-listing.html" -->
+          <a class="nav-link text-white add-button" href="{% url 'signup' %}"> <!-- href="ad-listing.html" -->
            <!-- <i class="fa fa-plus-circle"> -->
            </i>
            Sign up
@@ -241,10 +241,10 @@
      <div class="col-md-12">
       <div class="section-title">
        <h2>
-        Trending Adds
+        Featured Products
        </h2>
        <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quas, magnam.
+		Check our collection of A4 Framed photos, Vectors & Clips
        </p>
       </div>
      </div>

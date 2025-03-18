@@ -6,11 +6,12 @@
  // GITHUB: https://github.com/themefisher/
 -->
 <html lang="en">
+{% load static %}
  <head>
   <!-- ** Basic Page Needs ** -->
   <meta charset="utf-8"/>
   <title>
-   Classimax | Classified Marketplace Template
+   BlackBox | Store
   </title>
   <!-- ** Mobile Specific Metas ** -->
   <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
@@ -19,7 +20,7 @@
   <meta content="Themefisher" name="author"/>
   <meta content="Themefisher Classified Marketplace Template v1.0" name="generator"/>
   <!-- favicon -->
-  <link href="{% static 'images/favicon.png'%}" rel="shortcut icon"/>
+  <link href="{% static 'images/favicon.jpg'%}" rel="shortcut icon"/>
   <!-- 
   Essential stylesheets
   =====================================-->
@@ -38,7 +39,7 @@
      <div class="col-md-12">
       <nav class="navbar navbar-expand-lg navbar-light navigation">
        <a class="navbar-brand" href="index.html">
-        <img alt="" src="{% static 'images/logo.png'%}"/>
+        <img alt="" src="{% static 'images/BlackBox.png'%}"/>
        </a>
        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
         <span class="navbar-toggler-icon">
@@ -46,68 +47,19 @@
        </button>
        <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto main-nav">
-         <li class="nav-item @@home">
-          <a class="nav-link" href="index.html">
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'main' %}">
            Home
           </a>
          </li>
-         <li class="nav-item dropdown dropdown-slide @@dashboard">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#!">
-           Dashboard
-           <span>
-            <i class="fa fa-angle-down">
-            </i>
-           </span>
+         <li class="nav-item active">
+          <a class="nav-link" href="{% url 'store' %}">
+           Store
           </a>
-          <!-- Dropdown list -->
-          <ul class="dropdown-menu">
-           <li>
-            <a class="dropdown-item @@dashboardPage" href="dashboard.html">
-             Dashboard
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@dashboardMyAds" href="dashboard-my-ads.html">
-             Dashboard My Ads
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@dashboardFavouriteAds" href="dashboard-favourite-ads.html">
-             Dashboard Favourite Ads
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@dashboardArchivedAds" href="dashboard-archived-ads.html">
-             Dashboard Archived Ads
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@dashboardPendingAds" href="dashboard-pending-ads.html">
-             Dashboard Pending Ads
-            </a>
-           </li>
-           <li class="dropdown dropdown-submenu dropright">
-            <a aria-expanded="false" aria-haspopup="true" class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#!" id="dropdown0501" role="button">
-             Sub Menu
-            </a>
-            <ul aria-labelledby="dropdown0501" class="dropdown-menu">
-             <li>
-              <a class="dropdown-item" href="index.html">
-               Submenu 01
-              </a>
-             </li>
-             <li>
-              <a class="dropdown-item" href="index.html">
-               Submenu 02
-              </a>
-             </li>
-            </ul>
-           </li>
-          </ul>
-         </li>
-         <li class="nav-item dropdown dropdown-slide active">
+		 </li>
+         <li class="nav-item dropdown dropdown-slide @@pages">
           <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
-           Pages
+           On Demand
            <span>
             <i class="fa fa-angle-down">
             </i>
@@ -116,60 +68,20 @@
           <!-- Dropdown list -->
           <ul class="dropdown-menu">
            <li>
-            <a class="dropdown-item @@about" href="about-us.html">
-             About Us
+            <a class="dropdown-item @@framedArt" href="">
+             Framed Art
             </a>
            </li>
            <li>
-            <a class="dropdown-item @@contact" href="contact-us.html">
-             Contact Us
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@profile" href="user-profile.html">
-             User Profile
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@404" href="404.html">
-             404 Page
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@package" href="package.html">
-             Package
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@singlePage" href="single.html">
-             Single Page
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item active" href="store.html">
-             Store Single
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@blog" href="blog.html">
-             Blog
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@singleBlog" href="single-blog.html">
-             Blog Details
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@terms" href="terms-condition.html">
-             Terms &amp; Conditions
+            <a class="dropdown-item @@logoDesign">
+              Logo Design
             </a>
            </li>
           </ul>
          </li>
          <li class="nav-item dropdown dropdown-slide @@listing">
           <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#!">
-           Listing
+           Services
            <span>
             <i class="fa fa-angle-down">
             </i>
@@ -178,46 +90,40 @@
           <!-- Dropdown list -->
           <ul class="dropdown-menu">
            <li>
-            <a class="dropdown-item @@category" href="category.html">
-             Ad-Gird View
+            <a class="dropdown-item @@WebDev">
+             Web Development
             </a>
            </li>
            <li>
-            <a class="dropdown-item @@listView" href="ad-list-view.html">
-             Ad-List View
+            <a class="dropdown-item @@VideoEditing">
+             Video Editing
             </a>
            </li>
-           <li class="dropdown dropdown-submenu dropleft">
-            <a aria-expanded="false" aria-haspopup="true" class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#!" id="dropdown0201" role="button">
-             Sub Menu
+           <li>
+            <a class="dropdown-item @@Photo Editing">
+             Photo Editing
             </a>
-            <ul aria-labelledby="dropdown0201" class="dropdown-menu">
-             <li>
-              <a class="dropdown-item" href="index.html">
-               Submenu 01
-              </a>
-             </li>
-             <li>
-              <a class="dropdown-item" href="index.html">
-               Submenu 02
-              </a>
-             </li>
-            </ul>
            </li>
           </ul>
          </li>
+		 <li class="nav-item">
+			<a class="nav-link" href="{% url 'about' %}">
+				About
+			</a>
+		 </li>
         </ul>
+		
         <ul class="navbar-nav ml-auto mt-10">
          <li class="nav-item">
-          <a class="nav-link login-button" href="login.html">
+          <a class="nav-link login-button" href="{% url 'login' %}">
            Login
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link text-white add-button" href="ad-listing.html">
-           <i class="fa fa-plus-circle">
+          <a class="nav-link text-white add-button" href="{% url 'signup' %}"> <!-- href="ad-listing.html" -->
+           <!-- <i class="fa fa-plus-circle"> -->
            </i>
-           Add Listing
+           Sign up
           </a>
          </li>
         </ul>
@@ -227,597 +133,816 @@
     </div>
    </div>
   </header>
-  <!--===================================
-=            Clients Section        =
-====================================-->
-  <section class="client-slider-03">
-   <!-- Container Start -->
+  <section class="page-search">
    <div class="container">
     <div class="row">
-     <!-- Client Slider -->
      <div class="col-md-12">
-      <!-- Client Slider -->
-      <div class="category-slider">
-       <!-- Client 01 -->
-       <div class="item">
-        <a href="store.html">
-         <!-- Slider Image -->
-         <i class="fa fa-bed">
-         </i>
-         <h4>
-          Bed
-         </h4>
-        </a>
-       </div>
-       <div class="item">
-        <a href="store.html">
-         <!-- Slider Image -->
-         <i class="fa fa-bed">
-         </i>
-         <h4>
-          Hotels
-         </h4>
-        </a>
-       </div>
-       <div class="item">
-        <a href="store.html">
-         <!-- Slider Image -->
-         <i class="fa fa-car">
-         </i>
-         <h4>
-          Cars
-         </h4>
-        </a>
-       </div>
-       <div class="item">
-        <a href="store.html">
-         <!-- Slider Image -->
-         <i class="fa fa-cutlery">
-         </i>
-         <h4>
-          Restaurants
-         </h4>
-        </a>
-       </div>
-       <div class="item">
-        <a href="store.html">
-         <!-- Slider Image -->
-         <i class="fa fa-mobile">
-         </i>
-         <h4>
-          Automobile
-         </h4>
-        </a>
-       </div>
-       <div class="item">
-        <a href="store.html">
-         <!-- Slider Image -->
-         <i class="fa fa-film">
-         </i>
-         <h4>
-          Gym
-         </h4>
-        </a>
-       </div>
-       <!-- Client 01 -->
-       <div class="item">
-        <a href="store.html">
-         <!-- Slider Image -->
-         <i class="fa fa-paragraph">
-         </i>
-         <h4>
-          Park
-         </h4>
-        </a>
-       </div>
-       <div class="item">
-        <a href="store.html">
-         <!-- Slider Image -->
-         <i class="fa fa-play">
-         </i>
-         <h4>
-          Play
-         </h4>
-        </a>
-       </div>
-       <div class="item">
-        <a href="store.html">
-         <!-- Slider Image -->
-         <i class="fa fa-building">
-         </i>
-         <h4>
-          Real Estate
-         </h4>
-        </a>
-       </div>
-       <div class="item">
-        <a href="store.html">
-         <!-- Slider Image -->
-         <i class="fa fa-shopping-bag">
-         </i>
-         <h4>
-          Shopping
-         </h4>
-        </a>
-       </div>
-       <div class="item">
-        <a href="store.html">
-         <!-- Slider Image -->
-         <i class="fa fa-bed">
-         </i>
-         <h4>
-          Electronics
-         </h4>
-        </a>
-       </div>
-       <div class="item">
-        <a href="store.html">
-         <!-- Slider Image -->
-         <i class="fa fa-bed">
-         </i>
-         <h4>
-          Health
-         </h4>
-        </a>
-       </div>
+      <!-- Advance Search -->
+      <div class="advance-search nice-select-white">
+       <form>
+        <div class="form-row align-items-center">
+         <div class="form-group col-xl-4 col-lg-3 col-md-6">
+          <input class="form-control my-2 my-lg-0" id="inputtext4" placeholder="What are you looking for" type="text"/>
+         </div>
+         <div class="form-group col-lg-3 col-md-6">
+          <select class="w-100 form-control my-2 my-lg-0">
+           <option>
+            Category
+           </option>
+           <option value="1">
+            Top rated
+           </option>
+           <option value="2">
+            Lowest Price
+           </option>
+           <option value="4">
+            Highest Price
+           </option>
+          </select>
+         </div>
+         <div class="form-group col-lg-3 col-md-6">
+          <input class="form-control my-2 my-lg-0" id="inputLocation4" placeholder="Location" type="text"/>
+         </div>
+         <div class="form-group col-xl-2 col-lg-3 col-md-6">
+          <button class="btn btn-primary active w-100" type="submit">
+           Search Now
+          </button>
+         </div>
+        </div>
+       </form>
       </div>
      </div>
     </div>
    </div>
-   <!-- Container End -->
   </section>
-  <section class="stores section">
+  <section class="section-sm">
    <div class="container">
     <div class="row">
      <div class="col-md-12">
-      <div class="section-title">
+      <div class="search-result bg-gray">
        <h2>
-        More Stores
+        Results For "Electronics"
        </h2>
+       <p>
+        123 Results on 12 December, 2017
+       </p>
       </div>
-      <!-- First Letter -->
-      <div class="block">
-       <!-- Store First Letter -->
-       <h5 class="store-letter">
-        #
-       </h5>
-       <hr/>
-       <!-- Store Lists -->
-       <div class="row">
-        <!-- Store List 01 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
+     </div>
+    </div>
+    <div class="row">
+     <div class="col-lg-3 col-md-4">
+      <div class="category-sidebar">
+       <div class="widget category-list">
+        <h4 class="widget-header">
+         All Category
+        </h4>
+        <ul class="category-list">
+         <li>
+          <a href="category.html">
+           Laptops
+           <span>
+            93
+           </span>
+          </a>
+         </li>
+         <li>
+          <a href="category.html">
+           Iphone
+           <span>
+            233
+           </span>
+          </a>
+         </li>
+         <li>
+          <a href="category.html">
+           Microsoft
+           <span>
+            183
+           </span>
+          </a>
+         </li>
+         <li>
+          <a href="category.html">
+           Monitors
+           <span>
+            343
+           </span>
+          </a>
+         </li>
+        </ul>
+       </div>
+       <div class="widget category-list">
+        <h4 class="widget-header">
+         Nearby
+        </h4>
+        <ul class="category-list">
+         <li>
+          <a href="category.html">
+           New York
+           <span>
+            93
+           </span>
+          </a>
+         </li>
+         <li>
+          <a href="category.html">
+           New Jersy
+           <span>
+            233
+           </span>
+          </a>
+         </li>
+         <li>
+          <a href="category.html">
+           Florida
+           <span>
+            183
+           </span>
+          </a>
+         </li>
+         <li>
+          <a href="category.html">
+           California
+           <span>
+            120
+           </span>
+          </a>
+         </li>
+         <li>
+          <a href="category.html">
+           Texas
+           <span>
+            40
+           </span>
+          </a>
+         </li>
+         <li>
+          <a href="category.html">
+           Alaska
+           <span>
+            81
+           </span>
+          </a>
+         </li>
+        </ul>
+       </div>
+       <div class="widget filter">
+        <h4 class="widget-header">
+         Show Produts
+        </h4>
+        <select>
+         <option>
+          Popularity
+         </option>
+         <option value="1">
+          Top rated
+         </option>
+         <option value="2">
+          Lowest Price
+         </option>
+         <option value="4">
+          Highest Price
+         </option>
+        </select>
+       </div>
+       <div class="widget price-range w-100">
+        <h4 class="widget-header">
+         Price Range
+        </h4>
+        <div class="block">
+         <input class="range-track w-100" data-slider-max="5000" data-slider-min="0" data-slider-step="5" data-slider-value="[0,5000]" type="text"/>
+         <div class="d-flex justify-content-between mt-2">
+          <span class="value">
+           $10 - $5000
+          </span>
+         </div>
         </div>
-        <!-- Store List 02 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
+       </div>
+       <div class="widget product-shorting">
+        <h4 class="widget-header">
+         By Condition
+        </h4>
+        <div class="form-check">
+         <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" value=""/>
+          Brand New
+         </label>
         </div>
-        <!-- Store List 03 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
+        <div class="form-check">
+         <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" value=""/>
+          Almost New
+         </label>
         </div>
-        <!-- Store List 04 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
+        <div class="form-check">
+         <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" value=""/>
+          Gently New
+         </label>
+        </div>
+        <div class="form-check">
+         <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" value=""/>
+          Havely New
+         </label>
         </div>
        </div>
       </div>
-      <!-- Second Letter -->
-      <div class="block">
-       <!-- Store First Letter -->
-       <h5 class="store-letter">
-        A
-       </h5>
-       <hr/>
-       <!-- Store Lists -->
+     </div>
+     <div class="col-lg-9 col-md-8">
+      <div class="category-search-filter">
        <div class="row">
-        <!-- Store List 01 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
+        <div class="col-md-6 text-center text-md-left">
+         <strong>
+          Short
+         </strong>
+         <select>
+          <option>
+           Most Recent
+          </option>
+          <option value="1">
+           Most Popular
+          </option>
+          <option value="2">
+           Lowest Price
+          </option>
+          <option value="4">
+           Highest Price
+          </option>
+         </select>
         </div>
-        <!-- Store List 02 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
-        </div>
-        <!-- Store List 03 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
-        </div>
-        <!-- Store List 04 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
+        <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">
+         <div class="view">
+          <strong>
+           Views
+          </strong>
+          <ul class="list-inline view-switcher">
+           <li class="list-inline-item">
+            <a class="text-info" href="#!" onclick="event.preventDefault();">
+             <i class="fa fa-th-large">
+             </i>
+            </a>
+           </li>
+           <li class="list-inline-item">
+            <a href="ad-list-view.html">
+             <i class="fa fa-reorder">
+             </i>
+            </a>
+           </li>
+          </ul>
+         </div>
         </div>
        </div>
       </div>
-      <!-- Third Letter -->
-      <div class="block">
-       <!-- Store First Letter -->
-       <h5 class="store-letter">
-        B
-       </h5>
-       <hr/>
-       <!-- Store Lists -->
-       <div class="row">
-        <!-- Store List 01 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
+      <div class="product-grid-list">
+       <div class="row mt-30">
+        <div class="col-lg-4 col-md-6">
+         <!-- product card -->
+         <div class="product-item bg-light">
+          <div class="card">
+           <div class="thumb-content">
+            <!-- <div class="price">$200</div> -->
+            <a href="single.html">
+             <img alt="Card image cap" class="card-img-top img-fluid" src="{% static 'images/products/products-1.jpg'%}"/>
+            </a>
+           </div>
+           <div class="card-body">
+            <h4 class="card-title">
+             <a href="single.html">
+              11inch Macbook Air
+             </a>
+            </h4>
+            <ul class="list-inline product-meta">
+             <li class="list-inline-item">
+              <a href="single.html">
+               <i class="fa fa-folder-open-o">
+               </i>
+               Electronics
+              </a>
+             </li>
+             <li class="list-inline-item">
+              <a href="category.html">
+               <i class="fa fa-calendar">
+               </i>
+               26th December
+              </a>
+             </li>
+            </ul>
+            <p class="card-text">
+             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!
+            </p>
+            <div class="product-ratings">
+             <ul class="list-inline">
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item">
+               <i class="fa fa-star">
+               </i>
+              </li>
+             </ul>
+            </div>
+           </div>
+          </div>
+         </div>
         </div>
-        <!-- Store List 02 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
+        <div class="col-lg-4 col-md-6">
+         <!-- product card -->
+         <div class="product-item bg-light">
+          <div class="card">
+           <div class="thumb-content">
+            <!-- <div class="price">$200</div> -->
+            <a href="single.html">
+             <img alt="Card image cap" class="card-img-top img-fluid" src="{% static 'images/products/products-2.jpg'%}"/>
+            </a>
+           </div>
+           <div class="card-body">
+            <h4 class="card-title">
+             <a href="single.html">
+              Study Table Combo
+             </a>
+            </h4>
+            <ul class="list-inline product-meta">
+             <li class="list-inline-item">
+              <a href="single.html">
+               <i class="fa fa-folder-open-o">
+               </i>
+               Furnitures
+              </a>
+             </li>
+             <li class="list-inline-item">
+              <a href="category.html">
+               <i class="fa fa-calendar">
+               </i>
+               26th December
+              </a>
+             </li>
+            </ul>
+            <p class="card-text">
+             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!
+            </p>
+            <div class="product-ratings">
+             <ul class="list-inline">
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item">
+               <i class="fa fa-star">
+               </i>
+              </li>
+             </ul>
+            </div>
+           </div>
+          </div>
+         </div>
         </div>
-        <!-- Store List 03 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
+        <div class="col-lg-4 col-md-6">
+         <!-- product card -->
+         <div class="product-item bg-light">
+          <div class="card">
+           <div class="thumb-content">
+            <!-- <div class="price">$200</div> -->
+            <a href="single.html">
+             <img alt="Card image cap" class="card-img-top img-fluid" src="{% static 'images/products/products-3.jpg'%}"/>
+            </a>
+           </div>
+           <div class="card-body">
+            <h4 class="card-title">
+             <a href="single.html">
+              11inch Macbook Air
+             </a>
+            </h4>
+            <ul class="list-inline product-meta">
+             <li class="list-inline-item">
+              <a href="single.html">
+               <i class="fa fa-folder-open-o">
+               </i>
+               Electronics
+              </a>
+             </li>
+             <li class="list-inline-item">
+              <a href="category.html">
+               <i class="fa fa-calendar">
+               </i>
+               26th December
+              </a>
+             </li>
+            </ul>
+            <p class="card-text">
+             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!
+            </p>
+            <div class="product-ratings">
+             <ul class="list-inline">
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item">
+               <i class="fa fa-star">
+               </i>
+              </li>
+             </ul>
+            </div>
+           </div>
+          </div>
+         </div>
         </div>
-        <!-- Store List 04 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
+        <div class="col-lg-4 col-md-6">
+         <!-- product card -->
+         <div class="product-item bg-light">
+          <div class="card">
+           <div class="thumb-content">
+            <!-- <div class="price">$200</div> -->
+            <a href="single.html">
+             <img alt="Card image cap" class="card-img-top img-fluid" src="{% static 'images/products/products-1.jpg'%}"/>
+            </a>
+           </div>
+           <div class="card-body">
+            <h4 class="card-title">
+             <a href="single.html">
+              11inch Macbook Air
+             </a>
+            </h4>
+            <ul class="list-inline product-meta">
+             <li class="list-inline-item">
+              <a href="single.html">
+               <i class="fa fa-folder-open-o">
+               </i>
+               Electronics
+              </a>
+             </li>
+             <li class="list-inline-item">
+              <a href="category.html">
+               <i class="fa fa-calendar">
+               </i>
+               26th December
+              </a>
+             </li>
+            </ul>
+            <p class="card-text">
+             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!
+            </p>
+            <div class="product-ratings">
+             <ul class="list-inline">
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item">
+               <i class="fa fa-star">
+               </i>
+              </li>
+             </ul>
+            </div>
+           </div>
+          </div>
+         </div>
         </div>
+        <div class="col-lg-4 col-md-6">
+         <!-- product card -->
+         <div class="product-item bg-light">
+          <div class="card">
+           <div class="thumb-content">
+            <!-- <div class="price">$200</div> -->
+            <a href="single.html">
+             <img alt="Card image cap" class="card-img-top img-fluid" src="{% static 'images/products/products-2.jpg'%}"/>
+            </a>
+           </div>
+           <div class="card-body">
+            <h4 class="card-title">
+             <a href="single.html">
+              Study Table Combo
+             </a>
+            </h4>
+            <ul class="list-inline product-meta">
+             <li class="list-inline-item">
+              <a href="single.html">
+               <i class="fa fa-folder-open-o">
+               </i>
+               Furnitures
+              </a>
+             </li>
+             <li class="list-inline-item">
+              <a href="category.html">
+               <i class="fa fa-calendar">
+               </i>
+               26th December
+              </a>
+             </li>
+            </ul>
+            <p class="card-text">
+             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!
+            </p>
+            <div class="product-ratings">
+             <ul class="list-inline">
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item">
+               <i class="fa fa-star">
+               </i>
+              </li>
+             </ul>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+         <!-- product card -->
+         <div class="product-item bg-light">
+          <div class="card">
+           <div class="thumb-content">
+            <!-- <div class="price">$200</div> -->
+            <a href="single.html">
+             <img alt="Card image cap" class="card-img-top img-fluid" src="{% static 'images/products/products-3.jpg'%}"/>
+            </a>
+           </div>
+           <div class="card-body">
+            <h4 class="card-title">
+             <a href="single.html">
+              11inch Macbook Air
+             </a>
+            </h4>
+            <ul class="list-inline product-meta">
+             <li class="list-inline-item">
+              <a href="single.html">
+               <i class="fa fa-folder-open-o">
+               </i>
+               Electronics
+              </a>
+             </li>
+             <li class="list-inline-item">
+              <a href="category.html">
+               <i class="fa fa-calendar">
+               </i>
+               26th December
+              </a>
+             </li>
+            </ul>
+            <p class="card-text">
+             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!
+            </p>
+            <div class="product-ratings">
+             <ul class="list-inline">
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item">
+               <i class="fa fa-star">
+               </i>
+              </li>
+             </ul>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+         <!-- product card -->
+         <div class="product-item bg-light">
+          <div class="card">
+           <div class="thumb-content">
+            <!-- <div class="price">$200</div> -->
+            <a href="single.html">
+             <img alt="Card image cap" class="card-img-top img-fluid" src="{% static 'images/products/products-1.jpg'%}"/>
+            </a>
+           </div>
+           <div class="card-body">
+            <h4 class="card-title">
+             <a href="single.html">
+              11inch Macbook Air
+             </a>
+            </h4>
+            <ul class="list-inline product-meta">
+             <li class="list-inline-item">
+              <a href="single.html">
+               <i class="fa fa-folder-open-o">
+               </i>
+               Electronics
+              </a>
+             </li>
+             <li class="list-inline-item">
+              <a href="category.html">
+               <i class="fa fa-calendar">
+               </i>
+               26th December
+              </a>
+             </li>
+            </ul>
+            <p class="card-text">
+             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!
+            </p>
+            <div class="product-ratings">
+             <ul class="list-inline">
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item">
+               <i class="fa fa-star">
+               </i>
+              </li>
+             </ul>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+        <div class="col-lg-4 col-md-6">
+         <!-- product card -->
+         <div class="product-item bg-light">
+          <div class="card">
+           <div class="thumb-content">
+            <!-- <div class="price">$200</div> -->
+            <a href="single.html">
+             <img alt="Card image cap" class="card-img-top img-fluid" src="{% static 'images/products/products-2.jpg'%}"/>
+            </a>
+           </div>
+           <div class="card-body">
+            <h4 class="card-title">
+             <a href="single.html">
+              Study Table Combo
+             </a>
+            </h4>
+            <ul class="list-inline product-meta">
+             <li class="list-inline-item">
+              <a href="single.html">
+               <i class="fa fa-folder-open-o">
+               </i>
+               Furnitures
+              </a>
+             </li>
+             <li class="list-inline-item">
+              <a href="category.html">
+               <i class="fa fa-calendar">
+               </i>
+               26th December
+              </a>
+             </li>
+            </ul>
+            <p class="card-text">
+             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo, aliquam!
+            </p>
+            <div class="product-ratings">
+             <ul class="list-inline">
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item selected">
+               <i class="fa fa-star">
+               </i>
+              </li>
+              <li class="list-inline-item">
+               <i class="fa fa-star">
+               </i>
+              </li>
+             </ul>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+
        </div>
       </div>
-      <!-- Fourth Letter -->
-      <div class="block">
-       <!-- Store First Letter -->
-       <h5 class="store-letter">
-        C
-       </h5>
-       <hr/>
-       <!-- Store Lists -->
-       <div class="row">
-        <!-- Store List 01 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
-        </div>
-        <!-- Store List 02 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
-        </div>
-        <!-- Store List 03 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
-        </div>
-        <!-- Store List 04 -->
-        <div class="col-md-3 col-sm-6">
-         <ul class="store-list">
-          <li>
-           <a href="store.html">
-            1 - 800 - Got - Junk?
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            1000 bulbs.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            180 packrat.com
-           </a>
-          </li>
-          <li>
-           <a href="store.html">
-            3 day blinds
-           </a>
-          </li>
-         </ul>
-        </div>
-       </div>
+      <div class="pagination justify-content-center">
+       <nav aria-label="Page navigation example">
+        <ul class="pagination">
+         <li class="page-item">
+          <a aria-label="Previous" class="page-link" href="category.html">
+           <span aria-hidden="true">
+            &laquo;
+           </span>
+           <span class="sr-only">
+            Previous
+           </span>
+          </a>
+         </li>
+         <li class="page-item">
+          <a class="page-link" href="category.html">
+           1
+          </a>
+         </li>
+         <li class="page-item active">
+          <a class="page-link" href="category.html">
+           2
+          </a>
+         </li>
+         <li class="page-item">
+          <a class="page-link" href="category.html">
+           3
+          </a>
+         </li>
+         <li class="page-item">
+          <a aria-label="Next" class="page-link" href="category.html">
+           <span aria-hidden="true">
+            &raquo;
+           </span>
+           <span class="sr-only">
+            Next
+           </span>
+          </a>
+         </li>
+        </ul>
+       </nav>
       </div>
      </div>
     </div>
@@ -834,12 +959,12 @@
       <!-- About -->
       <div class="block about">
        <!-- footer logo -->
-       <img alt="logo" src="{% static 'images/logo-footer.png'%}"/>
+       <img alt="logo" src="{% static 'images/BlackBox.png'%}"/>
        <!-- description -->
        <p class="alt-color">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat.
+        Explore our vibrant collection of framed A4 photos, featuring bold designs, 
+        <br/>
+        personalized artwork, and sleek vector prints perfect for any space
        </p>
       </div>
      </div>

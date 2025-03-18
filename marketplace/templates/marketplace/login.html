@@ -6,11 +6,12 @@
  // GITHUB: https://github.com/themefisher/
 -->
 <html lang="en">
+{% load static %}
  <head>
   <!-- ** Basic Page Needs ** -->
   <meta charset="utf-8"/>
   <title>
-   Classimax | Classified Marketplace Template
+   BlackBox | Login
   </title>
   <!-- ** Mobile Specific Metas ** -->
   <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
@@ -19,7 +20,7 @@
   <meta content="Themefisher" name="author"/>
   <meta content="Themefisher Classified Marketplace Template v1.0" name="generator"/>
   <!-- favicon -->
-  <link href="{% static 'images/favicon.png'%}" rel="shortcut icon"/>
+  <link href="{% static 'images/favicon.jpg'%}" rel="shortcut icon"/>
   <!-- 
   Essential stylesheets
   =====================================-->
@@ -38,7 +39,7 @@
      <div class="col-md-12">
       <nav class="navbar navbar-expand-lg navbar-light navigation">
        <a class="navbar-brand" href="index.html">
-        <img alt="" src="{% static 'images/logo.png'%}"/>
+        <img alt="" src="{% static 'images/BlackBox.png'%}"/>
        </a>
        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
         <span class="navbar-toggler-icon">
@@ -46,68 +47,19 @@
        </button>
        <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto main-nav">
-         <li class="nav-item @@home">
-          <a class="nav-link" href="index.html">
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'main' %}">
            Home
           </a>
          </li>
-         <li class="nav-item dropdown dropdown-slide @@dashboard">
-          <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#!">
-           Dashboard
-           <span>
-            <i class="fa fa-angle-down">
-            </i>
-           </span>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'store' %}">
+           Store
           </a>
-          <!-- Dropdown list -->
-          <ul class="dropdown-menu">
-           <li>
-            <a class="dropdown-item @@dashboardPage" href="dashboard.html">
-             Dashboard
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@dashboardMyAds" href="dashboard-my-ads.html">
-             Dashboard My Ads
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@dashboardFavouriteAds" href="dashboard-favourite-ads.html">
-             Dashboard Favourite Ads
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@dashboardArchivedAds" href="dashboard-archived-ads.html">
-             Dashboard Archived Ads
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@dashboardPendingAds" href="dashboard-pending-ads.html">
-             Dashboard Pending Ads
-            </a>
-           </li>
-           <li class="dropdown dropdown-submenu dropright">
-            <a aria-expanded="false" aria-haspopup="true" class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#!" id="dropdown0501" role="button">
-             Sub Menu
-            </a>
-            <ul aria-labelledby="dropdown0501" class="dropdown-menu">
-             <li>
-              <a class="dropdown-item" href="index.html">
-               Submenu 01
-              </a>
-             </li>
-             <li>
-              <a class="dropdown-item" href="index.html">
-               Submenu 02
-              </a>
-             </li>
-            </ul>
-           </li>
-          </ul>
-         </li>
+		 </li>
          <li class="nav-item dropdown dropdown-slide @@pages">
           <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
-           Pages
+           On Demand
            <span>
             <i class="fa fa-angle-down">
             </i>
@@ -116,60 +68,20 @@
           <!-- Dropdown list -->
           <ul class="dropdown-menu">
            <li>
-            <a class="dropdown-item @@about" href="about-us.html">
-             About Us
+            <a class="dropdown-item @@framedArt" href="">
+             Framed Art
             </a>
            </li>
            <li>
-            <a class="dropdown-item @@contact" href="contact-us.html">
-             Contact Us
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@profile" href="user-profile.html">
-             User Profile
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@404" href="404.html">
-             404 Page
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@package" href="package.html">
-             Package
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@singlePage" href="single.html">
-             Single Page
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@store" href="store.html">
-             Store Single
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@blog" href="blog.html">
-             Blog
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@singleBlog" href="single-blog.html">
-             Blog Details
-            </a>
-           </li>
-           <li>
-            <a class="dropdown-item @@terms" href="terms-condition.html">
-             Terms &amp; Conditions
+            <a class="dropdown-item @@logoDesign">
+              Logo Design
             </a>
            </li>
           </ul>
          </li>
          <li class="nav-item dropdown dropdown-slide @@listing">
           <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#!">
-           Listing
+           Services
            <span>
             <i class="fa fa-angle-down">
             </i>
@@ -178,46 +90,40 @@
           <!-- Dropdown list -->
           <ul class="dropdown-menu">
            <li>
-            <a class="dropdown-item @@category" href="category.html">
-             Ad-Gird View
+            <a class="dropdown-item @@WebDev">
+             Web Development
             </a>
            </li>
            <li>
-            <a class="dropdown-item @@listView" href="ad-list-view.html">
-             Ad-List View
+            <a class="dropdown-item @@VideoEditing">
+             Video Editing
             </a>
            </li>
-           <li class="dropdown dropdown-submenu dropleft">
-            <a aria-expanded="false" aria-haspopup="true" class="dropdown-item dropdown-toggle" data-toggle="dropdown" href="#!" id="dropdown0201" role="button">
-             Sub Menu
+           <li>
+            <a class="dropdown-item @@Photo Editing">
+             Photo Editing
             </a>
-            <ul aria-labelledby="dropdown0201" class="dropdown-menu">
-             <li>
-              <a class="dropdown-item" href="index.html">
-               Submenu 01
-              </a>
-             </li>
-             <li>
-              <a class="dropdown-item" href="index.html">
-               Submenu 02
-              </a>
-             </li>
-            </ul>
            </li>
           </ul>
          </li>
+		 <li class="nav-item">
+			<a class="nav-link" href="{% url 'about' %}">
+				About
+			</a>
+		 </li>
         </ul>
+		
         <ul class="navbar-nav ml-auto mt-10">
          <li class="nav-item">
-          <a class="nav-link login-button" href="login.html">
+          <a class="nav-link login-button" href="{% url 'login' %}">
            Login
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link text-white add-button" href="ad-listing.html">
-           <i class="fa fa-plus-circle">
+          <a class="nav-link text-white add-button" href="{% url 'signup' %}"> <!-- href="ad-listing.html" -->
+           <!-- <i class="fa fa-plus-circle"> -->
            </i>
-           Add Listing
+           Sign up
           </a>
          </li>
         </ul>
@@ -272,12 +178,12 @@
       <!-- About -->
       <div class="block about">
        <!-- footer logo -->
-       <img alt="logo" src="{% static 'images/logo-footer.png'%}"/>
+       <img alt="logo" src="{% static 'images/BlackBox.png'%}"/>
        <!-- description -->
-       <p class="alt-color">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-            laboris nisi ut aliquip ex ea commodo consequat.
+       <p>
+        Explore our vibrant collection of framed A4 photos, featuring bold designs, 
+        <br/>
+        personalized artwork, and sleek vector prints perfect for any space
        </p>
       </div>
      </div>
