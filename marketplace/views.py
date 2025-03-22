@@ -3,13 +3,26 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .forms import LogUser
 import re
 
 # Main Page
 def main(request):
-    return render(request, 'marketplace/index.html')
-<<<<<<< HEAD
+    class iTem:
+        def __init__(self, title, price, image, category, description):
+            self.title = title
+            self.price = price
+            self.image = image
+            self.category = category
+            self.description = description
+    imAge = "https://static.wikia.nocookie.net/harrypotter/images/5/59/Elder_Wand.png/revision/latest?cb=20241227040818"
     
+    context = {"items": [iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
+                         iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
+                         iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
+                         iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),]}
+    return render(request, 'marketplace/index.html', context)
+
 # Store Page
 def store(request):
     return render(request, 'marketplace/store.html')
@@ -26,7 +39,7 @@ def signup(request):
 # About Page
 def about(request):
     return render(request, 'marketplace/about-us.html')
-=======
+
 
 def login(request):
     if request.method == "POST":
@@ -92,4 +105,4 @@ def signup(request):
 def logout(request):
     auth_logout(request)
     return redirect("/")
->>>>>>> c0935d17f512d19ef735faf641b65d0c15fbe1f8
+
