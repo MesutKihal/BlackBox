@@ -312,18 +312,18 @@
        </h2>
       </div>
       <div id="categoryRow" class="row">
-		{% for category in categories %}
+		{% for temp in categories %}
 		<div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6">
 			<div class="category-block">
 				<div class="header">
-					<img class="icon-bg-1" src="{% static CategoryImage %}" alt="{{ Category }}">
-					<h4>{{ Category }}</h4>
+					<img style="width: 80%;" src="{{ temp.category.image }}" alt="{{ temp.category.title }}">
+					<h4>{{ temp.category.title }}</h4>
 				</div>
 				<ul class="category-list">
-					{% for sub in SubCategories %}
+					{% for sub in temp.subs %}
 						<li>
 							<a href="">
-								{{ sub.title }}<span>{{ sub.count }}</span>
+								{{ sub.title }}<span>100</span>
 							</a>
 						</li>
 					{% endfor %}

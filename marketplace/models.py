@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Category(models.Model):
-    name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
     image = models.ImageField(upload_to = "media/img/categories")
     class Meta:
         verbose_name_plural = "Categories"
@@ -10,7 +10,8 @@ class Category(models.Model):
         return self.name
 
 class SubCategory(models.Model):
-    name = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)
+    parent = models.ForeignKey(Category, related_name="subcategories", on_delete = models.CASCADE)
     class Meta:
         verbose_name_plural = "Sub Categories"
     def __str__(self):

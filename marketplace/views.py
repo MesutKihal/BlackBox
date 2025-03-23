@@ -16,11 +16,25 @@ def main(request):
             self.category = category
             self.description = description
     imAge = "https://static.wikia.nocookie.net/harrypotter/images/5/59/Elder_Wand.png/revision/latest?cb=20241227040818"
-    
+    class category:
+        def __init__(self, title, image):
+            self.title = title
+            self.image = image
+
+    class subcategory(category):
+        def __init__(self, title):
+            self.title = title
+            #self.parent = category.title
+
     context = {"items": [iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
                          iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
                          iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
-                         iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),]}
+                         iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),],
+                "categories": [{"category": category("Framed Art", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCk96LIp6HYuAf_-5mFENMpvzhCH9Bvn29Jw&s"), "subs": [subcategory("canvas"), subcategory("photography"), subcategory("drawing"), subcategory("vibrant")]},
+                               {"category": category("Logos", "https://static.vecteezy.com/system/resources/previews/047/656/219/non_2x/abstract-logo-design-for-any-corporate-brand-business-company-vector.jpg"), "subs": [subcategory("lettermark"), subcategory("pictorial marks"), subcategory("abstract"), subcategory("mascot"), subcategory("emblem")]},
+                               {"category": category("Clips", "https://ultahost.com/blog/wp-content/uploads/2022/06/how-to-make-a-video-sharing-platform-1.png"), "subs": [subcategory("Youtube"), subcategory("Instagram reels"), subcategory("TikTok")]},
+                               {"category": category("Pictures", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNbkECXtEG_6-RV7CSNgNoYUGZE-JCliYm9g&s"), "subs": [subcategory("horizantal"), subcategory("vertical"), subcategory("panoramic")]},]
+                }
     return render(request, 'marketplace/index.html', context)
 
 # Store Page
