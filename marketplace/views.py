@@ -4,7 +4,10 @@ from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import LogUser
+from django.core.paginator import Paginator
 import re
+
+
 
 # Main Page
 def main(request):
@@ -39,7 +42,26 @@ def main(request):
 
 # Store Page
 def store(request):
-    return render(request, 'marketplace/store.html')
+    class iTem:
+        def __init__(self, title, price, image, category, description):
+            self.title = title
+            self.price = price
+            self.image = image
+            self.category = category
+            self.description = description
+    imAge = "https://static.wikia.nocookie.net/harrypotter/images/5/59/Elder_Wand.png/revision/latest?cb=20241227040818"
+    
+    context = {"items": [iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
+                         iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
+                         iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
+                         iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),]}
+    return render(request, 'marketplace/store.html', context)
+    
+
+# @csrf_exempt
+# def products(request, category, page):
+    # data = {}
+    # return JsonResponse(data, safe=false)
     
     
 # Login Page
@@ -53,8 +75,16 @@ def signup(request):
 # About Page
 def about(request):
     return render(request, 'marketplace/about-us.html')
+    
 
+# On Demand
+def ondemand(request, page):
+    if page == "framed":
+        return render(request, "marketplace/framed.html")
+    else:
+        return render(request, "marketplace/logo.html")
 
+# Login Page
 def login(request):
     if request.method == "POST":
         form = LogUser(request.POST)

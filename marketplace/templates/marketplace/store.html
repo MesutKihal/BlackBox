@@ -133,7 +133,7 @@
     </div>
    </div>
   </header>
-  <section class="page-search">
+  <section class="page-search bg-dark">
    <div class="container">
     <div class="row">
      <div class="col-md-12">
@@ -164,7 +164,7 @@
           <input class="form-control my-2 my-lg-0" id="inputLocation4" placeholder="Location" type="text"/>
          </div>
          <div class="form-group col-xl-2 col-lg-3 col-md-6">
-          <button class="btn btn-primary active w-100" type="submit">
+          <button class="btn btn-success active w-100" type="submit">
            Search Now
           </button>
          </div>
@@ -201,7 +201,7 @@
         <ul class="category-list">
          <li>
           <a href="category.html">
-           Laptops
+           Framed Art
            <span>
             93
            </span>
@@ -233,6 +233,19 @@
          </li>
         </ul>
        </div>
+       <div class="widget product-shorting">
+        <h4 class="widget-header">
+         {{ category }}
+        </h4>
+		{% for sub in subs %}
+        <div class="form-check">
+         <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" value=""/>
+          {{ sub }}
+         </label>
+        </div>
+		{% endfor %}
+       </div>
        <div class="widget filter">
         <h4 class="widget-header">
          Show Produts
@@ -263,35 +276,6 @@
            $10 - $5000
           </span>
          </div>
-        </div>
-       </div>
-       <div class="widget product-shorting">
-        <h4 class="widget-header">
-         By Condition
-        </h4>
-        <div class="form-check">
-         <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" value=""/>
-          Brand New
-         </label>
-        </div>
-        <div class="form-check">
-         <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" value=""/>
-          Almost New
-         </label>
-        </div>
-        <div class="form-check">
-         <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" value=""/>
-          Gently New
-         </label>
-        </div>
-        <div class="form-check">
-         <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" value=""/>
-          Havely New
-         </label>
         </div>
        </div>
       </div>
@@ -343,6 +327,7 @@
       </div>
       <div class="product-grid-list">
        <div class="row mt-30">
+	   {% for item in items %}
         <div class="col-lg-4 col-md-6">
          <!-- product card -->
          <div class="product-item bg-light">
@@ -350,13 +335,13 @@
            <div class="thumb-content">
             <div class="price">200 DZD</div>
             <a href="single.html">
-             <img alt="Card image cap" class="card-img-top img-fluid" src="{{ product.image }}"/>
+             <img alt="{{ item.title }}" class="card-img-top img-fluid" src="{{ item.image }}"/>
             </a>
            </div>
            <div class="card-body">
             <h4 class="card-title">
              <a href="">
-              {{ product.title }}
+              {{ item.title }}
              </a>
             </h4>
             <ul class="list-inline product-meta">
@@ -364,7 +349,7 @@
               <a href="single.html">
                <i class="fa fa-folder-open-o">
                </i>
-               {{ product.category }}
+               {{ item.category }}
               </a>
              </li>
              <li class="list-inline-item">
@@ -376,7 +361,7 @@
              </li>
             </ul>
             <p class="card-text">
-             {{ product.description }}
+             {{ item.description }}
             </p>
             <div class="product-ratings">
              <ul class="list-inline">
@@ -406,6 +391,7 @@
           </div>
          </div>
         </div>
+		{% endfor %}
        </div>
       </div>
       <div class="pagination justify-content-center">
