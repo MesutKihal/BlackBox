@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import LogUser
 from django.core.paginator import Paginator
 import re
+import json
 
 
 
@@ -80,7 +81,14 @@ def about(request):
 # On Demand
 def ondemand(request, page):
     if page == "framed":
-        return render(request, "marketplace/framed.html")
+        context = {}
+        with open("marketplace/static/json/Wilaya_Of_Algeria.json", "rb") as jsonFile:
+            data = json.load(jsonFile)
+            context['wilayas'] = data
+        with open("marketplace/static/json/Commune_Of_Algeria.json", "rb") as jsonFile:
+            data = json.load(jsonFile)
+            context['communes'] = data
+        return render(request, "marketplace/framed.html", context)
     else:
         return render(request, "marketplace/logo.html")
 

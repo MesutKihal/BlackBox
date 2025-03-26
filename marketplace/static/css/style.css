@@ -49,6 +49,34 @@ p {
   color: #888;
 }
 
+.select-box {
+  display: flex;
+  flex-direction: row;
+  border: none;
+  align-items: center;
+}
+
+#currentWilaya, #currentCommune {
+  width: 90%;
+  margin: 5px;
+}
+
+.select-icon {
+  border: none;
+  background: none;
+  gap: 1px;
+  font-size: 15px;
+}
+
+.select-icon:hover {
+  color: #f00;
+}
+
+.select-control {
+  display: flex;
+  flex-direction: column;
+}
+
 label {
   font-size: 14px;
   letter-spacing: 0;

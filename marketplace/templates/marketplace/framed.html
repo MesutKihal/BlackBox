@@ -208,7 +208,7 @@
           </div>
          </div>
         </div>
-        <div class="choose-file text-center my-4 py-4 rounded bg-white">
+        <div class="text-center my-4 py-4 rounded bg-white">
          <label for="file-upload">
           <span class="d-block font-weight-bold text-dark">
            Drop files anywhere to upload
@@ -259,45 +259,25 @@
 		   <h6 class="font-weight-bold pt-4 pb-1">
 			 Wilaya
 			</h6>
-		   <select class="form-control w-100 bg-white" name="">
-			 <option value="1">
-			  Select Wilaya
-			 </option>
-			 <option value="2">
-			  Alger
-			 </option>
-			 <option value="3">
-			  Constantine
-			 </option>
-			 <option value="4">
-			  Oran
-			 </option>
-			 <option value="5">
-			  Setif
-			 </option>
-			</select>
+		   <div class="select-box form-control w-100 bg-white">
+				<span id="currentWilaya" data-wilaya-id="0">Select Wilaya</span>
+				<div class="select-control">
+					<div id="wilaya-up" class="select-icon">&#11165;</div>
+					<div id="wilaya-down" class="select-icon">&#11167;</div>
+				</div>
+			</div>
 		</div>
 	   <div class="col-lg-6">
 		   <h6 class="font-weight-bold pt-4 pb-1">
-			 Wilaya
+			 Commune
 			</h6>
-		   <select class="form-control w-100 bg-white" name="">
-			 <option value="1">
-			  Select Commune
-			 </option>
-			 <option value="2">
-			  Birkhadem
-			 </option>
-			 <option value="3">
-			  Zighoud Youcef
-			 </option>
-			 <option value="4">
-			  Bab Eldjedid
-			 </option>
-			 <option value="5">
-			  Bougaa
-			 </option>
-			</select>
+		   <div class="select-box form-control w-100 bg-white">
+				<span id="currentCommune" data-cummune-id="0" data-wilaya-id="0">Select Commune</span>
+				<div class="select-control">
+					<div id="commune-up" class="select-icon">&#11165;</div>
+					<div id="commune-down" class="select-icon">&#11167;</div>
+				</div>
+			</div>
 		</div>
       </div>
      </fieldset>
@@ -583,6 +563,97 @@ Essential Scripts
   <script src="{% static 'plugins/slick/slick.min.js'%}">
   </script>
   <script src="{% static 'plugins/jquery-nice-select/js/jquery.nice-select.min.js'%}">
+  </script>
+  <script>
+	// Wilaya select
+	let changeWilayaUp = document.querySelector('#wilaya-up');
+	let changeWilayaDown = document.querySelector('#wilaya-down');
+	let currentWilaya = document.querySelector('#currentWilaya');
+
+	let Wilaya = ["Select Wilaya"]
+	let index = 1
+	{% for w in wilayas %}
+		Wilaya[index] = "{{ w.name }}  -  {{ w.code }}"
+		index += 1
+	{% endfor %}
+
+	changeWilayaUp.onclick = (event) => {
+	  if (Number(currentWilaya.dataset.wilayaId) > 1) {
+		currentWilaya.innerText = Wilaya[Number(currentWilaya.dataset.wilayaId)-1];
+		currentWilaya.dataset.wilayaId = `${Number(currentWilaya.dataset.wilayaId) - 1}` 
+	  } else if (Number(currentWilaya.dataset.wilayaId) == 1){
+		currentWilaya.innerText = Wilaya[Wilaya.length-1];
+		currentWilaya.dataset.wilayaId = `${Number(Wilaya.length) - 1}` 
+	  } else {
+		currentWilaya.innerText = Wilaya[Wilaya.length-1];
+		currentWilaya.dataset.wilayaId = `${Number(Wilaya.length) - 1}`
+	  }
+	}
+
+	changeWilayaDown.onclick = (event) => { 
+	  if (Number(currentWilaya.dataset.wilayaId) == Wilaya.length-1) {
+		currentWilaya.innerText = Wilaya[1];
+		currentWilaya.dataset.wilayaId = "1"
+	  } else {
+		currentWilaya.innerText = Wilaya[Number(currentWilaya.dataset.wilayaId)+1];
+		currentWilaya.dataset.wilayaId = `${Number(currentWilaya.dataset.wilayaId)+1}`
+	  }
+	}
+	
+	// Commune Select
+	<!-- let changeCommuneUp = document.querySelector('#commune-up'); -->
+	<!-- let changeCommuneDown = document.querySelector('#commune-down'); -->
+	<!-- let currentCommune = document.querySelector('#currentCommune'); -->
+
+	<!-- let Commune = ["Select Commune"] -->
+	<!-- index = 1 -->
+	<!-- let temp = "" -->
+	
+	<!-- function getCommune() { -->
+		<!-- Commune = ["Select Commune"] -->
+		<!-- {% for c in communes %} -->
+			<!-- temp = "{{ c.wilaya_id }}" -->
+			<!-- {% if currentWilaya.dataset.wilayaId != 0 %} -->
+				<!-- {% if currentWilaya.dataset.wilayaId == temp %} -->
+					<!-- Commune[index] = "{{ c.name }}" -->
+					<!-- index += 1 -->
+				<!-- {% endif %} -->
+			<!-- {% endif %} -->
+		<!-- {% endfor %} -->
+		<!-- console.log(Commune); -->
+		<!-- return Commune; -->
+	<!-- } -->
+	
+	<!-- changeCommuneUp.onclick = (event) => { -->
+		<!-- Commune = getCommune(); -->
+		<!-- if (Commune.length > 1) -->
+		<!-- { -->
+		  <!-- if (Number(currentCommune.dataset.communeId) > 1) { -->
+			<!-- currentCommune.innerText = Commune[Number(currentCommune.dataset.communeId)-1]; -->
+			<!-- currentCommune.dataset.communeId = `${Number(currentCommune.dataset.communeId) - 1}`; -->
+		  <!-- } else if (Number(currentCommune.dataset.communeId) == 1){ -->
+			<!-- currentCommune.innerText = Commune[Commune.length-1]; -->
+			<!-- currentCommune.dataset.communeId = `${Number(Commune.length) - 1}`; -->
+		  <!-- } else { -->
+			<!-- currentCommune.innerText = Commune[Commune.length-1]; -->
+			<!-- currentCommune.dataset.communeId = `${Number(Commune.length) - 1}`; -->
+		  <!-- } -->
+		<!-- } -->
+	<!-- } -->
+
+	<!-- changeCommuneDown.onclick = (event) => { -->
+		<!-- Commune = getCommune() -->
+		<!-- if (Commune.length > 1) -->
+		<!-- { -->
+		  <!-- if (Number(currentCommune.dataset.communeId) == Commune.length-1) { -->
+			<!-- currentCommune.innerText = Commune[1]; -->
+			<!-- currentCommune.dataset.communeId = "1"; -->
+		  <!-- } else { -->
+			<!-- currentCommune.innerText = Commune[Number(currentCommune.dataset.communeId)+1]; -->
+			<!-- currentCommune.dataset.communeId = `${Number(currentCommune.dataset.communeId)+1}`; -->
+		  <!-- } -->
+		<!-- } -->
+	<!-- } -->
   </script>
   <!-- google map -->
   <script defer="" src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU'%}">
