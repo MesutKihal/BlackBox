@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<!--
+ // WEBSITE: https://themefisher.com
+ // TWITTER: https://twitter.com/themefisher
+ // FACEBOOK: https://www.facebook.com/themefisher
+ // GITHUB: https://github.com/themefisher/
+-->
+<html lang="en">
+{% load static %}
+ <head>
+  <!-- ** Basic Page Needs ** -->
+  <meta charset="utf-8"/>
+  <title>
+   On Demand | Framed Art
+  </title>
+  <!-- ** Mobile Specific Metas ** -->
+  <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+  <meta content="Agency HTML Template" name="description"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+  <meta content="Themefisher" name="author"/>
+  <meta content="Themefisher Classified Marketplace Template v1.0" name="generator"/>
+  <!-- favicon -->
+  <link href="{% static 'images/favicon.jpg'%}" rel="shortcut icon"/>
+  <!-- 
+  Essential stylesheets
+  =====================================-->
+  <link href="{% static 'plugins/bootstrap/bootstrap.min.css'%}" rel="stylesheet"/>
+  <link href="{% static 'plugins/bootstrap/bootstrap-slider.css'%}" rel="stylesheet"/>
+  <link href="{% static 'plugins/font-awesome/css/font-awesome.min.css'%}" rel="stylesheet"/>
+  <link href="{% static 'plugins/slick/slick.css'%}" rel="stylesheet"/>
+  <link href="{% static 'plugins/slick/slick-theme.css'%}" rel="stylesheet"/>
+  <link href="{% static 'plugins/jquery-nice-select/css/nice-select.css'%}" rel="stylesheet"/>
+  <link href="{% static 'css/style.css'%}" rel="stylesheet"/>
+ </head>
+ <body class="body-wrapper">
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-12">
+      <nav class="navbar navbar-expand-lg navbar-light navigation">
+       <a class="navbar-brand" href="index.html">
+        <img alt="" src="{% static 'images/BlackBox.png'%}"/>
+       </a>
+       <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+        <span class="navbar-toggler-icon">
+        </span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto main-nav">
+         <li class="nav-item active">
+          <a class="nav-link" href="{% url 'main' %}">
+           Home
+          </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link" href="{% url 'store' %}">
+           Store
+          </a>
+		 </li>
+         <li class="nav-item dropdown dropdown-slide @@pages">
+          <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown">
+           On Demand
+           <span>
+            <i class="fa fa-angle-down">
+            </i>
+           </span>
+          </a>
+          <!-- Dropdown list -->
+          <ul class="dropdown-menu">
+           <li>
+            <a class="dropdown-item @@framedArt" href="{% url 'ondemand' 'framed' %}">
+             Framed Art
+            </a>
+           </li>
+           <li>
+            <a class="dropdown-item @@logoDesign">
+              Logo Design
+            </a>
+           </li>
+          </ul>
+         </li>
+         <li class="nav-item dropdown dropdown-slide @@listing">
+          <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#!">
+           Services
+           <span>
+            <i class="fa fa-angle-down">
+            </i>
+           </span>
+          </a>
+          <!-- Dropdown list -->
+          <ul class="dropdown-menu">
+           <li>
+            <a class="dropdown-item @@WebDev">
+             Web Development
+            </a>
+           </li>
+           <li>
+            <a class="dropdown-item @@VideoEditing">
+             Video Editing
+            </a>
+           </li>
+           <li>
+            <a class="dropdown-item @@Photo Editing">
+             Photo Editing
+            </a>
+           </li>
+          </ul>
+         </li>
+		 <li class="nav-item">
+			<a class="nav-link" href="{% url 'about' %}">
+				About
+			</a>
+		 </li>
+        </ul>
+		
+        <ul class="navbar-nav ml-auto mt-10">
+         <li class="nav-item">
+          <a class="nav-link login-button" href="{% url 'login' %}">
+           Login
+          </a>
+         </li>
+         <li class="nav-item">
+          <a class="nav-link text-white add-button" href="{% url 'signup' %}"> <!-- href="ad-listing.html" -->
+           <!-- <i class="fa fa-plus-circle"> -->
+           </i>
+           Sign up
+          </a>
+         </li>
+        </ul>
+       </div>
+      </nav>
+     </div>
+    </div>
+   </div>
+  </header>
+  {% block content %}
+  
+  {% endblock %}
+
+   <!-- To Top -->
+   <div class="scroll-top-to">
+    <i class="fa fa-angle-up">
+    </i>
+   </div>
+
+  <!-- 
+Essential Scripts
+=====================================-->
+  <script src="{% static 'plugins/jquery/jquery.min.js'%}">
+  </script>
+  <script src="{% static 'plugins/bootstrap/popper.min.js'%}">
+  </script>
+  <script src="{% static 'plugins/bootstrap/bootstrap.min.js'%}">
+  </script>
+  <script src="{% static 'plugins/bootstrap/bootstrap-slider.js'%}">
+  </script>
+  <script src="{% static 'plugins/tether/js/tether.min.js'%}">
+  </script>
+  <script src="{% static 'plugins/raty/jquery.raty-fa.js'%}">
+  </script>
+  <script src="{% static 'plugins/slick/slick.min.js'%}">
+  </script>
+  <script src="{% static 'plugins/jquery-nice-select/js/jquery.nice-select.min.js'%}">
+  </script>
+  {% block script %}
+
+  {% endblock %}
+  <!-- google map -->
+  <!-- <script defer="" src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU'%}"> -->
+  <!-- </script> -->
+  <script defer="" src="{% static 'plugins/google-map/map.js'%}">
+  </script>
+  <script src="{% static 'js/script.js'%}">
+  </script>
+ </body>
+</html>

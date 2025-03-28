@@ -68,7 +68,7 @@
           <!-- Dropdown list -->
           <ul class="dropdown-menu">
            <li>
-            <a class="dropdown-item @@framedArt" href="">
+            <a class="dropdown-item @@framedArt" href="{% url 'ondemand' 'framed' %}">
              Framed Art
             </a>
            </li>
@@ -141,7 +141,7 @@
       <div class="advance-search nice-select-white">
        <form>
         <div class="form-row align-items-center">
-         <div class="form-group col-xl-4 col-lg-3 col-md-6">
+         <div class="form-group col-xl-5 col-lg-4 col-md-6">
           <input class="form-control my-2 my-lg-0" id="inputtext4" placeholder="What are you looking for" type="text"/>
          </div>
          <div class="form-group col-lg-3 col-md-6">
@@ -159,9 +159,6 @@
             Highest Price
            </option>
           </select>
-         </div>
-         <div class="form-group col-lg-3 col-md-6">
-          <input class="form-control my-2 my-lg-0" id="inputLocation4" placeholder="Location" type="text"/>
          </div>
          <div class="form-group col-xl-2 col-lg-3 col-md-6">
           <button class="btn btn-success active w-100" type="submit">
@@ -200,32 +197,32 @@
         </h4>
         <ul class="category-list">
          <li>
-          <a href="category.html">
+          <a href="">
            Framed Art
            <span>
-            93
+            100
            </span>
           </a>
          </li>
          <li>
-          <a href="category.html">
-           Iphone
+          <a href="">
+           Logos
            <span>
             233
            </span>
           </a>
          </li>
          <li>
-          <a href="category.html">
-           Microsoft
+          <a href="">
+           Clips
            <span>
             183
            </span>
           </a>
          </li>
          <li>
-          <a href="category.html">
-           Monitors
+          <a href="">
+           Pictures
            <span>
             343
            </span>
@@ -235,7 +232,7 @@
        </div>
        <div class="widget product-shorting">
         <h4 class="widget-header">
-         {{ category }}
+         category
         </h4>
 		{% for sub in subs %}
         <div class="form-check">
@@ -353,7 +350,7 @@
               </a>
              </li>
              <li class="list-inline-item">
-              <a href="category.html">
+              <a href="">
                <i class="fa fa-calendar">
                </i>
                in Stock / Out of Stock
@@ -398,7 +395,7 @@
        <nav aria-label="Page navigation example">
         <ul class="pagination">
          <li class="page-item">
-          <a aria-label="Previous" class="page-link" href="category.html">
+          <a aria-label="Previous" class="page-link" href="">
            <span aria-hidden="true">
             &laquo;
            </span>
@@ -408,22 +405,22 @@
           </a>
          </li>
          <li class="page-item">
-          <a class="page-link" href="category.html">
+          <a class="page-link" href="">
            1
           </a>
          </li>
          <li class="page-item active">
-          <a class="page-link" href="category.html">
+          <a class="page-link" href="">
            2
           </a>
          </li>
          <li class="page-item">
-          <a class="page-link" href="category.html">
+          <a class="page-link" href="">
            3
           </a>
          </li>
          <li class="page-item">
-          <a aria-label="Next" class="page-link" href="category.html">
+          <a aria-label="Next" class="page-link" href="">
            <span aria-hidden="true">
             &raquo;
            </span>
@@ -502,7 +499,7 @@
        </h4>
        <ul>
         <li>
-         <a href="category.html">
+         <a href="">
           Category
          </a>
         </li>

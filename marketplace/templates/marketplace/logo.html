@@ -3,8 +3,7 @@
 {% block content %}
   <section class="advt-post bg-gray py-5">
    <div class="container">
-    <form action="{% url 'ondemand' 'framed' %}" method="POST">
-	 {% csrf_token %}
+    <form action="#!" method="POST">
      <!-- Post Your ad start -->
      <fieldset class="border border-gary px-3 px-md-4 py-4 mb-5">
       <div class="row">
@@ -17,26 +16,26 @@
         <h6 class="font-weight-bold pt-4 pb-1">
          Title:
         </h6>
-        <input name="title" class="form-control bg-white" placeholder="Ad title go There" required="" type="text"/>
+        <input class="form-control bg-white" placeholder="Ad title go There" required="" type="text"/>
         <h6 class="font-weight-bold pt-4 pb-1">
 		 Size:
         </h6>
         <div class="row px-3">
          <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
-          <input id="a5" name="size" required="" type="radio" value="A5"/>
-          <label class="py-2" for="a5">
+          <input id="business" name="itemName" required="" type="radio" value="business"/>
+          <label class="py-2" for="business">
            A5
           </label>
          </div>
          <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
-          <input id="a4" name="size" required="" type="radio" value="A4"/>
-          <label class="py-2" for="a4">
+          <input id="personal" name="itemName" required="" type="radio" value="personal"/>
+          <label class="py-2" for="personal">
            A4
           </label>
          </div>
          <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
-          <input id="a3" name="size" required="" type="radio" value="A3"/>
-          <label class="py-2" for="a3">
+          <input id="business" name="itemName" required="" type="radio" value="business"/>
+          <label class="py-2" for="business">
            A3
           </label>
          </div>
@@ -44,13 +43,13 @@
         <h6 class="font-weight-bold pt-4 pb-1">
          Description:
         </h6>
-        <textarea class="form-control bg-white" id="description" name="description" placeholder="Write a brief description of the artwork you want us to make" required="" rows="7"></textarea>
+        <textarea class="form-control bg-white" id="" name="" placeholder="Write a brief description of the artwork you want us to make" required="" rows="7"></textarea>
        </div>
        <div class="col-lg-6">
         <h6 class="font-weight-bold pt-4 pb-1">
          Select Category:
         </h6>
-        <select class="form-control w-100 bg-white" id="inputGroupSelect" name="category">
+        <select class="form-control w-100 bg-white" id="inputGroupSelect" name="">
          <option value="1">
           Select category
          </option>
@@ -73,7 +72,7 @@
          </h6>
          <div class="row px-3 text-center">
           <div class="col-lg-6 rounded my-2 px-0">
-           <h5 id="priceTag" class="text-success">500.00 DZD  -   2000.00 DZD</h5>
+           <h5 class="text-success">0.00 DZD</h5>
           </div>
          </div>
         </div>
@@ -263,7 +262,7 @@
 		const payload = new FormData();
 		payload.append('file', file);
 		const req = new XMLHttpRequest();
-		req.open('POST', "{% url 'upload' %}");
+		req.open('POST', "https://httpbin.org/post");
 		req.upload.addEventListener('progress', function(e) {
 			const percentComplete = (e.loaded / e.total) * 100;
 			progress.value = percentComplete;

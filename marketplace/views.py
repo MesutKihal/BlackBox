@@ -4,7 +4,9 @@ from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import LogUser
+from django.http import JsonResponse
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
 import re
 import json
 
@@ -80,17 +82,25 @@ def about(request):
 
 # On Demand
 def ondemand(request, page):
+    context = {}
+    with open("marketplace/static/json/Wilaya_Of_Algeria.json", "rb") as jsonFile:
+        data = json.load(jsonFile)
+        context['wilayas'] = data
+    with open("marketplace/static/json/Commune_Of_Algeria.json", "rb") as jsonFile:
+        data = json.load(jsonFile)
+        context['communes'] = data
     if page == "framed":
-        context = {}
-        with open("marketplace/static/json/Wilaya_Of_Algeria.json", "rb") as jsonFile:
-            data = json.load(jsonFile)
-            context['wilayas'] = data
-        with open("marketplace/static/json/Commune_Of_Algeria.json", "rb") as jsonFile:
-            data = json.load(jsonFile)
-            context['communes'] = data
-        return render(request, "marketplace/framed.html", context)
+        if request.POST:
+            print(request.POST)
+            return render(request, "marketplace/framed.html", context)
+        else:
+            return render(request, "marketplace/framed.html", context)
     else:
         return render(request, "marketplace/logo.html")
+
+# Services
+def services(request):
+    return
 
 # Login Page
 def login(request):
@@ -158,3 +168,16 @@ def logout(request):
     auth_logout(request)
     return redirect("/")
 
+@csrf_exempt
+def search(request, q, category, price, filterBy):
+    return 
+
+
+@csrf_exempt
+def upload(request):
+    if request.method == "POST":
+        print(request.FILES)
+        response = "File uploaded successfully"
+    else:
+        response = f"Request method: {request.method}"
+    return JsonResponse(response, safe=False)
