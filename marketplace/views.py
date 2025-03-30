@@ -36,10 +36,10 @@ def main(request):
                          iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
                          iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
                          iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),],
-                "categories": [{"category": category("Framed Art", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCk96LIp6HYuAf_-5mFENMpvzhCH9Bvn29Jw&s"), "subs": [subcategory("canvas"), subcategory("photography"), subcategory("drawing"), subcategory("vibrant")]},
-                               {"category": category("Logos", "https://static.vecteezy.com/system/resources/previews/047/656/219/non_2x/abstract-logo-design-for-any-corporate-brand-business-company-vector.jpg"), "subs": [subcategory("lettermark"), subcategory("pictorial marks"), subcategory("abstract"), subcategory("mascot"), subcategory("emblem")]},
-                               {"category": category("Clips", "https://ultahost.com/blog/wp-content/uploads/2022/06/how-to-make-a-video-sharing-platform-1.png"), "subs": [subcategory("Youtube"), subcategory("Instagram reels"), subcategory("TikTok")]},
-                               {"category": category("Pictures", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNbkECXtEG_6-RV7CSNgNoYUGZE-JCliYm9g&s"), "subs": [subcategory("horizantal"), subcategory("vertical"), subcategory("panoramic")]},]
+                "categories": [{"category": category("Framed Art", "/static/images/categories/framed-art.webp"), "subs": [subcategory("canvas"), subcategory("photography"), subcategory("drawing"), subcategory("vibrant")]},
+                               {"category": category("Logos", "/static/images/categories/logo.avif"), "subs": [subcategory("lettermark"), subcategory("pictorial marks"), subcategory("abstract"), subcategory("mascot"), subcategory("emblem")]},
+                               {"category": category("Clips", "/static/images/categories/video.webp"), "subs": [subcategory("Youtube"), subcategory("Instagram reels"), subcategory("TikTok")]},
+                               {"category": category("Pictures", "/static/images/categories/picture.jpg"), "subs": [subcategory("horizantal"), subcategory("vertical"), subcategory("panoramic")]},]
                 }
     return render(request, 'marketplace/index.html', context)
 

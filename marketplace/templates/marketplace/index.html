@@ -138,7 +138,7 @@
   <!--===============================
 =            Hero Area            =
 ================================-->
-  <section class="hero-area bg-1 text-center overly">
+  <section id="bg-1" class="hero-area bg-1 text-center overly">
    <!-- Container Start -->
    <div class="container">
     <div class="row">
@@ -313,7 +313,7 @@
 		<div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6">
 			<div class="category-block">
 				<div class="header">
-					<img style="width: 80%;" src="{{ temp.category.image }}" alt="{{ temp.category.title }}">
+					<img class="category-img" src="{{ temp.category.image }}" alt="{{ temp.category.title }}">
 					<h4>{{ temp.category.title }}</h4>
 				</div>
 				<ul class="category-list">
@@ -388,27 +388,22 @@
      <div class="col-lg-2 offset-lg-1 col-md-3 col-6 mb-4 mb-lg-0">
       <div class="block">
        <h4>
-        Site Pages
-       </h4>
-       <ul>
+		Contact	& Information
+	   </h4>
+	   <ul>
         <li>
-         <a href="dashboard-my-ads.html">
-          My Ads
+         <a href="">
+          Contact
          </a>
         </li>
         <li>
-         <a href="dashboard-favourite-ads.html">
-          Favourite Ads
+         <a href="">
+          About Us
          </a>
         </li>
         <li>
-         <a href="dashboard-archived-ads.html">
-          Archived Ads
-         </a>
-        </li>
-        <li>
-         <a href="dashboard-pending-ads.html">
-          Pending Ads
+         <a href="">
+          Sell Your Product
          </a>
         </li>
         <li>
@@ -423,31 +418,16 @@
      <div class="col-lg-2 col-md-3 offset-md-1 offset-lg-0 col-6 mb-4 mb-md-0">
       <div class="block">
        <h4>
-        Admin Pages
+        Admin
        </h4>
        <ul>
         <li>
-         <a href="category.html">
-          Category
+         <a href="">
+          Team
          </a>
         </li>
         <li>
-         <a href="single.html">
-          Single Page
-         </a>
-        </li>
-        <li>
-         <a href="store.html">
-          Store Single
-         </a>
-        </li>
-        <li>
-         <a href="single-blog.html">
-          Single Post
-         </a>
-        </li>
-        <li>
-         <a href="blog.html">
+         <a href="">
           Blog
          </a>
         </li>
@@ -567,6 +547,13 @@ Essential Scripts
 	<!-- {% for item in items %} -->
 		<!-- featuredSlide.appendChild(productCard("{{ item.title }}", {{ item.price }}, "{{ item.image }}", "{{ item.category }}", "{{ item.description }}")) -->
 	<!-- {% endfor %} -->
+	
+	const el = document.querySelector("#bg-1");
+
+	el.addEventListener("mousemove", (e) => {
+	  el.style.backgroundPositionX = -e.offsetX + "px";
+	  el.style.backgroundPositionY = -e.offsetY + "px";
+	});
   </script>
  </body>
 </html>
