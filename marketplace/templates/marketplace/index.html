@@ -153,39 +153,20 @@
         <br/>
         personalized artwork, and sleek vector prints perfect for any space
        </p>
-       <div class="short-popular-category-list text-center">
-        <h2>
-         Popular Category
-        </h2>
-        <ul class="list-inline">
-         <li class="list-inline-item">
-          <a href="category.html">
-           <i class="fa fa-picture-o" aria-hidden="true">
-           </i>
-           Framed Art
-          </a>
-         </li>
-         <li class="list-inline-item">
-          <a href="category.html">
-           <i class="fa fa-mobile">
-           </i>
-           On Demand
-          </a>
-         </li>
-         <li class="list-inline-item">
-          <a href="category.html">
-          <i class="fa fa-play" aria-hidden="true"></i>
-           Clips
-          </a>
-         </li>
-         <li class="list-inline-item">
-          <a href="category.html">
-           <i class="fa fa-pencil-square" aria-hidden="true"></i>
-           Logos
-          </a>
-         </li>
-        </ul>
-       </div>
+	   <div class="all-category-div">
+		 <div class="category-box top-left">
+			<i class="fa fa-paint-brush" aria-hidden="true"></i>
+			Wall & Desk artwork
+		 </div>
+		 <div class="category-box top-center">
+			<i class="fa fa-picture-o" aria-hidden="true"></i>
+			Free Stock Videos & Images
+		 </div>
+		 <div class="category-box top-right">
+			<i class="fa fa-font-awesome" aria-hidden="true"></i>
+			Personalized Logos
+		 </div>
+	   </div>
       </div>
       <!-- Advance Search -->
       <div class="advance-search">
@@ -551,8 +532,9 @@ Essential Scripts
 	const el = document.querySelector("#bg-1");
 
 	el.addEventListener("mousemove", (e) => {
-	  el.style.backgroundPositionX = -e.offsetX + "px";
-	  el.style.backgroundPositionY = -e.offsetY + "px";
+	  el.style.backgroundPositionX = -e.clientX + "px";
+	  el.style.backgroundPositionY = -e.clientY + "px";
+	  console.log(`${e.clientX}, ${e.clientY}`);
 	});
   </script>
  </body>
