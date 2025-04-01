@@ -66,7 +66,10 @@ def store(request):
     # data = {}
     # return JsonResponse(data, safe=false)
     
-    
+# Admin Page
+def admin(request):
+    return render(request, 'marketplace/admin.html')
+ 
 # Login Page
 def login(request):
     return render(request, 'marketplace/login.html')
