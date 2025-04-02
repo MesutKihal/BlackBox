@@ -1,6 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class UserProfile(models.Model):
+    user = models.ForeignKey(User, related_name="user_profile", on_delete = models.CASCADE)
+    image = models.ImageField("media/img/profiles")
+    
+    def __str__(self):
+        return self.user
+    
 class Category(models.Model):
     title = models.CharField(max_length=255)
     image = models.ImageField(upload_to = "media/img/categories")
@@ -31,7 +38,44 @@ class Item(models.Model):
 class Item_image(models.Model):
     abbr = models.CharField(max_length=255)
     item = models.ForeignKey(Item, related_name="items_images", on_delete = models.CASCADE)
-    file = models.ImageField(upload_to = "media/img/products")
+    file = models.ImageField(upload_to = "media/img/items")
     
     def __str__(self):
         return self.abbr
+
+class Purchase(models.Model):
+    user = models.ForeignKey(User, related_name="purchase_user", on_delete = models.CASCADE)
+    item = models.ForeignKey(Item, related_name="purchase_item", on_delete = models.CASCADE)
+    delivary = models.CharField(max_length=255)
+    date = models.DateTimeField(auto_now_add=True)
+    
+    def __str__(self):
+        return self.user
+        
+class Request(models.Model):
+    user = models.ForeignKey(User, related_name="request_user", on_delete = models.CASCADE)
+    item_title = models.CharField(max_length=255, blank=False)
+    item_size = models.CharField(max_length=255, blank=False)
+    item_description = models.CharField(max_length=255, blank=False)
+    client_fullname = models.CharField(max_length=255, blank=False)
+    client_phone_number = models.CharField(max_length=255, blank=False)
+    client_email = models.CharField(max_length=255, blank=False)
+    client_address = models.CharField(max_length=255, blank=False)
+    client_location = models.CharField(max_length=255, blank=False)
+    
+    def __str__(self):
+        return f"{self.user} - {self.item_title} - {self.client_location}"
+        
+class RequestFile(models.Model):
+    request = models.ForeignKey(Request, related_name="request_file", on_delete = models.CASCADE)
+    file = models.FileField(upload_to="media/request_files")
+    
+    def __str__(self):
+        return self.order
+        
+class Service(models.Model):
+    user = models.ForeignKey(User, related_name="service_user", on_delete = models.CASCADE)
+    file = models.FileField(upload_to="media/service_files")
+    
+    def __str__(self):
+        return self.file
