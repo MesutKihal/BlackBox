@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.contrib.auth import login as auth_login, logout as auth_logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from .forms import LogUser
+from .forms import LogUser, AddUser
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
@@ -59,25 +59,51 @@ def store(request):
                          iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
                          iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),]}
     return render(request, 'marketplace/store.html', context)
-    
 
-# @csrf_exempt
-# def products(request, category, page):
-    # data = {}
-    # return JsonResponse(data, safe=false)
     
 # Admin Page
 def admin(request):
     return render(request, 'marketplace/admin.html')
- 
+    
+def requests(request):
+    context = {'requests': [{
+                            'id': '4654',
+                            'user': 'bobby',
+                            'name': 'Canvas Painting',
+                            'image': '',
+                            'date': 'April 4, 2025',
+                            'location': 'Zighoud Youcef, Constantine',
+                            'category': 'A4 Canvas',
+                            'status': 'pending',
+                           },
+                          ]
+              }    
+    return render(request, 'marketplace/requests.html', context)
+
+def view_request(request, id):
+    context = {'id': id}
+    return render(request, 'marketplace/view_request.html', context)
+
+def products(request):    
+    return render(request, 'marketplace/products.html')
+
+
+def stats(request):    
+    return render(request, 'marketplace/stats.html')
+
+def media(request):    
+    return render(request, 'marketplace/media.html')
+
+def users(request):    
+    return render(request, 'marketplace/users.html')
+    
+def settings(request):    
+    return render(request, 'marketplace/settings.html')
+
 # Login Page
 def login(request):
     return render(request, 'marketplace/login.html')
-       
-# Register Page
-def signup(request):
-    return render(request, 'marketplace/register.html')
-    
+ 
 # About Page
 def about(request):
     return render(request, 'marketplace/about-us.html')
@@ -132,7 +158,7 @@ def login(request):
         form = LogUser()
     return render(request, 'marketplace/login.html', {'form': form})
 
-
+# Register Page
 def signup(request):
     if request.method == "POST":
         form = AddUser(request.POST)
@@ -164,7 +190,7 @@ def signup(request):
         return redirect("/signup")
     else:
         form = AddUser()
-    return render(request, 'marketplace/signup.html', {'form':form})
+    return render(request, 'marketplace/register.html', {'form':form})
 
 
 def logout(request):

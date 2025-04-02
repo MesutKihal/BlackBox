@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+ <head>
+  <!-- ** Basic Page Needs ** -->
+  <meta charset="utf-8"/>
+  <title>
+   BlackBox | Headquaters
+  </title>
+  <!-- ** Mobile Specific Metas ** -->
+  <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+  <meta content="Agency HTML Template" name="description"/>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
+  <meta content="Messaoud KIHAL" name="author"/>
+  <!-- favicon -->
+  <link href="{% static 'images/favicon.jpg'%}" rel="shortcut icon"/>
+  <!-- 
+  Essential stylesheets
+  =====================================-->
+  <link href="{% static 'plugins/bootstrap/bootstrap.min.css'%}" rel="stylesheet"/>
+  <link href="{% static 'plugins/bootstrap/bootstrap-slider.css'%}" rel="stylesheet"/>
+  <link href="{% static 'plugins/font-awesome/css/font-awesome.min.css'%}" rel="stylesheet"/>
+  <link href="{% static 'plugins/slick/slick.css'%}" rel="stylesheet"/>
+  <link href="{% static 'plugins/slick/slick-theme.css'%}" rel="stylesheet"/>
+  <link href="{% static 'plugins/jquery-nice-select/css/nice-select.css'%}" rel="stylesheet"/>
+  <link href="{% static 'css/style.css'%}" rel="stylesheet"/>
+ </head>
+ <body class="body-wrapper">
+  <header>
+   <div class="container">
+    <div class="row">
+     <div class="col-md-10">
+      <nav class="navbar navbar-expand-lg navbar-light navigation d-flex justify-content-center">
+       <a class="navbar-brand" href="index.html">
+        <img alt="" src="{% static 'images/BlackBox.png'%}"/>
+       </a>
+      </nav>
+     </div>
+	 <div class="col-md-2 d-flex justify-content-center align-items-center">
+		<a href="" class="text-primary" style="font-size: 30px;">
+			<i class="fa fa-bell" aria-hidden="true"></i>
+		</a>
+	 </div>
+    </div>
+   </div>
+  </header>
+  <!--==================================
+=            User Profile            =
+===================================-->
+  {% block content %}
+  {% endblock %}
+   <!-- Container End -->
+   <!-- To Top -->
+   <div class="scroll-top-to">
+    <i class="fa fa-angle-up">
+    </i>
+   </div>
+
+  <!-- 
+Essential Scripts
+=====================================-->
+  <script src="{% static 'plugins/jquery/jquery.min.js'%}">
+  </script>
+  <script src="{% static 'plugins/bootstrap/popper.min.js'%}">
+  </script>
+  <script src="{% static 'plugins/bootstrap/bootstrap.min.js'%}">
+  </script>
+  <script src="{% static 'plugins/bootstrap/bootstrap-slider.js'%}">
+  </script>
+  <script src="{% static 'plugins/tether/js/tether.min.js'%}">
+  </script>
+  <script src="{% static 'plugins/raty/jquery.raty-fa.js'%}">
+  </script>
+  <script src="{% static 'plugins/slick/slick.min.js'%}">
+  </script>
+  <script src="{% static 'plugins/jquery-nice-select/js/jquery.nice-select.min.js'%}">
+  </script>
+  <!-- google map -->
+  <script defer="" src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU'%}">
+  </script>
+  <script defer="" src="{% static 'plugins/google-map/map.js'%}">
+  </script>
+  <script src="{% static 'js/script.js'%}">
+  </script>
+ </body>
+</html>
