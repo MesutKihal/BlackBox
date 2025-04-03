@@ -24,4 +24,5 @@ urlpatterns = [
     path('hq/logout', views.logout, name="hq-l"),
     # API'S URL's
     path('upload/', views.upload, name="upload"),
+    path('search/<str:query>/<str:category>/<str:filterBy>/<int:minPrice>/<int:maxPrice>', views.search, name="search")
 ]

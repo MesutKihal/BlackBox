@@ -45,20 +45,7 @@ def main(request):
 
 # Store Page
 def store(request):
-    class iTem:
-        def __init__(self, title, price, image, category, description):
-            self.title = title
-            self.price = price
-            self.image = image
-            self.category = category
-            self.description = description
-    imAge = "https://static.wikia.nocookie.net/harrypotter/images/5/59/Elder_Wand.png/revision/latest?cb=20241227040818"
-    
-    context = {"items": [iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
-                         iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
-                         iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
-                         iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),]}
-    return render(request, 'marketplace/store.html', context)
+    return render(request, 'marketplace/store.html')
 
     
 # Admin Page
@@ -198,8 +185,22 @@ def logout(request):
     return redirect("/")
 
 @csrf_exempt
-def search(request, q, category, price, filterBy):
-    return 
+def search(request, query, category, filterBy, minPrice, maxPrice):
+    class iTem:
+        def __init__(self, title, price, image, category, description):
+            self.title = title
+            self.price = price
+            self.image = image
+            self.category = category
+            self.description = description
+    imAge = "https://static.wikia.nocookie.net/harrypotter/images/5/59/Elder_Wand.png/revision/latest?cb=20241227040818"
+    data = {
+        'items': [iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
+                  iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
+                  iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
+                  iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),]
+    }
+    return JsonResponse(data, safe=False)
 
 
 @csrf_exempt
