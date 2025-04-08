@@ -16,7 +16,7 @@ urlpatterns = [
     path('hq/', views.admin, name="hq"),
     path('hq/requests', views.requests, name="hq-r"),
     path('hq/request/<str:id>', views.view_request, name="hq-r-v"),
-    path('hq/products', views.products, name="hq-p"),
+    path('hq/products', views.view_products, name="hq-p"),
     path('hq/stats', views.stats, name="hq-st"),
     path('hq/media', views.media, name="hq-m"),
     path('hq/users', views.users, name="hq-u"),
@@ -24,5 +24,6 @@ urlpatterns = [
     path('hq/logout', views.logout, name="hq-l"),
     # API'S URL's
     path('upload/', views.upload, name="upload"),
-    path('search/<str:query>/<str:category>/<str:filterBy>/<int:minPrice>/<int:maxPrice>', views.search, name="search")
+    path('store/get_products', views.products, name="products"),
+    path('store/get_categories', views.get_categories, name="categories"),
 ]

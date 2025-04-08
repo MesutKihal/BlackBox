@@ -131,14 +131,13 @@
      <div class="col-md-12">
       <!-- Advance Search -->
       <div class="advance-search nice-select-white">
-       <form>
         <div class="form-row align-items-center">
-         <div class="form-group col-xl-5 col-lg-4 col-md-6">
+         <div class="form-group col-xl-8 col-lg-6 col-md-12">
           <input class="form-control my-2 my-lg-0" id="inputtext4" placeholder="What are you looking for" type="text"/>
          </div>
          <div class="form-group col-lg-3 col-md-6">
-          <select class="w-100 form-control my-2 my-lg-0">
-           <option>
+          <select id="filter1" class="w-100 form-control my-2 my-lg-0">
+           <option value="0">
             FilterBy
            </option>
            <option value="1">
@@ -147,18 +146,12 @@
            <option value="2">
             Lowest Price
            </option>
-           <option value="4">
+           <option value="3">
             Highest Price
            </option>
           </select>
          </div>
-         <div class="form-group col-xl-2 col-lg-3 col-md-6">
-          <button class="btn btn-success active w-100" type="submit">
-           Search Now
-          </button>
-         </div>
         </div>
-       </form>
       </div>
      </div>
     </div>
@@ -183,73 +176,33 @@
     <div class="row">
      <div class="col-lg-3 col-md-4">
       <div class="category-sidebar">
-       <div class="widget category-list">
-        <h4 class="widget-header">
-         All Category
+	   <div class="widget category-list">
+		<h4 class="widget-header">
+         Categories
         </h4>
-        <ul class="category-list">
-         <li>
-          <a href="">
-           Framed Art
-           <span>
-            100
-           </span>
-          </a>
-         </li>
-         <li>
-          <a href="">
-           Logos
-           <span>
-            233
-           </span>
-          </a>
-         </li>
-         <li>
-          <a href="">
-           Clips
-           <span>
-            183
-           </span>
-          </a>
-         </li>
-         <li>
-          <a href="">
-           Pictures
-           <span>
-            343
-           </span>
-          </a>
-         </li>
-        </ul>
-       </div>
-       <div class="widget product-shorting">
-        <h4 class="widget-header">
-         category
-        </h4>
-		{% for sub in subs %}
-        <div class="form-check">
-         <label class="form-check-label">
-          <input class="form-check-input" type="checkbox" value=""/>
-          {{ sub }}
-         </label>
-        </div>
-		{% endfor %}
+		<select id="categorySelect" class="w-100">
+		 <option vlaue="0">...</option>
+		 <option value="Framed Art">Framed Art</option>
+		 <option value="Logo">Logo</option>
+		 <option value="Pictures">Pictures</option>
+		 <option value="Clips">Clips</option>
+		</select>
+	   </div>
+       <div id="subCategories" class="widget category-list" style="display: none;">
+		
        </div>
        <div class="widget filter">
         <h4 class="widget-header">
          Show Produts
         </h4>
-        <select>
-         <option>
-          Popularity
-         </option>
+        <select id="filter2">
          <option value="1">
           Top rated
          </option>
          <option value="2">
           Lowest Price
          </option>
-         <option value="4">
+         <option value="3">
           Highest Price
          </option>
         </select>
@@ -259,10 +212,10 @@
          Price Range
         </h4>
         <div class="block">
-         <input class="range-track w-100" data-slider-max="5000" data-slider-min="0" data-slider-step="5" data-slider-value="[0,5000]" type="text"/>
+         <input id="Price" class="range-track w-100" data-slider-max="5000" data-slider-min="500" data-slider-step="5" data-slider-value="[500,5000]" type="text"/>
          <div class="d-flex justify-content-between mt-2">
           <span class="value">
-           $10 - $5000
+           500 DZD -  5000 DZD
           </span>
          </div>
         </div>
@@ -316,7 +269,7 @@
       </div>
       <div class="product-grid-list">
        <div id="product-container" class="row mt-30">
-
+		
        </div>
       </div>
       <div class="pagination justify-content-center">
@@ -377,7 +330,7 @@
        <!-- footer logo -->
        <img alt="logo" src="{% static 'images/BlackBox.png'%}"/>
        <!-- description -->
-       <p class="alt-color">
+       <p>
         Explore our vibrant collection of framed A4 photos, featuring bold designs, 
         <br/>
         personalized artwork, and sleek vector prints perfect for any space
@@ -388,27 +341,22 @@
      <div class="col-lg-2 offset-lg-1 col-md-3 col-6 mb-4 mb-lg-0">
       <div class="block">
        <h4>
-        Site Pages
-       </h4>
-       <ul>
+		Contact	& Information
+	   </h4>
+	   <ul>
         <li>
-         <a href="dashboard-my-ads.html">
-          My Ads
+         <a href="">
+          Contact
          </a>
         </li>
         <li>
-         <a href="dashboard-favourite-ads.html">
-          Favourite Ads
+         <a href="">
+          About Us
          </a>
         </li>
         <li>
-         <a href="dashboard-archived-ads.html">
-          Archived Ads
-         </a>
-        </li>
-        <li>
-         <a href="dashboard-pending-ads.html">
-          Pending Ads
+         <a href="">
+          Sell Your Product
          </a>
         </li>
         <li>
@@ -423,31 +371,16 @@
      <div class="col-lg-2 col-md-3 offset-md-1 offset-lg-0 col-6 mb-4 mb-md-0">
       <div class="block">
        <h4>
-        Admin Pages
+        <a style="text-decoration: none;color: white;" href="{% url 'hq' %}">Admin</a>
        </h4>
        <ul>
         <li>
          <a href="">
-          Category
+          Team
          </a>
         </li>
         <li>
-         <a href="single.html">
-          Single Page
-         </a>
-        </li>
-        <li>
-         <a href="store.html">
-          Store Single
-         </a>
-        </li>
-        <li>
-         <a href="single-blog.html">
-          Single Post
-         </a>
-        </li>
-        <li>
-         <a href="blog.html">
+         <a href="">
           Blog
          </a>
         </li>
@@ -495,9 +428,14 @@
          var CurrentYear = new Date().getFullYear()
               document.write(CurrentYear)
         </script>
-        . Designed &amp; Developed by
-        <a class="text-white" href="https://themefisher.com">
-         Themefisher
+        .Owned By 
+		<a class="text-white" href="">
+			Ayoub Bahri
+		</a>
+		</br>
+		Designed &amp; Developed by
+        <a class="text-white" href="https://mesutkihal.github.io">
+			Messaoud Kihal
         </a>
        </p>
       </div>
@@ -554,10 +492,12 @@ Essential Scripts
   <script src="{% static 'js/store.js' %}">
   </script>
   <!-- google map -->
-  <script defer="" src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU'%}">
-  </script>
-  <script defer="" src="{% static 'plugins/google-map/map.js'%}">
-  </script>
+  <!-- <script defer="" src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU'%}"> -->
+  <!-- </script> -->
+  <!-- <script defer="" src="{% static 'plugins/google-map/map.js'%}"> -->
+  <!-- </script> -->
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+  <script src="{% static 'js/store.js' %}"></script>
   <script src="{% static 'js/script.js'%}">
   </script>
  </body>

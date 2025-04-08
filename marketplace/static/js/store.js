@@ -1,58 +1,155 @@
-document.addEventListner("DOMContentLoaded", function() => {
-	const productContainer = document.getElementById("product-container");
-	async function getData() {
-		let query = document.getElementById('inputtext4').value;
-		let category = '';
-		let filterBy = document.get // TO DO
-		const response = await fetch(`search/${query}/${category}/${filterBy}/${minPrice}/${maxPrice}`, {
-			method: 'POST',
-			headers: {
-			  'Content-Type': 'application/json',
-			  // 'X-CSRFToken': getCSRFToken()
-			},
-			body: JSON.stringify({query: '',
-								  category: '',
-								  filterBy: '',
-								  minPrice: '',
-								  maxPrice: ''})
-		});
-
-	  const data = await response.json();
-	  return data;
+document.addEventListener("DOMContentLoaded", (event) => {
+	// Get products from database
+	async function getProducts() {
+		try {
+			const response = await fetch("get_products");
+			if (!response.ok) {
+				throw new Error(`Response status: ${response.status}`);
+			}
+			return response.json();
+		} catch (error) {
+			console.error(error.message);
+			return;
+		}
 	}
+	// Get categories from database
+	async function getCategories() {
+		try {
+			const response = await fetch("get_categories");
+			if (!response.ok) {
+				throw new Error(`Response status: ${response.status}`)
+			}
+			return response.json();
+		} catch (error) {
+			console.error(error.message);
+			return;
+		}
+	}
+	// Check for checked checkboxes ""A lot of checks hhh""
+	function categoryFilter() {
+		let filters = document.getElementsByName('categoryFilter');
+		let isChecked = []
+		filters.forEach(filter => {
+			if (filter.checked == true)
+			{
+				isChecked.push(filter.id);
+			}
+		})
+		return isChecked;
+	}
+	// Update the products view
+	function updateProducts() {
+		let categories = categoryFilter();
+		let values = priceFilter.value.split(',');
+		// Filter without search
+		if (input.value == "")
+		{
+			list.innerHTML = '';
+			// products.length = 0;
+			// products.push(...originalProducts);
+			products.forEach(product => {
+				if (categories.length == 0) {
+					if (Number(values[0]) <= product.price && product.price <= Number(values[1]))
+					{
+						list.appendChild(createProductCard(product));
+					}
+				} else {
+					for (var i = 0; i < categories.length; i++)
+					{
+						if (product.category == categories[i] && Number(values[0]) <= product.price && product.price <= Number(values[1]))
+						{
+							list.appendChild(createProductCard(product));
+							break;
+						}
+					} 
+				}
+			})
+		} // Search & Filter
+		else {
+			let searchResult = fuse.search(input.value);
+			list.innerHTML = '';
+			let html = searchResult.map(result => {
+				const card = createProductCard(result.item)
+				if (categories.length == 0) {
+					if (Number(values[0]) <= result.item.price && result.item.price <= Number(values[1]))
+					{
+						list.appendChild(card);
+					}
+				} else {
+					for (var i = 0; i < categories.length; i++)
+					{
+						if (result.item.category == categories[i] && Number(values[0]) <= result.item.price && result.item.price <= Number(values[1]))
+						{
+							list.appendChild(card);
+							break;
+						}
+					} 
+				}
+				
+			}).join('');
+		}
+	}
+	// Update Checkboxes
+	function updateCheckBoxes() {
+		if (categorySelect.value == "0")
+		{
+			return;
+		} else {
+			subCategories.style.display = "block";
+			subCategories.innerText = "";
+			categories.forEach(category => {
+				if (category.title == categorySelect.value)
+				{
+					subCategories.appendChild(createCategoryCheckbox(category.subcategories));
+				}
+			})
+		}
+	}
+	// Listen to the search input and category filter
+	let input = document.getElementById('inputtext4');
+	let list = document.querySelector('#product-container');
+	let categoryFilters = document.getElementsByName('categoryFilter');
+	let categorySelect = document.getElementById("categorySelect");
+	let subCategories = document.getElementById("subCategories");
+	let priceFilter = document.getElementById("Price");
+	let products = [];
+	let fuse = new Fuse()
+	let originalProducts = []
+	let categories = []
 	
-	let items = getData();
-	
-	// Append items to container
-	items.forEach(item => {
-		productContainer.appendChild(createProductCard(item));
-	});
-	
-	// Filter out Items
-	const searchInput = document.getElementById("search");
-    const categoryFilter = document.getElementById("category");
-    const productContainer = document.getElementById("product-container");
-
-    function filterProducts() {
-        let searchQuery = searchInput.value.toLowerCase();
-        let selectedCategory = categoryFilter.value;
-
-        productContainer.innerHTML = ""; // Clear previous results
-
-        items.forEach(item => {
-            if (
-                (item.title.toLowerCase().includes(searchQuery) || item.description.toLowerCase().includes(searchQuery)) &&
-                (selectedCategory === "all" || item.category === selectedCategory)
-            ) {
-                productContainer.appendChild(createProductCard(item)); // Use your function to create cards
-            }
-        });
-    }
-
-    searchInput.addEventListener("input", filterProducts);
-    categoryFilter.addEventListener("change", filterProducts);
+	getCategories().then(data => {
+		categories = data["categories"];
+		categorySelect.onchange = (event) => {
+			updateCheckBoxes();
+			categoryFilters = document.getElementsByName('categoryFilter');
+			categoryFilters.forEach(filter => {
+				filter.onchange = (event) => {
+					updateProducts();
+				}			
+			})
+		}
+	})
+	getProducts().then(data => {
+		products = data['items'];
+		updateProducts();
+		originalProducts = [...products];
+		fuse = new Fuse(products, {
+			keys: ['title'],
+			threshold: 0.1
+		});	
+		
+		input.addEventListener('input', () => {
+			updateProducts();
+		});
+		
+		priceFilter.onchange = (event) => {
+			updateProducts();
+		}
+		
+	})	
 })
 
+// Create product card 
 function createProductCard(item) {
 	const colDiv = document.createElement("div");
 	colDiv.classList.add("col-lg-4", "col-md-6");
@@ -71,7 +168,7 @@ function createProductCard(item) {
 	priceDiv.textContent = item.price;
 
 	const link = document.createElement("a");
-	link.href = "single.html";
+	link.href = "";
 
 	const img = document.createElement("img");
 	img.classList.add("card-img-top", "img-fluid");
@@ -142,7 +239,6 @@ function createProductCard(item) {
 
 	ratingsDiv.appendChild(ratingsUl);
 
-	// Append elements in proper hierarchy
 	cardBodyDiv.appendChild(title);
 	cardBodyDiv.appendChild(productMetaUl);
 	cardBodyDiv.appendChild(descriptionP);
@@ -155,4 +251,33 @@ function createProductCard(item) {
 	colDiv.appendChild(productItemDiv);
 
 	return colDiv;
+}
+
+// Create a category checkbox
+function createCategoryCheckbox(categories) {
+	const containerDiv = document.createElement('div');
+	containerDiv.classList.add('d-flex', 'align-items-start', 'flex-column');
+
+	categories.forEach(category => {
+	  const formCheckDiv = document.createElement('div');
+	  formCheckDiv.classList.add('form-check');
+
+	  const checkboxInput = document.createElement('input');
+	  checkboxInput.classList.add('form-check-input');
+	  checkboxInput.type = 'checkbox';
+	  checkboxInput.name = 'categoryFilter';
+	  checkboxInput.id = category.id;
+
+	  const label = document.createElement('label');
+	  label.classList.add('form-check-label', 'text-dark');
+	  label.setAttribute('for', category.id);
+	  label.textContent = category.label;
+
+	  formCheckDiv.appendChild(checkboxInput);
+	  formCheckDiv.appendChild(label);
+
+	  containerDiv.appendChild(formCheckDiv);
+	});
+	
+	return containerDiv;
 }

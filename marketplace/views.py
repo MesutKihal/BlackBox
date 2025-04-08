@@ -71,7 +71,7 @@ def view_request(request, id):
     context = {'id': id}
     return render(request, 'marketplace/view_request.html', context)
 
-def products(request):    
+def view_products(request):    
     return render(request, 'marketplace/products.html')
 
 
@@ -185,23 +185,25 @@ def logout(request):
     return redirect("/")
 
 @csrf_exempt
-def search(request, query, category, filterBy, minPrice, maxPrice):
-    class iTem:
-        def __init__(self, title, price, image, category, description):
-            self.title = title
-            self.price = price
-            self.image = image
-            self.category = category
-            self.description = description
+def products(request):
     imAge = "https://static.wikia.nocookie.net/harrypotter/images/5/59/Elder_Wand.png/revision/latest?cb=20241227040818"
     data = {
-        'items': [iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
-                  iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
-                  iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),
-                  iTem("The Elder Wand", 2000000, imAge, "Magic", "The strongest wand ever"),]
+        'items': [{"title": "The Elder Wand", "price": 5000, "image": imAge, "category": "Magic", "description": "The strongest wand ever"},
+                  {"title": "The Younger Wand", "price": 1500, "image": imAge, "category": "Magic", "description": "The strongest wand ever"},
+                  {"title": "The Wand", "price": 2000, "image": imAge, "category": "Magic", "description": "The strongest wand ever"},
+                  {"title": "The Great Wand", "price": 4500, "image": imAge, "category": "Magic", "description": "The strongest wand ever"},]
     }
     return JsonResponse(data, safe=False)
 
+
+@csrf_exempt
+def get_categories(request):
+    data = {
+        "categories": [
+            {"title": "Framed Art", "subcategories": [{"id": 0, "label": "mylbl0"}]}
+        ]
+    }
+    return JsonResponse(data, safe=False)
 
 @csrf_exempt
 def upload(request):
