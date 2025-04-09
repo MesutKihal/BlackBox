@@ -2361,4 +2361,20 @@ form textarea {
     line-height: 35px;
   }
 }
+.product-card {
+	position: relative;
+	overflow: hidden;
+}
+
+.product-image {
+	transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover .product-image {
+	transform: scale(1.1);
+}
+
+.product-list-item:hover .product-image {
+	transform: scale(1.1);
+}
 /*# sourceMappingURL=style.css.map */

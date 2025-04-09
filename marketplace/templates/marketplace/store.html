@@ -138,7 +138,7 @@
          <div class="form-group col-lg-3 col-md-6">
           <select id="filter1" class="w-100 form-control my-2 my-lg-0">
            <option value="0">
-            FilterBy
+            Show Products
            </option>
            <option value="1">
             Top rated
@@ -181,7 +181,7 @@
          Categories
         </h4>
 		<select id="categorySelect" class="w-100">
-		 <option vlaue="0">...</option>
+		 <option vlaue="0">Select Category</option>
 		 <option value="Framed Art">Framed Art</option>
 		 <option value="Logo">Logo</option>
 		 <option value="Pictures">Pictures</option>
@@ -250,14 +250,14 @@
            Views
           </strong>
           <ul class="list-inline view-switcher">
-           <li class="list-inline-item">
-            <a class="text-info" href="#!" onclick="event.preventDefault();">
+           <li id="viewSwitcher" data-view="grid" class="list-inline-item">
+            <a id="gridView" class="text-primary">
              <i class="fa fa-th-large">
              </i>
             </a>
            </li>
            <li class="list-inline-item">
-            <a href="ad-list-view.html">
+            <a id="listView" class="text-secondary">
              <i class="fa fa-reorder">
              </i>
             </a>
@@ -274,9 +274,9 @@
       </div>
       <div class="pagination justify-content-center">
        <nav aria-label="Page navigation example">
-        <ul class="pagination">
+        <ul id="pagination" class="pagination" data-page="1">
          <li class="page-item">
-          <a aria-label="Previous" class="page-link" href="">
+          <a aria-label="Previous" class="page-link" onclick="page('first-page')">
            <span aria-hidden="true">
             &laquo;
            </span>
@@ -286,22 +286,22 @@
           </a>
          </li>
          <li class="page-item">
-          <a class="page-link" href="">
-           1
+          <a class="page-link" style="display: none;" id="previous" onclick="page('previous-page')">
+           
           </a>
          </li>
          <li class="page-item active">
-          <a class="page-link" href="">
+          <a class="page-link" id="current" onclick="page('current-page')">
+           1
+          </a>
+         </li>
+         <li class="page-item">
+          <a class="page-link" id="next" onclick="page('next-page')">
            2
           </a>
          </li>
          <li class="page-item">
-          <a class="page-link" href="">
-           3
-          </a>
-         </li>
-         <li class="page-item">
-          <a aria-label="Next" class="page-link" href="">
+          <a aria-label="Next" class="page-link" onclick="page('last-page')">
            <span aria-hidden="true">
             &raquo;
            </span>

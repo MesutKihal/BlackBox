@@ -47,18 +47,33 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			list.innerHTML = '';
 			// products.length = 0;
 			// products.push(...originalProducts);
-			products.forEach(product => {
+			paginate(products);
+			products.forEach((product, i) => {
+				let card = createProductCard(product);
+				if (viewSwitcher.dataset.view == "grid")
+				{
+					card = createProductCard(product);
+				} else {
+					card = createProductStrip(product);
+				}
 				if (categories.length == 0) {
+					card.animate([
+						{transform: "translateY(-50px)"},
+						{transform: "translateY(0px)"}
+					], {
+						duration: 500+(i*100),
+						easing: "ease",
+					})
 					if (Number(values[0]) <= product.price && product.price <= Number(values[1]))
 					{
-						list.appendChild(createProductCard(product));
+						list.appendChild(card);
 					}
 				} else {
 					for (var i = 0; i < categories.length; i++)
 					{
 						if (product.category == categories[i] && Number(values[0]) <= product.price && product.price <= Number(values[1]))
 						{
-							list.appendChild(createProductCard(product));
+							list.appendChild(card);
 							break;
 						}
 					} 
@@ -68,8 +83,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		else {
 			let searchResult = fuse.search(input.value);
 			list.innerHTML = '';
-			let html = searchResult.map(result => {
-				const card = createProductCard(result.item)
+			let html = searchResult.map((result, i) => {
+				let card = createProductCard(result.item)
+				if (viewSwitcher.dataset.view == "grid")
+				{
+					card = createProductCard(result.item);
+				} else {
+					card = createProductStrip(result.item);
+				}
+				card.animate([
+						{transform: "translateY(-50px)"},
+						{transform: "translateY(0px)"}
+					], {
+						duration: 500+(i*300),
+						easing: "ease",
+				})
 				if (categories.length == 0) {
 					if (Number(values[0]) <= result.item.price && result.item.price <= Number(values[1]))
 					{
@@ -85,7 +113,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 						}
 					} 
 				}
-				
 			}).join('');
 		}
 	}
@@ -112,11 +139,16 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	let categorySelect = document.getElementById("categorySelect");
 	let subCategories = document.getElementById("subCategories");
 	let priceFilter = document.getElementById("Price");
+	let viewSwitcher = document.getElementById("viewSwitcher");
+	let listView = document.getElementById('listView');
+	let gridView = document.getElementById('gridView');
 	let products = [];
 	let fuse = new Fuse()
 	let originalProducts = []
 	let categories = []
 	
+	
+	// Intializing the category filter
 	getCategories().then(data => {
 		categories = data["categories"];
 		categorySelect.onchange = (event) => {
@@ -129,6 +161,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			})
 		}
 	})
+	
+	// Initializing the fuse search
 	getProducts().then(data => {
 		products = data['items'];
 		updateProducts();
@@ -146,118 +180,204 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			updateProducts();
 		}
 		
+		gridView.onclick = (event) => {
+			if (viewSwitcher.dataset.view == 'list') {
+				switchView();
+				updateProducts();
+			}
+		}
+		listView.onclick = (event) => {
+			if (viewSwitcher.dataset.view == 'grid') {
+				switchView();
+				updateProducts();
+			}
+		}
 	})	
 })
 
-// Create product card 
+// Create product card
 function createProductCard(item) {
-	const colDiv = document.createElement("div");
-	colDiv.classList.add("col-lg-4", "col-md-6");
+    const colDiv = document.createElement("div");
+    colDiv.classList.add("col-lg-4", "col-md-4", "mb-4"); // more compact like Alibaba
 
-	const productItemDiv = document.createElement("div");
-	productItemDiv.classList.add("product-item", "bg-light");
+    const cardDiv = document.createElement("div");
+    cardDiv.classList.add("card", "h-100", "border-0", "shadow", "product-card", "overflow-hidden");
 
-	const cardDiv = document.createElement("div");
-	cardDiv.classList.add("card");
+    // Product image
+    const imgLink = document.createElement("a");
+    imgLink.href = "#";
 
-	const thumbContentDiv = document.createElement("div");
-	thumbContentDiv.classList.add("thumb-content");
+    const img = document.createElement("img");
+    img.classList.add("card-img-top", "img-fluid", "p-3", "product-image");
+    img.src = item.image;
+    img.alt = item.title;
 
-	const priceDiv = document.createElement("div");
-	priceDiv.classList.add("price");
-	priceDiv.textContent = item.price;
+    imgLink.appendChild(img);
+    cardDiv.appendChild(imgLink);
 
-	const link = document.createElement("a");
-	link.href = "";
+    // Card Body
+    const cardBodyDiv = document.createElement("div");
+    cardBodyDiv.classList.add("card-body", "p-2", "text-center");
 
-	const img = document.createElement("img");
-	img.classList.add("card-img-top", "img-fluid");
-	img.src = item.image;
-	img.alt = item.title;
+    // Price
+    const priceDiv = document.createElement("h5");
+    priceDiv.classList.add("fw-bold", "text-success", "mb-2");
+    priceDiv.textContent = item.price;
 
-	link.appendChild(img);
-	thumbContentDiv.appendChild(priceDiv);
-	thumbContentDiv.appendChild(link);
+    // Title
+    const title = document.createElement("h6");
+    title.classList.add("card-title", "mb-1", "text-truncate"); 
+    title.textContent = item.title;
 
-	const cardBodyDiv = document.createElement("div");
-	cardBodyDiv.classList.add("card-body");
+    // Category
+    const category = document.createElement("small");
+    category.classList.add("text-muted", "d-block", "mb-2", "text-truncate");
+    category.textContent = item.category;
 
-	const title = document.createElement("h4");
-	title.classList.add("card-title");
+    // Stock Status
+    const stockStatusDiv = document.createElement("span");
+    stockStatusDiv.classList.add("badge", "bg-success", "mb-2", "mr-2", "fs-6", "p-2");
+    stockStatusDiv.textContent = item.stockStatus || "In Stock"; // Default: "In Stock"
 
-	const titleLink = document.createElement("a");
-	titleLink.href = "#";
-	titleLink.textContent = item.title;
+    // Badges - Best Seller
+    const bestSellerBadge = document.createElement("span");
+    bestSellerBadge.classList.add("badge", "bg-primary", "text-white", "fs-6", "p-2", "mb-2");
+    bestSellerBadge.textContent = "Best Seller"; // You can update this as needed later
 
-	title.appendChild(titleLink);
+    // Ratings - 5 stars by default
+    const ratingsDiv = document.createElement("div");
+    ratingsDiv.classList.add("product-ratings", "mb-2");
 
-	const productMetaUl = document.createElement("ul");
-	productMetaUl.classList.add("list-inline", "product-meta");
+    const ratingsUl = document.createElement("ul");
+    ratingsUl.classList.add("list-inline");
 
-	const categoryLi = document.createElement("li");
-	categoryLi.classList.add("list-inline-item");
+    // Create 5 stars (Font Awesome)
+    for (let i = 0; i < 5; i++) {
+        const starLi = document.createElement("li");
+        starLi.classList.add("list-inline-item", "selected");
+        starLi.innerHTML = '<i class="fa fa-star"></i>';
+        ratingsUl.appendChild(starLi);
+    }
 
-	const categoryLink = document.createElement("a");
-	categoryLink.href = "single.html";
-	categoryLink.innerHTML = `<i class="fa fa-folder-open-o"></i> ${item.category}`;
+    ratingsDiv.appendChild(ratingsUl);
 
-	categoryLi.appendChild(categoryLink);
+    // Button
+    const btn = document.createElement("a");
+    btn.href = "#";
+    btn.classList.add("btn", "btn-sm", "btn-outline-primary", "w-100");
+    btn.textContent = "View Product";
 
-	const stockLi = document.createElement("li");
-	stockLi.classList.add("list-inline-item");
+    // Append everything
+    cardBodyDiv.append(priceDiv, title, category, stockStatusDiv, bestSellerBadge, ratingsDiv, btn);
 
-	const stockLink = document.createElement("a");
-	stockLink.href = "#";
-	stockLink.innerHTML = `<i class="fa fa-calendar"></i> ${item.stockStatus}`;
+    cardDiv.appendChild(cardBodyDiv);
+    colDiv.appendChild(cardDiv);
 
-	stockLi.appendChild(stockLink);
+    return colDiv;
+}
 
-	productMetaUl.appendChild(categoryLi);
-	productMetaUl.appendChild(stockLi);
+// Create Product Strip
+function createProductStrip(item) {
+    const rowDiv = document.createElement("div");
+    rowDiv.classList.add("row", "mb-4", "product-list-item", "shadow", "ml-4");
 
-	const descriptionP = document.createElement("p");
-	descriptionP.classList.add("card-text");
-	descriptionP.textContent = item.description;
+    // Left side: Product Image
+    const colImgDiv = document.createElement("div");
+    colImgDiv.classList.add("col-4", "col-md-3", "p-3");
 
-	const ratingsDiv = document.createElement("div");
-	ratingsDiv.classList.add("product-ratings");
+    const imgLink = document.createElement("a");
+    imgLink.href = "#";
 
-	const ratingsUl = document.createElement("ul");
-	ratingsUl.classList.add("list-inline");
+    const img = document.createElement("img");
+    img.classList.add("img-fluid", "product-image", "list-view-img"); // Add custom class for list view
+    img.src = item.image;
+    img.alt = item.title;
 
-	for (let i = 0; i < 4; i++) {
-		const starLi = document.createElement("li");
-		starLi.classList.add("list-inline-item", "selected");
-		starLi.innerHTML = '<i class="fa fa-star"></i>';
-		ratingsUl.appendChild(starLi);
-	}
+    imgLink.appendChild(img);
+    colImgDiv.appendChild(imgLink);
 
-	const unselectedStarLi = document.createElement("li");
-	unselectedStarLi.classList.add("list-inline-item");
-	unselectedStarLi.innerHTML = '<i class="fa fa-star"></i>';
-	ratingsUl.appendChild(unselectedStarLi);
+    // Right side: Product Details
+    const colDetailsDiv = document.createElement("div");
+    colDetailsDiv.classList.add("col-8", "col-md-9", "p-3", "d-flex", "flex-column", "justify-content-between");
 
-	ratingsDiv.appendChild(ratingsUl);
+    // Card Body
+    const cardBodyDiv = document.createElement("div");
+    cardBodyDiv.classList.add("product-card-body", "d-flex", "flex-column", "h-100"); // Allow expansion to full height
 
-	cardBodyDiv.appendChild(title);
-	cardBodyDiv.appendChild(productMetaUl);
-	cardBodyDiv.appendChild(descriptionP);
-	cardBodyDiv.appendChild(ratingsDiv);
+    // Price
+    const priceDiv = document.createElement("h5");
+    priceDiv.classList.add("fw-bold", "text-success", "mb-2");
+    priceDiv.textContent = item.price;
 
-	cardDiv.appendChild(thumbContentDiv);
-	cardDiv.appendChild(cardBodyDiv);
+    // Title
+    const title = document.createElement("h6");
+    title.classList.add("card-title", "mb-1");
+    title.textContent = item.title;
 
-	productItemDiv.appendChild(cardDiv);
-	colDiv.appendChild(productItemDiv);
+    // Category
+    const category = document.createElement("small");
+    category.classList.add("text-muted", "d-block", "mb-2");
+    category.textContent = item.category;
 
-	return colDiv;
+    // Badges (Best Seller and In Stock)
+    const badgesDiv = document.createElement("div");
+    badgesDiv.classList.add("d-flex", "mb-2"); // Flex container to align badges side by side
+
+    // Stock Status Badge
+    const stockStatusDiv = document.createElement("span");
+    stockStatusDiv.classList.add("badge", "bg-success", "fs-6", "p-1", "mr-2");
+    stockStatusDiv.textContent = item.stockStatus || "In Stock"; // Default: "In Stock"
+
+    // Best Seller Badge
+    const bestSellerBadge = document.createElement("span");
+    bestSellerBadge.classList.add("badge", "bg-primary", "text-white", "fs-6", "p-1");
+    bestSellerBadge.textContent = "Best Seller"; // You can update this as needed later
+
+    // Add badges to badges container
+    badgesDiv.appendChild(stockStatusDiv);
+    badgesDiv.appendChild(bestSellerBadge);
+
+    // Ratings - 5 stars by default
+    const ratingsDiv = document.createElement("div");
+    ratingsDiv.classList.add("product-ratings", "mb-2");
+
+    const ratingsUl = document.createElement("ul");
+    ratingsUl.classList.add("list-inline");
+
+    // Create 5 stars (Font Awesome)
+    for (let i = 0; i < 5; i++) {
+        const starLi = document.createElement("li");
+        starLi.classList.add("list-inline-item", "selected");
+        starLi.innerHTML = '<i class="fa fa-star"></i>';
+        ratingsUl.appendChild(starLi);
+    }
+
+    ratingsDiv.appendChild(ratingsUl);
+
+    // Button
+    const btn = document.createElement("a");
+    btn.href = "#";
+    btn.classList.add("btn", "btn-sm", "btn-outline-primary", "mt-2", "w-50");
+    btn.textContent = "View Product";
+
+    // Append everything
+    cardBodyDiv.append(title, priceDiv, category, badgesDiv, ratingsDiv, btn);
+
+    // Append card body to details div
+    colDetailsDiv.appendChild(cardBodyDiv);
+
+    // Append columns to row
+    rowDiv.appendChild(colImgDiv);
+    rowDiv.appendChild(colDetailsDiv);
+
+    return rowDiv;
 }
 
 // Create a category checkbox
 function createCategoryCheckbox(categories) {
 	const containerDiv = document.createElement('div');
 	containerDiv.classList.add('d-flex', 'align-items-start', 'flex-column');
-
+	let i = 0;
 	categories.forEach(category => {
 	  const formCheckDiv = document.createElement('div');
 	  formCheckDiv.classList.add('form-check');
@@ -275,9 +395,46 @@ function createCategoryCheckbox(categories) {
 
 	  formCheckDiv.appendChild(checkboxInput);
 	  formCheckDiv.appendChild(label);
-
+	  formCheckDiv.animate([
+			{ transform: 'translateX(-50px)' },
+			{ transform: 'translateX(0)' }
+		  ], {
+			duration: (500*i) + 500,
+			easing: 'ease',
+		});
 	  containerDiv.appendChild(formCheckDiv);
+	  i++
 	});
 	
 	return containerDiv;
+}
+
+function switchView()
+{
+	if (viewSwitcher.dataset.view == 'grid') 
+	{
+		viewSwitcher.dataset.view = "list";
+		gridView.setAttribute('class', 'text-secondary');
+		listView.setAttribute('class', 'text-primary');
+	} else {
+		viewSwitcher.dataset.view = "grid";
+		gridView.setAttribute('class', 'text-primary');
+		listView.setAttribute('class', 'text-secondary');
+	}
+}
+
+
+function paginate(products) {
+	let currentPage = document.getElementById('pagination').dataset.page;
+	let itemsPerPage = 6;
+	let pageCount = Math.ceil(products.length / itemsPerPage);
+	let thisPage = products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+}
+
+function page(changeTo) {
+	if (changeTo == 'next-page') {
+		let pagination = document.getElementById('pagination');
+		pagination.dataset.page = Number(pagination.dataset.page) + 1;
+		// TO DO
+	}
 }

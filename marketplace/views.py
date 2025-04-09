@@ -200,7 +200,8 @@ def products(request):
 def get_categories(request):
     data = {
         "categories": [
-            {"title": "Framed Art", "subcategories": [{"id": 0, "label": "mylbl0"}]}
+            {"title": "Framed Art", "subcategories": [{"id": 0, "label": "mylbl0"},
+                                                      {"id": 1, "label": "mylbl1"}]}
         ]
     }
     return JsonResponse(data, safe=False)
