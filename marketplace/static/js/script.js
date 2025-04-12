@@ -1,9 +1,3 @@
-/**
- * WEBSITE: https://themefisher.com
- * TWITTER: https://twitter.com/themefisher
- * FACEBOOK: https://www.facebook.com/themefisher
- * GITHUB: https://github.com/themefisher/
- */
 
 (function ($) {
   'use strict';
@@ -192,6 +186,5 @@
   $('.range-track').on('slide', function (slideEvt) {
     $('.value').text('DZD' + slideEvt.value[0] + ' - ' + 'DZD' + slideEvt.value[1]);
   });
-
-
+  
 })(jQuery);

@@ -41,14 +41,15 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	function updateProducts() {
 		let categories = categoryFilter();
 		let values = priceFilter.value.split(',');
+		let page = []
 		// Filter without search
 		if (input.value == "")
 		{
 			list.innerHTML = '';
 			// products.length = 0;
 			// products.push(...originalProducts);
-			paginate(products);
-			products.forEach((product, i) => {
+			page = paginate(products);
+			page.forEach((product, i) => {
 				let card = createProductCard(product);
 				if (viewSwitcher.dataset.view == "grid")
 				{
@@ -83,13 +84,18 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		else {
 			let searchResult = fuse.search(input.value);
 			list.innerHTML = '';
-			let html = searchResult.map((result, i) => {
-				let card = createProductCard(result.item)
+			
+			searchResult.map(result => {
+				page.push(result.item)
+			});
+			page = paginate(page);
+			page.forEach((product, i) => {
+				let card = createProductCard(product)
 				if (viewSwitcher.dataset.view == "grid")
 				{
-					card = createProductCard(result.item);
+					card = createProductCard(product);
 				} else {
-					card = createProductStrip(result.item);
+					card = createProductStrip(product);
 				}
 				card.animate([
 						{transform: "translateY(-50px)"},
@@ -99,21 +105,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
 						easing: "ease",
 				})
 				if (categories.length == 0) {
-					if (Number(values[0]) <= result.item.price && result.item.price <= Number(values[1]))
+					if (Number(values[0]) <= product.price && product.price <= Number(values[1]))
 					{
 						list.appendChild(card);
 					}
 				} else {
 					for (var i = 0; i < categories.length; i++)
 					{
-						if (result.item.category == categories[i] && Number(values[0]) <= result.item.price && result.item.price <= Number(values[1]))
+						if (product.category == categories[i] && Number(values[0]) <= product.price && product.price <= Number(values[1]))
 						{
 							list.appendChild(card);
 							break;
 						}
 					} 
 				}
-			}).join('');
+			}) //.join('');
 		}
 	}
 	// Update Checkboxes
@@ -142,6 +148,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	let viewSwitcher = document.getElementById("viewSwitcher");
 	let listView = document.getElementById('listView');
 	let gridView = document.getElementById('gridView');
+	let previousPage = document.getElementById('previousPage');
+	let nextPage = document.getElementById('nextPage');
+	let paginationControl = document.getElementById("pagination");
+	
 	let products = [];
 	let fuse = new Fuse()
 	let originalProducts = []
@@ -192,13 +202,24 @@ document.addEventListener("DOMContentLoaded", (event) => {
 				updateProducts();
 			}
 		}
+		
+		previousPage.onclick = (event) => {
+			paginationControl.dataset.pageNumber = Number(paginationControl.dataset.pageNumber) - 1;
+			updateProducts();
+		}
+		
+		nextPage.onclick = (event) => {
+			paginationControl.dataset.pageNumber = Number(paginationControl.dataset.pageNumber) + 1;
+			updateProducts();	
+		}
+		
 	})	
 })
 
 // Create product card
 function createProductCard(item) {
     const colDiv = document.createElement("div");
-    colDiv.classList.add("col-lg-4", "col-md-4", "mb-4"); // more compact like Alibaba
+    colDiv.classList.add("col-lg-4", "col-md-4", "mb-4");
 
     const cardDiv = document.createElement("div");
     cardDiv.classList.add("card", "h-100", "border-0", "shadow", "product-card", "overflow-hidden");
@@ -409,6 +430,7 @@ function createCategoryCheckbox(categories) {
 	return containerDiv;
 }
 
+// Switch view 
 function switchView()
 {
 	if (viewSwitcher.dataset.view == 'grid') 
@@ -423,18 +445,30 @@ function switchView()
 	}
 }
 
-
-function paginate(products) {
-	let currentPage = document.getElementById('pagination').dataset.page;
+function paginate(products) 
+{
 	let itemsPerPage = 6;
 	let pageCount = Math.ceil(products.length / itemsPerPage);
-	let thisPage = products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
+	let paginationControl = document.getElementById("pagination");
+	let currentPage = document.getElementById("CurrentPage");
+	let pages = [];
+	paginationControl.dataset.pageCount = pageCount;
+	for (let i = 0; i < products.length; i += itemsPerPage)
+	{
+		pages.push(products.slice(i, i + itemsPerPage))
+	}
+	if (paginationControl.dataset.pageNumber > pageCount)
+	{
+		paginationControl.dataset.pageNumber = pageCount;
+	} else if (paginationControl.dataset.pageNumber <= 0) {
+		paginationControl.dataset.pageNumber = 1;
+	}
+	currentPage.innerText = paginationControl.dataset.pageNumber;
+	return pages[paginationControl.dataset.pageNumber - 1];
 }
 
-function page(changeTo) {
-	if (changeTo == 'next-page') {
-		let pagination = document.getElementById('pagination');
-		pagination.dataset.page = Number(pagination.dataset.page) + 1;
-		// TO DO
-	}
+
+function filteredData()
+{
+	
 }
