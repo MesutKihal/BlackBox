@@ -43,9 +43,9 @@ class Item_image(models.Model):
     def __str__(self):
         return self.abbr
 
-class Purchase(models.Model):
-    user = models.ForeignKey(User, related_name="purchase_user", on_delete = models.CASCADE)
-    item = models.ForeignKey(Item, related_name="purchase_item", on_delete = models.CASCADE)
+class Order(models.Model):
+    user = models.ForeignKey(User, related_name="order_user", on_delete = models.CASCADE)
+    item = models.ForeignKey(Item, related_name="order_item", on_delete = models.CASCADE)
     delivary = models.CharField(max_length=255)
     date = models.DateTimeField(auto_now_add=True)
     

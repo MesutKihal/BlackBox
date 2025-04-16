@@ -181,7 +181,7 @@
          Categories
         </h4>
 		<select id="categorySelect" class="w-100">
-		 <option vlaue="0">Select Category</option>
+		 <option value="0">Select Category</option>
 		 <option value="Framed Art">Framed Art</option>
 		 <option value="Logo">Logo</option>
 		 <option value="Pictures">Pictures</option>
@@ -206,17 +206,17 @@
        </div>
        <div class="widget filter">
         <h4 class="widget-header">
-         Show Produts
+         Availability
         </h4>
         <select id="filter2">
+		 <option value="both">
+          In stock / Out of Stock
+         </option>
          <option value="1">
-          Top rated
+          In stock
          </option>
-         <option value="2">
-          Lowest Price
-         </option>
-         <option value="3">
-          Highest Price
+         <option value="0">
+          Out of Stock
          </option>
         </select>
        </div>
@@ -226,23 +226,12 @@
       <div class="category-search-filter">
        <div class="row">
         <div class="col-md-6 text-center text-md-left">
-         <strong>
-          Short
-         </strong>
-         <select id="filterBy">
-          <option>
-           Most Recent
-          </option>
-          <option value="1">
-           Most Popular
-          </option>
-          <option value="2">
-           Lowest Price
-          </option>
-          <option value="4">
-           Highest Price
-          </option>
-         </select>
+		  <div class="search-result bg-gray">
+		   <h3 id="searchQuery">
+		   </h3>
+		   <p id="resultCount">
+		   </p>
+		  </div>
         </div>
         <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">
          <div class="view">

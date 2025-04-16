@@ -111,8 +111,12 @@ def ondemand(request, page):
             return render(request, "marketplace/framed.html", context)
         else:
             return render(request, "marketplace/framed.html", context)
-    else:
-        return render(request, "marketplace/logo.html")
+    if page == "logo":
+        if request.POST:
+            print(request.POST)
+            return render(request, "marketplace/logo.html", context)
+        else:
+            return render(request, "marketplace/logo.html", context)
 
 # Services
 def services(request):
@@ -189,13 +193,13 @@ def products(request):
     image_1 = "https://static.wikia.nocookie.net/harrypotter/images/5/59/Elder_Wand.png/revision/latest?cb=20241227040818"
     image_2 = "https://lamuchette.fr/cdn/shop/files/nimbus-2000-junior-la-muchette-1.jpg?v=1703247587&width=713"
     data = {
-        'items': [{"title": "The Elder Wand", "price": 5000, "image": image_1, "category": "Magic", "description": "The strongest wand ever"},
-                  {"title": "The Younger Wand", "price": 1500, "image": image_1, "category": "Magic", "description": "The strongest wand ever"},
-                  {"title": "The Wand", "price": 2000, "image": image_1, "category": "Magic", "description": "The strongest wand ever"},
-                  {"title": "The Great Wand", "price": 4500, "image": image_1, "category": "Magic", "description": "The strongest wand ever"},
-                  {"title": "Nimbus 2000", "price": 2000, "image": image_2, "category": "Magic", "description": "the best broomstick"},
-                  {"title": "Nimbus 2100", "price": 2100, "image": image_2, "category": "Magic", "description": "the best broomstick"},
-                  {"title": "Nimbus 2200", "price": 2200, "image": image_2, "category": "Magic", "description": "the best broomstick"}]
+        'items': [{"title": "The Elder Wand", "price": 5000, "image": image_1, "category": "Magic", "description": "The strongest wand ever", "rating": 5, "inStock": "0"},
+                  {"title": "The Younger Wand", "price": 1500, "image": image_1, "category": "Magic", "description": "The strongest wand ever", "rating": 4, "inStock": "1"},
+                  {"title": "The Wand", "price": 2000, "image": image_1, "category": "Magic", "description": "The strongest wand ever", "rating": 2, "inStock": "0"},
+                  {"title": "The Great Wand", "price": 4500, "image": image_1, "category": "Magic", "description": "The strongest wand ever", "rating": 3, "inStock": "1"},
+                  {"title": "Nimbus 2000", "price": 2000, "image": image_2, "category": "Magic", "description": "the best broomstick", "rating": 3, "inStock": "1"},
+                  {"title": "Nimbus 2100", "price": 2100, "image": image_2, "category": "Magic", "description": "the best broomstick", "rating": 4, "inStock": "0"},
+                  {"title": "Nimbus 2200", "price": 2200, "image": image_2, "category": "Magic", "description": "the best broomstick", "rating": 5, "inStock": "1"}]
     }
     return JsonResponse(data, safe=False)
 

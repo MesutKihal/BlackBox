@@ -183,8 +183,21 @@
 
   // bootstrap slider range
   $('.range-track').slider({});
-  $('.range-track').on('slide', function (slideEvt) {
-    $('.value').text('DZD' + slideEvt.value[0] + ' - ' + 'DZD' + slideEvt.value[1]);
-  });
+  
+  // Unified update function
+  function updateSliderValue(slideEvt) {
+	  
+	  if (Array.isArray(slideEvt.value))
+	  {
+		$('.value').text('DZD' + slideEvt.value[0] + ' - ' + 'DZD' + slideEvt.value[1]);
+	  } else {
+		$('.value').text('DZD' + slideEvt.value.newValue[0] + ' - ' + 'DZD' + slideEvt.value.newValue[1]); 
+	  }
+	  
+	}
+  // Attach to multiple events
+   $('.range-track').on('slide', updateSliderValue);
+   $('.range-track').on('slideStop', updateSliderValue);
+   $('.range-track').on('change', updateSliderValue);
   
 })(jQuery);

@@ -41,23 +41,38 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	function updateProducts() {
 		let categories = categoryFilter();
 		let values = priceFilter.value.split(',');
-		let page = []
+		let page = [];
+		if (sortBy.value == "1")
+		{
+			products.sort((a, b) => b.rating - a.rating);
+		} else if (sortBy.value == "2")
+		{
+			products.sort((a, b) => a.price - b.price);
+		} else if (sortBy.value == "3") 
+		{
+			products.sort((a, b) => b.price - a.price);
+		}
+		
 		// Filter without search
 		if (input.value == "")
 		{
+			document.getElementById('searchQuery').innerText = "";
+			document.getElementById('resultCount').innerText = "";
 			list.innerHTML = '';
 			// products.length = 0;
 			// products.push(...originalProducts);
-			page = paginate(products);
-			page.forEach((product, i) => {
-				let card = createProductCard(product);
-				if (viewSwitcher.dataset.view == "grid")
-				{
-					card = createProductCard(product);
-				} else {
-					card = createProductStrip(product);
-				}
-				if (categories.length == 0) {
+			page = paginate(filteredProducts(products));
+			if (page)
+			{
+				page.forEach((product, i) => {
+					let card = createProductCard(product);
+					if (viewSwitcher.dataset.view == "grid")
+					{
+						card = createProductCard(product);
+					} else {
+						card = createProductStrip(product);
+					}
+					
 					card.animate([
 						{transform: "translateY(-50px)"},
 						{transform: "translateY(0px)"}
@@ -65,61 +80,42 @@ document.addEventListener("DOMContentLoaded", (event) => {
 						duration: 500+(i*100),
 						easing: "ease",
 					})
-					if (Number(values[0]) <= product.price && product.price <= Number(values[1]))
-					{
-						list.appendChild(card);
-					}
-				} else {
-					for (var i = 0; i < categories.length; i++)
-					{
-						if (product.category == categories[i] && Number(values[0]) <= product.price && product.price <= Number(values[1]))
-						{
-							list.appendChild(card);
-							break;
-						}
-					} 
-				}
-			})
+					list.appendChild(card);
+				})
+			}
 		} // Search & Filter
 		else {
 			let searchResult = fuse.search(input.value);
 			list.innerHTML = '';
 			
+			document.getElementById('searchQuery').innerText = `Results For "${input.value}",`;
+			document.getElementById('resultCount').innerText = `${searchResult.length} Results`;
+			
 			searchResult.map(result => {
 				page.push(result.item)
 			});
-			page = paginate(page);
-			page.forEach((product, i) => {
-				let card = createProductCard(product)
-				if (viewSwitcher.dataset.view == "grid")
-				{
-					card = createProductCard(product);
-				} else {
-					card = createProductStrip(product);
-				}
-				card.animate([
-						{transform: "translateY(-50px)"},
-						{transform: "translateY(0px)"}
-					], {
-						duration: 500+(i*300),
-						easing: "ease",
-				})
-				if (categories.length == 0) {
-					if (Number(values[0]) <= product.price && product.price <= Number(values[1]))
+			page = paginate(filteredProducts(page));
+			if (page)
+			{
+				page.forEach((product, i) => {
+					let card = createProductCard(product)
+					if (viewSwitcher.dataset.view == "grid")
 					{
-						list.appendChild(card);
+						card = createProductCard(product);
+					} else {
+						card = createProductStrip(product);
 					}
-				} else {
-					for (var i = 0; i < categories.length; i++)
-					{
-						if (product.category == categories[i] && Number(values[0]) <= product.price && product.price <= Number(values[1]))
-						{
-							list.appendChild(card);
-							break;
-						}
-					} 
-				}
-			}) //.join('');
+					card.animate([
+							{transform: "translateY(-50px)"},
+							{transform: "translateY(0px)"}
+						], {
+							duration: 500+(i*300),
+							easing: "ease",
+					})
+					list.appendChild(card);
+				})
+			}
+			//.join('');
 		}
 	}
 	// Update Checkboxes
@@ -138,6 +134,21 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			})
 		}
 	}
+	function filteredProducts(products) {
+		let categories = categoryFilter();
+		let values = priceFilter.value.split(',');
+		let isAvailable = document.getElementById('filter2');
+		const min = Number(values[0]);
+		const max = Number(values[1]);
+
+		return products.filter(product => {
+			const priceMatch = product.price >= min && product.price <= max;
+			const stockMatch = isAvailable.value === "both" || isAvailable.value == product.inStock;
+			const categoryMatch = categories.length === 0 || categories.includes(product.category);
+
+			return priceMatch && stockMatch && categoryMatch;
+		});
+	}
 	// Listen to the search input and category filter
 	let input = document.getElementById('inputtext4');
 	let list = document.querySelector('#product-container');
@@ -151,6 +162,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	let previousPage = document.getElementById('previousPage');
 	let nextPage = document.getElementById('nextPage');
 	let paginationControl = document.getElementById("pagination");
+	let sortBy = document.getElementById('filter1');
+	let isAvailable = document.getElementById('filter2');
 	
 	let products = [];
 	let fuse = new Fuse()
@@ -213,6 +226,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			updateProducts();	
 		}
 		
+		sortBy.onchange = (event) => {
+			paginationControl.dataset.pageNumber = 1;
+			updateProducts();
+		}
+		
+		isAvailable.onchange = (event) => {
+			updateProducts();
+		}
 	})	
 })
 
@@ -257,8 +278,14 @@ function createProductCard(item) {
 
     // Stock Status
     const stockStatusDiv = document.createElement("span");
-    stockStatusDiv.classList.add("badge", "bg-success", "mb-2", "mr-2", "fs-6", "p-2");
-    stockStatusDiv.textContent = item.stockStatus || "In Stock"; // Default: "In Stock"
+	if (item.inStock == "1")
+	{
+		stockStatusDiv.classList.add("badge", "bg-success", "text-white", "mb-2", "mr-2", "fs-6", "p-2");
+		stockStatusDiv.textContent = "In Stock";
+	} else {
+		stockStatusDiv.classList.add("badge", "bg-danger", "text-white", "mb-2", "mr-2", "fs-6", "p-2");
+		stockStatusDiv.textContent = "Out of Stock";
+	}
 
     // Badges - Best Seller
     const bestSellerBadge = document.createElement("span");
@@ -272,8 +299,8 @@ function createProductCard(item) {
     const ratingsUl = document.createElement("ul");
     ratingsUl.classList.add("list-inline");
 
-    // Create 5 stars (Font Awesome)
-    for (let i = 0; i < 5; i++) {
+    // Create stars (Font Awesome)
+    for (let i = 0; i < item.rating; i++) {
         const starLi = document.createElement("li");
         starLi.classList.add("list-inline-item", "selected");
         starLi.innerHTML = '<i class="fa fa-star"></i>';
@@ -346,8 +373,14 @@ function createProductStrip(item) {
 
     // Stock Status Badge
     const stockStatusDiv = document.createElement("span");
-    stockStatusDiv.classList.add("badge", "bg-success", "fs-6", "p-1", "mr-2");
-    stockStatusDiv.textContent = item.stockStatus || "In Stock"; // Default: "In Stock"
+	if (item.inStock == "1")
+	{
+		stockStatusDiv.classList.add("badge", "bg-success", "text-white", "fs-6", "p-1", "mr-2");
+		stockStatusDiv.textContent = "In Stock";
+	} else {
+		stockStatusDiv.classList.add("badge", "bg-danger", "text-white", "fs-6", "p-1", "mr-2");
+		stockStatusDiv.textContent = "Out of Stock";
+	}
 
     // Best Seller Badge
     const bestSellerBadge = document.createElement("span");
@@ -365,8 +398,8 @@ function createProductStrip(item) {
     const ratingsUl = document.createElement("ul");
     ratingsUl.classList.add("list-inline");
 
-    // Create 5 stars (Font Awesome)
-    for (let i = 0; i < 5; i++) {
+    // Create stars (Font Awesome)
+    for (let i = 0; i < item.rating; i++) {
         const starLi = document.createElement("li");
         starLi.classList.add("list-inline-item", "selected");
         starLi.innerHTML = '<i class="fa fa-star"></i>';
@@ -465,10 +498,4 @@ function paginate(products)
 	}
 	currentPage.innerText = paginationControl.dataset.pageNumber;
 	return pages[paginationControl.dataset.pageNumber - 1];
-}
-
-
-function filteredData()
-{
-	
 }

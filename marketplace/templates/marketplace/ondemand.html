@@ -1,10 +1,5 @@
 <!DOCTYPE html>
-<!--
- // WEBSITE: https://themefisher.com
- // TWITTER: https://twitter.com/themefisher
- // FACEBOOK: https://www.facebook.com/themefisher
- // GITHUB: https://github.com/themefisher/
--->
+
 <html lang="en">
 {% load static %}
  <head>
@@ -47,7 +42,7 @@
        </button>
        <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto main-nav">
-         <li class="nav-item active">
+         <li class="nav-item">
           <a class="nav-link" href="{% url 'main' %}">
            Home
           </a>
@@ -57,7 +52,7 @@
            Store
           </a>
 		 </li>
-         <li class="nav-item dropdown dropdown-slide @@pages">
+         <li class="nav-item active dropdown dropdown-slide @@pages">
           <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown">
            On Demand
            <span>
@@ -73,7 +68,7 @@
             </a>
            </li>
            <li>
-            <a class="dropdown-item @@logoDesign">
+            <a class="dropdown-item @@logoDesign" href="{% url 'ondemand' 'logo' %}">
               Logo Design
             </a>
            </li>

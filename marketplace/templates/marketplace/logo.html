@@ -1,4 +1,4 @@
-{% extends 'marketplace/base.html' %}
+{% extends 'marketplace/ondemand.html' %}
 
 {% block content %}
   <section class="advt-post bg-gray py-5">
@@ -9,7 +9,7 @@
       <div class="row">
        <div class="col-lg-12">
         <h3>
-			Request a presonlized framed artwork
+			Request a presonlized Logo
         </h3>
        </div>
        <div class="col-lg-6">
@@ -22,28 +22,40 @@
         </h6>
         <div class="row px-3">
          <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
-          <input id="business" name="itemName" required="" type="radio" value="business"/>
-          <label class="py-2" for="business">
-           A5
+          <input id="512x512" name="itemName" required="" type="radio" value="512x512"/>
+          <label class="py-2" for="512x512">
+           512 x 512
           </label>
          </div>
          <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
-          <input id="personal" name="itemName" required="" type="radio" value="personal"/>
-          <label class="py-2" for="personal">
-           A4
+          <input id="256x256" name="itemName" required="" type="radio" value="256x256"/>
+          <label class="py-2" for="256x256">
+           256 x 256
           </label>
          </div>
          <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
-          <input id="business" name="itemName" required="" type="radio" value="business"/>
-          <label class="py-2" for="business">
-           A3
+          <input id="128x128" name="itemName" required="" type="radio" value="128x128"/>
+          <label class="py-2" for="128x128">
+           128 x 128
+          </label>
+         </div>
+         <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
+          <input id="64x64" name="itemName" required="" type="radio" value="64x64"/>
+          <label class="py-2" for="64x64">
+           64 x 64
+          </label>
+         </div>
+         <div class="col-lg-4 mr-lg-4 my-2 pt-2 pb-1 rounded bg-white">
+          <input id="32x32" name="itemName" required="" type="radio" value="32x32"/>
+          <label class="py-2" for="32x32">
+           32 x 32
           </label>
          </div>
         </div>
         <h6 class="font-weight-bold pt-4 pb-1">
          Description:
         </h6>
-        <textarea class="form-control bg-white" id="" name="" placeholder="Write a brief description of the artwork you want us to make" required="" rows="7"></textarea>
+        <textarea class="form-control bg-white" id="" name="" placeholder="Write a brief description of the logo you want us to make" required="" rows="7"></textarea>
        </div>
        <div class="col-lg-6">
         <h6 class="font-weight-bold pt-4 pb-1">
@@ -54,16 +66,16 @@
           Select category
          </option>
          <option value="2">
-          canvas
+          abstract
          </option>
          <option value="3">
-          photography
+          mascot
          </option>
          <option value="4">
-          drawing
+          lettermark
          </option>
          <option value="5">
-          vibrant
+          pictorial marks
          </option>
         </select>
         <div class="price">
@@ -72,7 +84,7 @@
          </h6>
          <div class="row px-3 text-center">
           <div class="col-lg-6 rounded my-2 px-0">
-           <h5 class="text-success">0.00 DZD</h5>
+           <h5 class="text-success">2500 DZD - 10000 DZD</h5>
           </div>
          </div>
         </div>
