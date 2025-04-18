@@ -311,7 +311,7 @@ function createProductCard(item) {
 
     // Button
     const btn = document.createElement("a");
-    btn.href = "#";
+    btn.href = "/single";
     btn.classList.add("btn", "btn-sm", "btn-outline-primary", "w-100");
     btn.textContent = "View Product";
 

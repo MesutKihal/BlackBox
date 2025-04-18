@@ -7,6 +7,7 @@ urlpatterns = [
     # PAGES URL'S
     path('', views.main, name="main"),
     path('store/', views.store, name="store"),
+    path('single/', views.single, name="single"),
     path('ondemand/<str:page>', views.ondemand, name="ondemand"),
     path('services/<str:page>', views.services, name="services"),
     path('login/', views.login, name="login"),

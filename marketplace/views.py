@@ -121,6 +121,68 @@ def ondemand(request, page):
 # Services
 def services(request):
     return
+    
+# Single
+def single(request):
+     
+    context = {"product": {
+                            "id": 42,
+                            "title": "The Younger Wand A4 Canvas",
+                            "price": 1500,
+                            "description": "The strongest wand ever created by master artisans. This hand-painted canvas measures 29.7 × 21.0 cm (A4 size) and comes with a certificate of authenticity.",
+                            "rating": 4,
+                            "inStock": True,
+                            "stock_range": range(1, 6),  # Shows quantities 1-5 available
+                            "images": [
+                                {
+                                    "url": "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                                    "alt_text": "Front view of The Younger Wand canvas"
+                                },
+                                {
+                                    "url": "https://images.unsplash.com/photo-1578301978018-3005759f48f7?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                                    "alt_text": "Side angle view"
+                                },
+                                {
+                                    "url": "https://images.unsplash.com/photo-1549060279-7e168fcee0c2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                                    "alt_text": "Detail of brushwork"
+                                },
+                                {
+                                    "url": "https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80",
+                                    "alt_text": "With certificate of authenticity"
+                                }
+                            ],
+                            "specification": {
+                                "Dimensions": "29.7 × 21.0 cm (A4)",
+                                "Medium": "Acrylic on canvas",
+                                "Weight": "450g",
+                                "Frame Included": "No",
+                                "Signed": "Yes, by artist",
+                                "Year Created": "2023",
+                                "Shipping": "Free worldwide shipping",
+                                "Return Policy": "30 days money back guarantee"
+                            },
+                            "reviews": [
+                                {
+                                    "user": "bob",
+                                    "rating": 5,
+                                    "content": "This is an amazing artwork! The details are incredible and it looks even better in person than in the photos.",
+                                    "created_at": "2023-05-15"
+                                },
+                                {
+                                    "user": "alice",
+                                    "rating": 4,
+                                    "content": "Beautiful piece, arrived well packaged. The colors are vibrant though slightly different from the website image.",
+                                    "created_at": "2023-04-22"
+                                },
+                                {
+                                    "user": "charlie",
+                                    "rating": 5,
+                                    "content": "Absolutely stunning! Worth every penny. The artist's signature adds a nice personal touch.",
+                                    "created_at": "2023-03-10"
+                                }
+                            ]
+                          }}
+    return render(request, "marketplace/single.html", context)
 
 # Login Page
 def login(request):

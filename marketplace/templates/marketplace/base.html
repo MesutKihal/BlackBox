@@ -1,19 +1,16 @@
 <!DOCTYPE html>
-
 <html lang="en">
-{% load static %}
+ {% load static %}
  <head>
   <!-- ** Basic Page Needs ** -->
   <meta charset="utf-8"/>
   <title>
-   On Demand | Framed Art
+   BlackBox | {{ request.url }}
   </title>
   <!-- ** Mobile Specific Metas ** -->
   <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
   <meta content="Agency HTML Template" name="description"/>
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0" name="viewport"/>
-  <meta content="Themefisher" name="author"/>
-  <meta content="Themefisher Classified Marketplace Template v1.0" name="generator"/>
   <!-- favicon -->
   <link href="{% static 'images/favicon.jpg'%}" rel="shortcut icon"/>
   <!-- 
@@ -52,7 +49,7 @@
            Store
           </a>
 		 </li>
-         <li class="nav-item active dropdown dropdown-slide @@pages">
+         <li class="nav-item dropdown dropdown-slide">
           <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown">
            On Demand
            <span>
@@ -63,18 +60,18 @@
           <!-- Dropdown list -->
           <ul class="dropdown-menu">
            <li>
-            <a class="dropdown-item @@framedArt" href="{% url 'ondemand' 'framed' %}">
+            <a class="dropdown-item" href="{% url 'ondemand' 'framed' %}">
              Framed Art
             </a>
            </li>
            <li>
-            <a class="dropdown-item @@logoDesign" href="{% url 'ondemand' 'logo' %}">
+            <a class="dropdown-item" href="{% url 'ondemand' 'logo' %}">
               Logo Design
             </a>
            </li>
           </ul>
          </li>
-         <li class="nav-item dropdown dropdown-slide @@listing">
+         <li class="nav-item dropdown dropdown-slide">
           <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#!">
            Services
            <span>
@@ -85,17 +82,17 @@
           <!-- Dropdown list -->
           <ul class="dropdown-menu">
            <li>
-            <a class="dropdown-item @@WebDev">
+            <a class="dropdown-item">
              Web Development
             </a>
            </li>
            <li>
-            <a class="dropdown-item @@VideoEditing">
+            <a class="dropdown-item">
              Video Editing
             </a>
            </li>
            <li>
-            <a class="dropdown-item @@Photo Editing">
+            <a class="dropdown-item">
              Photo Editing
             </a>
            </li>
@@ -107,7 +104,6 @@
 			</a>
 		 </li>
         </ul>
-		
         <ul class="navbar-nav ml-auto mt-10">
          <li class="nav-item">
           <a class="nav-link login-button" href="{% url 'login' %}">
@@ -115,8 +111,7 @@
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link text-white add-button" href="{% url 'signup' %}"> <!-- href="ad-listing.html" -->
-           <!-- <i class="fa fa-plus-circle"> -->
+          <a class="nav-link text-white add-button" href="{% url 'signup' %}">
            </i>
            Sign up
           </a>
@@ -129,15 +124,155 @@
    </div>
   </header>
   {% block content %}
-  
   {% endblock %}
-
+  <!--============================
+=            Footer            =
+=============================-->
+  <footer class="footer section section-sm">
+   <!-- Container Start -->
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-3 col-md-7 offset-md-1 offset-lg-0 mb-4 mb-lg-0">
+      <!-- About -->
+      <div class="block about">
+       <!-- footer logo -->
+       <img alt="logo" src="{% static 'images/BlackBox.png'%}"/>
+       <!-- description -->
+       <p>
+        Explore our vibrant collection of framed A4 photos, featuring bold designs, 
+        <br/>
+        personalized artwork, and sleek vector prints perfect for any space
+       </p>
+      </div>
+     </div>
+     <!-- Link list -->
+     <div class="col-lg-2 offset-lg-1 col-md-3 col-6 mb-4 mb-lg-0">
+      <div class="block">
+       <h4>
+		Contact	& Information
+	   </h4>
+	   <ul>
+        <li>
+         <a href="">
+          Contact
+         </a>
+        </li>
+        <li>
+         <a href="">
+          About Us
+         </a>
+        </li>
+        <li>
+         <a href="">
+          Sell Your Product
+         </a>
+        </li>
+        <li>
+         <a href="terms-condition.html">
+          Terms &amp; Conditions
+         </a>
+        </li>
+       </ul>
+      </div>
+     </div>
+     <!-- Link list -->
+     <div class="col-lg-2 col-md-3 offset-md-1 offset-lg-0 col-6 mb-4 mb-md-0">
+      <div class="block">
+       <h4>
+        <a style="text-decoration: none;color: white;" href="{% url 'hq' %}">Admin</a>
+       </h4>
+       <ul>
+        <li>
+         <a href="">
+          Team
+         </a>
+        </li>
+        <li>
+         <a href="">
+          Blog
+         </a>
+        </li>
+       </ul>
+      </div>
+     </div>
+     <!-- Promotion -->
+     <div class="col-lg-4 col-md-7">
+      <!-- App promotion -->
+      <div class="block-2 app-promotion">
+       <div class="mobile d-flex align-items-center">
+        <a href="index.html">
+         <!-- Icon -->
+         <img alt="mobile-icon" src="{% static 'images/footer/phone-icon.png'%}"/>
+        </a>
+        <p class="mb-0">
+         Get the Dealsy Mobile App and Save more
+        </p>
+       </div>
+       <div class="download-btn d-flex my-3">
+        <a href="index.html">
+         <img alt="" class="img-fluid" src="{% static 'images/apps/google-play-store.png'%}"/>
+        </a>
+        <a class="ml-3" href="index.html">
+         <img alt="" class="img-fluid" src="{% static 'images/apps/apple-app-store.png'%}"/>
+        </a>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <!-- Container End -->
+  </footer>
+  <!-- Footer Bottom -->
+  <footer class="footer-bottom">
+   <!-- Container Start -->
+   <div class="container">
+    <div class="row">
+     <div class="col-lg-6 text-center text-lg-left mb-3 mb-lg-0">
+      <!-- Copyright -->
+      <div class="copyright">
+       <p>
+        Copyright &copy;
+        <script>
+         var CurrentYear = new Date().getFullYear()
+              document.write(CurrentYear)
+        </script>
+        .Owned By 
+		<a class="text-white" href="">
+			Ayoub Bahri
+		</a>
+       </p>
+      </div>
+     </div>
+     <div class="col-lg-6">
+      <!-- Social Icons -->
+      <ul class="social-media-icons text-center text-lg-right">
+       <li>
+        <a class="fa fa-facebook" href="https://www.facebook.com/themefisher">
+        </a>
+       </li>
+       <li>
+        <a class="fa fa-twitter" href="https://www.twitter.com/themefisher">
+        </a>
+       </li>
+       <li>
+        <a class="fa fa-pinterest-p" href="https://www.pinterest.com/themefisher">
+        </a>
+       </li>
+       <li>
+        <a class="fa fa-github-alt" href="https://www.github.com/themefisher">
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+   <!-- Container End -->
    <!-- To Top -->
    <div class="scroll-top-to">
     <i class="fa fa-angle-up">
     </i>
    </div>
-
+  </footer>
   <!-- 
 Essential Scripts
 =====================================-->
@@ -157,15 +292,11 @@ Essential Scripts
   </script>
   <script src="{% static 'plugins/jquery-nice-select/js/jquery.nice-select.min.js'%}">
   </script>
-  {% block script %}
-
-  {% endblock %}
-  <!-- google map -->
-  <!-- <script defer="" src="{% static 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCcABaamniA6OL5YvYSpB3pFMNrXwXnLwU'%}"> -->
-  <!-- </script> -->
   <script defer="" src="{% static 'plugins/google-map/map.js'%}">
   </script>
   <script src="{% static 'js/script.js'%}">
   </script>
+  {% block script %}
+  {% endblock %}
  </body>
 </html>
