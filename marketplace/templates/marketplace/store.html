@@ -44,10 +44,9 @@
         </h4>
 		<select id="categorySelect" class="w-100">
 		 <option value="0">Select Category</option>
-		 <option value="Framed Art">Framed Art</option>
-		 <option value="Logo">Logo</option>
-		 <option value="Pictures">Pictures</option>
-		 <option value="Clips">Clips</option>
+		 {% for category in categories %}
+			<option value="{{ category.title }}">{{ category.title }}</option>
+		 {% endfor %}
 		</select>
 	   </div>
        <div id="subCategories" class="widget category-list" style="display: none;">

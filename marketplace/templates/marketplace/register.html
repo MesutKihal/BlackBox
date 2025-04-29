@@ -1,4 +1,23 @@
 {% extends 'marketplace/base.html' %}
+{% if messages %}
+	{% if message.tags == "success" %}
+		<div class="alert alert-success" role="alert">
+		  {{ message }}
+		</div>
+	{% elif message.tags == "error" %}
+		<div class="alert alert-danger" role="alert">
+		  {{ message }}
+		</div>
+	{% elif message.tags == "info" %}
+		<div class="alert alert-warning" role="alert">
+		  {{ message }}
+		</div>
+	{% else %}
+		<div class="alert alert-info" role="alert">
+		  {{ message }}
+		</div>
+	{% endif %}
+{% endif %}
 
 {% block content %}
   <section class="login py-5 border-top-1">
@@ -9,20 +28,12 @@
        <h3 class="bg-gray p-4">
         Register Now
        </h3>
-       <form action="#">
+       <form method="post" action="{% url 'signup' %}">
+		{% csrf_token %}
         <fieldset class="p-4">
          <input class="form-control mb-3" placeholder="Email*" required="" type="email"/>
          <input class="form-control mb-3" placeholder="Password*" required="" type="password"/>
          <input class="form-control mb-3" placeholder="Confirm Password*" required="" type="password"/>
-         <div class="loggedin-forgot d-inline-flex my-3">
-          <input class="mt-1" id="registering" type="checkbox"/>
-          <label class="px-2" for="registering">
-           By registering, you accept our
-           <a class="text-primary font-weight-bold" href="terms-condition.html">
-            Terms &amp; Conditions
-           </a>
-          </label>
-         </div>
          <button class="btn btn-primary font-weight-bold mt-3" type="submit">
           Register Now
          </button>

@@ -2,6 +2,10 @@
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+
 
 urlpatterns = [
     # PAGES URL'S
@@ -27,4 +31,6 @@ urlpatterns = [
     path('upload/', views.upload, name="upload"),
     path('store/get_products', views.products, name="products"),
     path('store/get_categories', views.get_categories, name="categories"),
-]
+] + staticfiles_urlpatterns()
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

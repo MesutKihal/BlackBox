@@ -47,8 +47,84 @@
   <!--==================================
 =            User Profile            =
 ===================================-->
-  {% block content %}
-  {% endblock %}
+  <section class="dashboard section">
+   <!-- Container Start -->
+   <div class="container">
+    <!-- Row Start -->
+    <div class="row">
+     <div class="col-lg-4">
+      <div class="sidebar">
+       <!-- User Widget -->
+       <div class="widget user-dashboard-profile">
+        <!-- User Image -->
+        <div class="profile-thumb">
+         <img alt="" class="rounded-circle" src="{% static 'images/favicon.jpg'%}"/>
+        </div>
+        <!-- User Name -->
+        <h5 class="text-center">
+         {{ request.user }}
+        </h5>
+        <p>
+         Role: {{ user_profile.role }}
+        </p>
+       </div>
+       <!-- Dashboard Links -->
+       <div class="widget user-dashboard-menu">
+        <ul>
+         <li class="{% if request.path == '/hq/requests' %}active{% endif %}">
+          <a href='{% url "hq-r" %}'>
+           <i class="fa fa-tasks" aria-hidden="true"></i>
+           Requests 
+          </a>
+         </li>
+         <li class="{% if request.path == '/hq/products' %}active{% endif %}">
+          <a href='{% url "hq-p" %}'>
+           <i class="fa fa-archive" aria-hidden="true"></i>
+           Products
+          </a>
+         </li>
+         <li class="{% if request.path == '/hq/stats' %}active{% endif %}">
+          <a href='{% url "hq-st" %}'>
+           <i class="fa fa-bar-chart" aria-hidden="true"></i>
+           Statistics
+          </a>
+         </li>
+         <li class="{% if request.path == '/hq/media' %}active{% endif %}">
+          <a href="{% url 'hq-m' %}">
+           <i class="fa fa-film" aria-hidden="true"></i>
+           Media Files
+          </a>
+         </li>
+         <li class="{% if request.path == '/hq/users' %}active{% endif %}">
+          <a href="{% url 'hq-u' %}">
+           <i class="fa fa-user">
+           </i>
+           Users
+          </a>
+         </li>
+         <li class="{% if request.path == '/hq/settings' %}active{% endif %}">
+          <a href="{% url 'hq-s' %}">
+           <i class="fa fa-cog">
+           </i>
+           Settings
+          </a>
+         </li>
+         <li>
+          <a href="{% url 'hq-l' %}">
+           <i class="fa fa-power-off">
+           </i>
+           Log Out
+          </a>
+         </li>
+        </ul>
+       </div>
+      </div>
+     </div>
+	 {% block content %}
+	 {% endblock %}
+	</div>
+   </div>
+  </section>
    <!-- Container End -->
    <!-- To Top -->
    <div class="scroll-top-to">

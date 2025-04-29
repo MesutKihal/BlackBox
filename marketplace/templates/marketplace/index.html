@@ -119,12 +119,12 @@
 								</a>
 							</li>
 							<li class="list-inline-item">
-								<a href="category.html">
+								<a href="">
 									<i class="fas fa-inventory"></i>In Stock / Out of Stock
 								</a>
 							</li>
 						</ul>
-						<p class="card-text">{{ item.description }}</p>
+						<p style="width: 100ch;" class="card-text">{{ item.description }}</p>
 						<div class="product-ratings">
 							<ul class="list-inline">
 								{% for i in "1234" %}
@@ -160,8 +160,8 @@
 		<div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6">
 			<div class="category-block">
 				<div class="header">
-					<img class="category-img" src="{{ temp.category.image }}" alt="{{ temp.category.title }}">
-					<h4>{{ temp.category.title }}</h4>
+					<img class="category-img" src="{{ temp.image }}" alt="{{ temp.category }}">
+					<h4>{{ temp.category }}</h4>
 				</div>
 				<ul class="category-list">
 					{% for sub in temp.subs %}

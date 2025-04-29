@@ -187,6 +187,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	
 	// Initializing the fuse search
 	getProducts().then(data => {
+		console.log("I'm Alive");
 		products = data['items'];
 		updateProducts();
 		originalProducts = [...products];
@@ -252,7 +253,7 @@ function createProductCard(item) {
     const img = document.createElement("img");
     img.classList.add("card-img-top", "img-fluid", "p-3", "product-image");
     img.src = item.image;
-    img.alt = item.title;
+    img.alt = item.name;
 
     imgLink.appendChild(img);
     cardDiv.appendChild(imgLink);
@@ -269,7 +270,7 @@ function createProductCard(item) {
     // Title
     const title = document.createElement("h6");
     title.classList.add("card-title", "mb-1", "text-truncate"); 
-    title.textContent = item.title;
+    title.textContent = item.name;
 
     // Category
     const category = document.createElement("small");

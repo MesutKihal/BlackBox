@@ -4,17 +4,19 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.ForeignKey(User, related_name="user_profile", on_delete = models.CASCADE)
     image = models.ImageField("media/img/profiles")
+    full_name = models.CharField(max_length=64)
+    phone_number = models.CharField(max_length=10)
     
     def __str__(self):
         return self.user
     
 class Category(models.Model):
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to = "media/img/categories")
+    image = models.ImageField(upload_to = "img/categories")
     class Meta:
         verbose_name_plural = "Categories"
     def __str__(self):
-        return self.name
+        return self.title
 
 class SubCategory(models.Model):
     title = models.CharField(max_length=255)
@@ -22,7 +24,7 @@ class SubCategory(models.Model):
     class Meta:
         verbose_name_plural = "Sub Categories"
     def __str__(self):
-        return self.name
+        return self.title
      
 class Item(models.Model):
     name = models.CharField(max_length=255)
@@ -72,10 +74,3 @@ class RequestFile(models.Model):
     
     def __str__(self):
         return self.order
-        
-class Service(models.Model):
-    user = models.ForeignKey(User, related_name="service_user", on_delete = models.CASCADE)
-    file = models.FileField(upload_to="media/service_files")
-    
-    def __str__(self):
-        return self.file
