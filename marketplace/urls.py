@@ -11,14 +11,17 @@ urlpatterns = [
     # PAGES URL'S
     path('', views.main, name="main"),
     path('store/', views.store, name="store"),
-    path('single/', views.single, name="single"),
+    path('single/<int:id>', views.single, name="single"),
     path('ondemand/<str:page>', views.ondemand, name="ondemand"),
     path('services/<str:page>', views.services, name="services"),
     path('login/', views.login, name="login"),
     path('signup/', views.signup, name="signup"),
     path('about/', views.about, name="about"),
+     path('logout/', views.logout, name="logout"),
     # ADMIN URL'S
     path('hq/', views.admin, name="hq"),
+    path('hq/orders', views.orders, name="hq-o"),
+    path('hq/order/<str:id>', views.view_order, name="hq-o-v"),
     path('hq/requests', views.requests, name="hq-r"),
     path('hq/request/<str:id>', views.view_request, name="hq-r-v"),
     path('hq/products', views.view_products, name="hq-p"),
@@ -29,6 +32,7 @@ urlpatterns = [
     path('hq/logout', views.logout, name="hq-l"),
     # API'S URL's
     path('upload/', views.upload, name="upload"),
+    path('api/update-status/', views.update_request_status, name='update-status'),
     path('store/get_products', views.products, name="products"),
     path('store/get_categories', views.get_categories, name="categories"),
 ] + staticfiles_urlpatterns()

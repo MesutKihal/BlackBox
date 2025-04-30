@@ -5,19 +5,16 @@
       <!-- Recently Favorited -->
       <div class="widget dashboard-container my-adslist">
        <h3 class="widget-header">
-        Products
+        Orders
        </h3>
        <table class="table table-responsive product-dashboard-table">
         <thead>
          <tr>
           <th>
-           Image
-          </th>
-          <th>
            Product Title
           </th>
           <th class="text-center">
-           Category
+           Quantity
           </th>
           <th class="text-center">
            Action
@@ -25,50 +22,49 @@
          </tr>
         </thead>
         <tbody>
-		{% for product in products %}
+		{% for order in orders %}
          <tr>
-          <td class="product-thumb">
-           <img alt="image description" height="auto" src="{{ product.image }}" width="80px"/>
-          </td>
           <td class="product-details">
            <h3 class="title">
-            {{ product.name }}
+            {{ order.item }}
            </h3>
            <span class="add-id">
             <strong>
-             Price:
+             User
             </strong>
-            {{ product.price }}
+            {{ order.user }}
            </span>
            <span>
             <strong>
-             Created at:
+             Order on:
             </strong>
             <time>
-             {{ product.created_at }}
+             {{ order.date }}
             </time>
            </span>
-           <span class="status {% if product.inStock %}active{% endif %}">
+           <span class="status active">
             <strong>
              Status
             </strong>
-            {% if product.inStock %}
-			In Stock
-			{% else %}
-			Out of Stock
-			{% endif %}
+            {{ order.status }}
+           </span>
+           <span class="location">
+            <strong>
+             Location
+            </strong>
+            {{ order.delivary }}
            </span>
           </td>
           <td class="product-category">
            <span class="categories">
-            {{ product.category }}
+            {{ order.quantity }}
            </span>
           </td>
           <td class="action">
            <div class="">
             <ul class="list-inline justify-content-center">
              <li class="list-inline-item">
-              <a class="view" href="">
+              <a class="view" href="{% url 'hq-r-v' order.id %}">
                <i class="fa fa-eye">
                </i>
               </a>

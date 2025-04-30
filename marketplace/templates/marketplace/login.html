@@ -1,5 +1,25 @@
 {% extends 'marketplace/base.html' %}
-
+{% if messages %}
+	{% for message in messages %}
+		{% if message.tags == "success" %}
+			<div class="alert alert-success" role="alert">
+			  {{ message }}
+			</div>
+		{% elif message.tags == "error" %}
+			<div class="alert alert-danger" role="alert">
+			  {{ message }}
+			</div>
+		{% elif message.tags == "info" %}
+			<div class="alert alert-warning" role="alert">
+			  {{ message }}
+			</div>
+		{% else %}
+			<div class="alert alert-info" role="alert">
+			  {{ message }}
+			</div>
+		{% endif %}
+	{% endfor %}
+{% endif %}
 {% block content %}
   <section class="login py-5 border-top-1">
    <div class="container">
@@ -9,23 +29,18 @@
        <h3 class="bg-gray p-4">
         Login Now
        </h3>
-       <form action="#">
+       <form method="POST" action="{% url 'login' %}">
+		{% csrf_token %}
         <fieldset class="p-4">
-         <input class="form-control mb-3" placeholder="Username" required="" type="text"/>
-         <input class="form-control mb-3" placeholder="Password" required="" type="password"/>
-         <div class="loggedin-forgot">
-          <input id="keep-me-logged-in" type="checkbox"/>
-          <label class="pt-3 pb-2" for="keep-me-logged-in">
-           Keep me logged in
-          </label>
-         </div>
+         <input class="form-control mb-3" name="username" placeholder="Username" required="" type="text"/>
+         <input class="form-control mb-3" name="password" placeholder="Password" required="" type="password"/>
          <button class="btn btn-primary font-weight-bold mt-3" type="submit">
           Log in
          </button>
-         <a class="mt-3 d-block text-primary" href="#!">
+         <a class="mt-3 d-block text-primary" href="">
           Forget Password?
          </a>
-         <a class="mt-3 d-inline-block text-primary" href="register.html">
+         <a class="mt-3 d-inline-block text-primary" href="{% url 'signup' %}">
           Register Now
          </a>
         </fieldset>

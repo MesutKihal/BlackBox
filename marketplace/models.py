@@ -1,14 +1,18 @@
 from django.db import models
 from django.contrib.auth.models import User
+import datetime
+from django.utils import timezone
+
 
 class UserProfile(models.Model):
     user = models.ForeignKey(User, related_name="user_profile", on_delete = models.CASCADE)
-    image = models.ImageField("media/img/profiles")
+    image = models.ImageField("img/profiles")
+    role = models.CharField(max_length=64, default="normal")
     full_name = models.CharField(max_length=64)
     phone_number = models.CharField(max_length=10)
     
     def __str__(self):
-        return self.user
+        return f"{self.user} Profile"
     
 class Category(models.Model):
     title = models.CharField(max_length=255)
@@ -40,7 +44,7 @@ class Item(models.Model):
 class Item_image(models.Model):
     abbr = models.CharField(max_length=255)
     item = models.ForeignKey(Item, related_name="items_images", on_delete = models.CASCADE)
-    file = models.ImageField(upload_to = "media/img/items")
+    file = models.ImageField(upload_to = "img/items")
     
     def __str__(self):
         return self.abbr
@@ -48,29 +52,49 @@ class Item_image(models.Model):
 class Order(models.Model):
     user = models.ForeignKey(User, related_name="order_user", on_delete = models.CASCADE)
     item = models.ForeignKey(Item, related_name="order_item", on_delete = models.CASCADE)
+    quantity = models.IntegerField(default=1)
     delivary = models.CharField(max_length=255)
     date = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
-        return self.user
+        return f"{self.user} - ordered => {self.item} on {self.date}"
         
 class Request(models.Model):
-    user = models.ForeignKey(User, related_name="request_user", on_delete = models.CASCADE)
-    item_title = models.CharField(max_length=255, blank=False)
-    item_size = models.CharField(max_length=255, blank=False)
-    item_description = models.CharField(max_length=255, blank=False)
-    client_fullname = models.CharField(max_length=255, blank=False)
-    client_phone_number = models.CharField(max_length=255, blank=False)
-    client_email = models.CharField(max_length=255, blank=False)
-    client_address = models.CharField(max_length=255, blank=False)
-    client_location = models.CharField(max_length=255, blank=False)
-    
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('delivered', 'Delivered'),
+    ]
+
+    user = models.ForeignKey(User, related_name="request_user", on_delete=models.CASCADE)
+    item_title = models.CharField(max_length=255)
+    item_size = models.CharField(max_length=255)
+    item_description = models.CharField(max_length=255)
+    quantity = models.PositiveIntegerField(default=1)
+    client_fullname = models.CharField(max_length=255)
+    client_phone_number = models.CharField(max_length=255)
+    client_email = models.CharField(max_length=255)
+    client_address = models.CharField(max_length=255)
+    client_location = models.CharField(max_length=255)
+    date_created = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+
     def __str__(self):
         return f"{self.user} - {self.item_title} - {self.client_location}"
         
 class RequestFile(models.Model):
     request = models.ForeignKey(Request, related_name="request_file", on_delete = models.CASCADE)
-    file = models.FileField(upload_to="media/request_files")
+    file = models.FileField(upload_to="request_files/")
     
     def __str__(self):
-        return self.order
+        return self.request
+
+
+class Review(models.Model):
+    user = models.ForeignKey(User, related_name="review_user", on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, related_name="review_item", on_delete=models.CASCADE)
+    comment = models.CharField(max_length=255)
+    rating = models.IntegerField(default=1)
+    
+    def __str__(self):
+        return f"{self.user} review on {self.item} -> (rating: '{self.rating}', comment: {self.comment})"

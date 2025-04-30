@@ -71,6 +71,12 @@
        <!-- Dashboard Links -->
        <div class="widget user-dashboard-menu">
         <ul>
+         <li class="{% if request.path == '/hq/orders' %}active{% endif %}">
+          <a href='{% url "hq-o" %}'>
+           <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+           Orders 
+          </a>
+         </li>
          <li class="{% if request.path == '/hq/requests' %}active{% endif %}">
           <a href='{% url "hq-r" %}'>
            <i class="fa fa-tasks" aria-hidden="true"></i>

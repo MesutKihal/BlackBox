@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			categories.forEach(category => {
 				if (category.title == categorySelect.value)
 				{
-					subCategories.appendChild(createCategoryCheckbox(category.subcategories));
+					subCategories.appendChild(createCategoryCheckbox(category.subs));
 				}
 			})
 		}
@@ -187,7 +187,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	
 	// Initializing the fuse search
 	getProducts().then(data => {
-		console.log("I'm Alive");
 		products = data['items'];
 		updateProducts();
 		originalProducts = [...products];
@@ -312,7 +311,7 @@ function createProductCard(item) {
 
     // Button
     const btn = document.createElement("a");
-    btn.href = "/single";
+    btn.href = `/single/${item.id}`;
     btn.classList.add("btn", "btn-sm", "btn-outline-primary", "w-100");
     btn.textContent = "View Product";
 
@@ -441,12 +440,12 @@ function createCategoryCheckbox(categories) {
 	  checkboxInput.classList.add('form-check-input');
 	  checkboxInput.type = 'checkbox';
 	  checkboxInput.name = 'categoryFilter';
-	  checkboxInput.id = category.id;
+	  checkboxInput.id = category;
 
 	  const label = document.createElement('label');
 	  label.classList.add('form-check-label', 'text-dark');
-	  label.setAttribute('for', category.id);
-	  label.textContent = category.label;
+	  label.setAttribute('for', category);
+	  label.textContent = category;
 
 	  formCheckDiv.appendChild(checkboxInput);
 	  formCheckDiv.appendChild(label);

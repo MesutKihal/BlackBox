@@ -64,7 +64,7 @@
                   {% endfor %}
                 </select>
               </div>
-              
+              {% if request.user.is_authenticated %}
               <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" class="form-control" id="name" name="name" required>
@@ -88,6 +88,11 @@
               <button type="submit" class="btn btn-primary btn-block btn-lg">
                 <i class="fas fa-shopping-cart mr-2"></i> Purchase Now
               </button>
+			  {% else %}
+			  <a class="mt-3 d-block text-primary" href="{% url 'login' %}">
+				You want to purchase this item?
+			  </a>
+			  {% endif %}
             </form>
           </div>
         </div>
@@ -113,7 +118,7 @@
               <div class="col-md-6">
                 <table class="table table-striped">
                   <tbody>
-                    {% for key, value in product.specification.items %}
+                    {% for key, value in specification.items %}
                       <tr>
                         <th>{{ key }}</th>
                         <td>{{ value }}</td>
@@ -143,7 +148,7 @@
 						{% endfor %}
                       </div>
                     </div>
-                    <p>{{ review.content }}</p>
+                    <p>{{ review.comment }}</p>
                     <small class="text-muted">Posted on {{ review.created_at|date:"F d, Y" }}</small>
                   </div>
                 </div>

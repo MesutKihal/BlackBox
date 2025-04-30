@@ -1,87 +1,216 @@
 {% extends 'marketplace/admin-pages.html' %}
-{% block content %}
 {% load static %}
-     <div class="col-lg-8">
-      <!-- Recently Favorited -->
-      <div class="widget dashboard-container my-adslist">
-       <h3 class="widget-header">
-        Requests
-       </h3>
-       <table class="table table-responsive product-dashboard-table">
-        <thead>
-         <tr>
-          <th>
-           Image
-          </th>
-          <th>
-           Product Title
-          </th>
-          <th class="text-center">
-           Category
-          </th>
-          <th class="text-center">
-           Action
-          </th>
-         </tr>
-        </thead>
-        <tbody>
-		{% for order in orders %}
-         <tr>
-          <td class="product-thumb">
-           <img alt="image description" height="auto" src="{{ order.image }}" width="80px"/>
-          </td>
-          <td class="product-details">
-           <h3 class="title">
-            {{ order.title }}
-           </h3>
-           <span class="add-id">
-            <strong>
-             User
-            </strong>
-            {{ order.user }}
-           </span>
-           <span>
-            <strong>
-             Order on:
-            </strong>
-            <time>
-             {{ order.date }}
-            </time>
-           </span>
-           <span class="status active">
-            <strong>
-             Status
-            </strong>
-            {{ order.status }}
-           </span>
-           <span class="location">
-            <strong>
-             Location
-            </strong>
-            {{ order.location }}
-           </span>
-          </td>
-          <td class="product-category">
-           <span class="categories">
-            {{ order.category }}
-           </span>
-          </td>
+
+{% block content %}
+<div class="col-lg-8 mt-4">
+  <h2 class="mb-4">Requests</h2>
+
+  <div class="d-flex justify-content-between mb-3">
+    <input type="text" id="searchInput" class="form-control w-50" placeholder="Search requests...">
+    <select id="sortSelect" class="form-control w-25">
+      <option value="date">Sort by Date</option>
+      <option value="quantity">Sort by Quantity</option>
+    </select>
+  </div>
+
+  <div style="max-height: 600px; overflow-y: auto;">
+    <table class="table table-bordered" id="inventoryTable">
+      <thead class="thead-dark">
+        <tr>
+          <th>Item</th>
+          <th>Client</th>
+          <th>Quantity</th>
+          <th>Date</th>
+          <th>Status</th>
+          <th>Location</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="requestList">
+        {% for request in requests %}
+        <tr>
+          <td>{{ request.item_title }}</td>
+          <td>{{ request.client_fullname }}</td>
+          <td>{{ request.quantity }}</td>
+          <td>{{ request.date_created|date:"Y-m-d H:i" }}</td>
+          <td>{{ request.get_status_display }}</td>
+          <td>{{ request.client_location }}</td>
           <td class="action">
-           <div class="">
-            <ul class="list-inline justify-content-center">
-             <li class="list-inline-item">
-              <a class="view" href="{% url 'hq-r-v' order.id %}">
-               <i class="fa fa-eye">
-               </i>
-              </a>
-             </li>
-            </ul>
-           </div>
+            <div>
+              <ul class="list-inline justify-content-center">
+                <li class="list-inline-item">
+                  <a class="view" href="javascript:void(0);" onclick="showModal({{ request.id }})">
+                    <i class="fa fa-eye"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
           </td>
-         </tr>
-		 {% endfor %}
-        </tbody>
-       </table>
-      </div>
-     </div>
+        </tr>
+        <div id="modal-{{ request.id }}" class="modal-overlay" style="display:none;">
+          <div class="modal-content">
+            <h4>Request Details</h4>
+            <ul>
+              <li><strong>Item:</strong> {{ request.item_title }}</li>
+              <li><strong>Size:</strong> {{ request.item_size }}</li>
+              <li><strong>Description:</strong> {{ request.item_description }}</li>
+              <li><strong>Client:</strong> {{ request.client_fullname }}</li>
+              <li><strong>Email:</strong> {{ request.client_email }}</li>
+              <li><strong>Phone:</strong> {{ request.client_phone_number }}</li>
+              <li><strong>Location:</strong> {{ request.client_location }}</li>
+              <li><strong>Status:</strong> {{ request.get_status_display }}</li>
+              <li><strong>Created:</strong> {{ request.date_created|date:"Y-m-d H:i" }}</li>
+            </ul>
+			<div class="text-center mt-3">
+			  <button class="btn btn-success" onclick="updateStatus({{ request.id }}, 'approved')">Approve</button>
+			  <button class="btn btn-danger" onclick="updateStatus({{ request.id }}, 'declined')">Decline</button>
+			  <button class="btn btn-secondary" onclick="closeModal({{ request.id }})">Close</button>
+			</div>
+          </div>
+        </div>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-3 d-flex justify-content-end">
+    <label class="mr-2">Show:</label>
+    <select id="showLimit" class="form-control w-auto">
+      <option value="10">10</option>
+      <option value="50">50</option>
+      <option value="100">100</option>
+      <option value="200">200</option>
+    </select>
+  </div>
+</div>
+
+<style>
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+  }
+
+  .modal-content {
+    background-color: #fff;
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 10px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-content ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  .modal-content ul li {
+    padding: 5px 0;
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
+<script>
+  const tableRows = Array.from(document.querySelectorAll('#requestList tr'));
+  const searchInput = document.getElementById('searchInput');
+  const sortSelect = document.getElementById('sortSelect');
+  const showLimit = document.getElementById('showLimit');
+
+  let rowsData = tableRows.map(row => {
+    const cells = row.querySelectorAll('td');
+    return {
+      element: row,
+      item: cells[0].innerText,
+      client: cells[1].innerText,
+      quantity: parseInt(cells[2].innerText),
+      date: new Date(cells[3].innerText),
+      status: cells[4].innerText,
+      location: cells[5].innerText
+    };
+  });
+
+  const fuse = new Fuse(rowsData, {
+    keys: ['item', 'client', 'status', 'location'],
+    threshold: 0.3
+  });
+
+  function renderRows(data) {
+    const tbody = document.getElementById('requestList');
+    tbody.innerHTML = '';
+    data.slice(0, parseInt(showLimit.value)).forEach(d => tbody.appendChild(d.element));
+  }
+
+  searchInput.addEventListener('input', () => {
+    const query = searchInput.value;
+    const results = query ? fuse.search(query).map(r => r.item) : rowsData;
+    renderRows(results);
+  });
+
+  sortSelect.addEventListener('change', () => {
+    let sorted = [...rowsData];
+    const sortBy = sortSelect.value;
+
+    if (sortBy === 'date') {
+      sorted.sort((a, b) => b.date - a.date);
+    } else if (sortBy === 'quantity') {
+      sorted.sort((a, b) => b.quantity - a.quantity);
+    }
+
+    renderRows(sorted);
+  });
+
+  showLimit.addEventListener('change', () => {
+    renderRows(rowsData);
+  });
+
+  renderRows(rowsData);
+
+  function showModal(id) {
+    document.getElementById(`modal-${id}`).style.display = 'flex';
+  }
+
+  function closeModal(id) {
+    document.getElementById(`modal-${id}`).style.display = 'none';
+  }
+  function updateStatus(id, newStatus) {
+	  fetch("{% url 'update-status' %}", {
+		method: "POST",
+		headers: {
+		  'Content-Type': 'application/json',
+		  'X-CSRFToken': getCSRFToken()
+		},
+		body: JSON.stringify({ id: id, status: newStatus })
+	  })
+	  .then(response => response.json())
+	  .then(data => {
+		if (data.success) {
+		  alert(`Request ${id} updated to ${data.new_status}`);
+		  document.querySelector(`#modal-${id} .modal-content ul`).innerHTML += `<li><strong>New Status:</strong> ${data.new_status}</li>`;
+		  closeModal(id);
+		} else {
+		  alert(data.error);
+		}
+	  });
+	}
+  function getCSRFToken() {
+	  return document.cookie.split('; ')
+		.find(row => row.startsWith('csrftoken='))
+		?.split('=')[1];
+	}
+
+</script>
 {% endblock %}

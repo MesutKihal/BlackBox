@@ -8,6 +8,7 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
+from django.views.decorators.http import require_POST
 from .models import UserProfile, Category, SubCategory, Item, Item_image, Order, Request, RequestFile
 import re
 import json
@@ -16,8 +17,8 @@ import json
 
 # Main Page
 def main(request):
-    categories = [{"category": category.title, "image": category.image.url, "subs": []} for category in Category.objects.all()]
-    items = [{"title": product.name, "category": product.category.title, "description": product.description,"image": list(Item_image.objects.filter(item=product))[0]} for product in Item.objects.all()]
+    categories = [{"category": category.title, "image": category.image.url, "subs": [sub.title for sub in SubCategory.objects.filter(parent=category)]} for category in Category.objects.all()]
+    items = [{"title": product.name, "category": product.category.title, "price": product.price, "rating": range(5), "description": str(product.description)[:50] + "..","image": list(Item_image.objects.filter(item=product))[0].file.url} for product in Item.objects.all()]
     context = {"items": items,
                 "categories": categories
                 }
@@ -35,39 +36,89 @@ def store(request):
     
 # Admin Page
 def admin(request):
+    if request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        otp = request.POST['otp']
+        # Authentication
+        try:
+            user = User.objects.get(username=username, is_superuser=True)
+            if user.password != password:
+                messages.error(request,'Invalid password')
+                return redirect("hq")
+        except User.DoesNotExist:
+            user = None
+        # If authentication is successful Login
+        if user is not None:
+            auth_login(request, user)
+            messages.success(request, f"{username} Logged In Successfully!")
+            return redirect("hq-r")
+        else:
+            messages.error(request, "Cannot Log In!")
+            return redirect("hq")
     return render(request, 'marketplace/admin.html')
     
 def requests(request):
-    context = {'requests': Request.objects.all(),
-               'orders': Order.objects.all()
+    requests = Request.objects.all().order_by('-date_created')
+    return render(request, 'marketplace/requests.html', {'requests': requests})
+
+@csrf_exempt
+@require_POST
+def update_request_status(request):
+    data = json.loads(request.body)
+
+    try:
+        req = Request.objects.get(pk=data['id'])
+        if data['status'] in ['approved', 'declined']:
+            req.status = data['status']
+            req.save()
+            return JsonResponse({'success': True, 'new_status': req.get_status_display()})
+        else:
+            return JsonResponse({'success': False, 'error': 'Invalid status'})
+    except Request.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Request not found'})
+
+def orders(request):
+    context = {'orders': Order.objects.all()
               }
-    return render(request, 'marketplace/requests.html', context)
+    return render(request, 'marketplace/orders.html', context)
 
 def view_request(request, id):
     context = {'request': Request.objects.get(id=id)}
     return render(request, 'marketplace/view_request.html', context)
 
+def view_order(request, id):
+    context = {'request': Order.objects.get(id=id)}
+    return render(request, 'marketplace/view_order.html', context)
+
 def view_products(request):
-    context = {'product': Item.objects.get(id=id)}    
+    context = {'products': Item.objects.all()}    
     return render(request, 'marketplace/products.html', context)
 
 
 def stats(request):    
     return render(request, 'marketplace/stats.html')
 
-def media(request):    
-    return render(request, 'marketplace/media.html')
+def media(request):
+    context = {
+        "media_files": [file for file in RequestFile.objects.all()]
+    }
+    return render(request, 'marketplace/media.html', context)
 
-def users(request):    
+def users(request):
+    all_users = [usr for usr in User.objects.filter()]
+    context = {
+        'users': all_users,
+        'user_profiles': [profile for profile in UserProfile.objects.all() for usr in all_users if profile.user in all_users]
+    }
     return render(request, 'marketplace/users.html')
     
-def settings(request):    
+def settings(request):
+    context = {
+        "user": request.user,
+    }
     return render(request, 'marketplace/settings.html')
 
-# Login Page
-def login(request):
-    return render(request, 'marketplace/login.html')
- 
 # About Page
 def about(request):
     return render(request, 'marketplace/about-us.html')
@@ -102,7 +153,11 @@ def services(request):
 # Single
 def single(request, id):
      
-    context = {"product": Item.objects.get(id=id)}
+    context = {
+        "product": Item.objects.get(id=id),
+        "specification": ""
+        
+    }
     return render(request, "marketplace/single.html", context)
 
 # Login Page
@@ -117,17 +172,17 @@ def login(request):
                 user = User.objects.get(username=username)
                 if user.password != password:
                     messages.error(request,'Invalid password')
-                    return redirect("/login")
+                    return redirect("login")
             except User.DoesNotExist:
                 user = None
             # If authentication is successful Login
             if user is not None:
                 auth_login(request, user)
                 messages.success(request, f"{username} Logged In Successfully!")
-                return redirect("home")
+                return redirect("store")
             else:
                 messages.error(request, "Cannot Log In!")
-                return redirect("/login")
+                return redirect("login")
     else:
         form = LogUser()
     return render(request, 'marketplace/login.html', {'form': form})
@@ -174,7 +229,8 @@ def logout(request):
 @csrf_exempt
 def products(request):    
     data = {
-        "items": [{"title": product.name,
+        "items": [{"id": product.id,
+                   "title": product.name,
                    "category": product.category.title,
                    "description": product.description,
                    "rating": 5,

@@ -104,6 +104,18 @@
 			</a>
 		 </li>
         </ul>
+		{% if request.user.is_authenticated %}
+        <ul class="navbar-nav ml-auto mt-10">
+         <li class="nav-item">
+          <a class="nav-link login-button" href="">
+			{{ request.user }}
+          </a>
+		  <a class="nav-link text-danger login-button" href="{% url 'logout' %}">
+			Logout
+          </a>
+         </li>
+        </ul>
+		{% else %}
         <ul class="navbar-nav ml-auto mt-10">
          <li class="nav-item">
           <a class="nav-link login-button" href="{% url 'login' %}">
@@ -117,12 +129,35 @@
           </a>
          </li>
         </ul>
+		{% endif %}
        </div>
       </nav>
      </div>
     </div>
    </div>
   </header>
+{% if messages %}
+	{% for message in messages %}
+		{% if message.tags == "success" %}
+			<div class="alert alert-success" role="alert">
+			  {{ message }}
+			</div>
+		{% elif message.tags == "error" %}
+			<div class="alert alert-danger" role="alert">
+			  {{ message }}
+			</div>
+		{% elif message.tags == "info" %}
+			<div class="alert alert-warning" role="alert">
+			  {{ message }}
+			</div>
+		{% else %}
+			<div class="alert alert-info" role="alert">
+			  {{ message }}
+			</div>
+		{% endif %}
+	{% endfor %}
+{% endif %}
+
   {% block content %}
   {% endblock %}
   <!--============================
