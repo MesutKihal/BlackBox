@@ -14,7 +14,7 @@
   </div>
 
   <div style="max-height: 600px; overflow-y: auto;">
-    <table class="table table-bordered" id="inventoryTable">
+    <table class="table table-bordered table-striped table-responsive" id="inventoryTable">
       <thead class="thead-dark">
         <tr>
           <th>Item</th>
@@ -33,7 +33,13 @@
           <td>{{ request.client_fullname }}</td>
           <td>{{ request.quantity }}</td>
           <td>{{ request.date_created|date:"Y-m-d H:i" }}</td>
-          <td>{{ request.get_status_display }}</td>
+          {% if request.status == 'approved' %}
+			<td class="text-success">{{ request.status }}</td>
+          {% elif request.status == 'declined' %}
+			<td class="text-danger">{{ request.status }}</td>
+		  {% elif request.status == 'pending' %}
+			<td class="text-warning">{{ request.status }}</td>
+		  {% endif %}
           <td>{{ request.client_location }}</td>
           <td class="action">
             <div>
@@ -58,7 +64,7 @@
               <li><strong>Email:</strong> {{ request.client_email }}</li>
               <li><strong>Phone:</strong> {{ request.client_phone_number }}</li>
               <li><strong>Location:</strong> {{ request.client_location }}</li>
-              <li><strong>Status:</strong> {{ request.get_status_display }}</li>
+              <li><strong>Status:</strong> {{ request.status }}</li>
               <li><strong>Created:</strong> {{ request.date_created|date:"Y-m-d H:i" }}</li>
             </ul>
 			<div class="text-center mt-3">
@@ -83,45 +89,6 @@
     </select>
   </div>
 </div>
-
-<style>
-  .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0,0,0,0.85);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1050;
-  }
-
-  .modal-content {
-    background-color: #fff;
-    padding: 30px;
-    width: 90%;
-    max-width: 600px;
-    border-radius: 10px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
-    animation: fadeIn 0.3s ease-out;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .modal-content ul {
-    list-style: none;
-    padding-left: 0;
-  }
-
-  .modal-content ul li {
-    padding: 5px 0;
-  }
-</style>
 
 <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 <script>
@@ -187,7 +154,7 @@
     document.getElementById(`modal-${id}`).style.display = 'none';
   }
   function updateStatus(id, newStatus) {
-	  fetch("{% url 'update-status' %}", {
+	  fetch("{% url 'update-request-status' %}", {
 		method: "POST",
 		headers: {
 		  'Content-Type': 'application/json',
@@ -198,9 +165,9 @@
 	  .then(response => response.json())
 	  .then(data => {
 		if (data.success) {
-		  alert(`Request ${id} updated to ${data.new_status}`);
 		  document.querySelector(`#modal-${id} .modal-content ul`).innerHTML += `<li><strong>New Status:</strong> ${data.new_status}</li>`;
 		  closeModal(id);
+		  location.reload();
 		} else {
 		  alert(data.error);
 		}

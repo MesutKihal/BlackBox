@@ -37,6 +37,10 @@ class Item(models.Model):
     inStock = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(SubCategory, related_name="items", on_delete = models.CASCADE)
+    # rating 
+    # specification
+    # stock_range
+    # tag
 
     def __str__(self):
         return self.name
@@ -50,12 +54,17 @@ class Item_image(models.Model):
         return self.abbr
 
 class Order(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('approved', 'Approved'),
+        ('delivered', 'Delivered'),
+    ]
     user = models.ForeignKey(User, related_name="order_user", on_delete = models.CASCADE)
     item = models.ForeignKey(Item, related_name="order_item", on_delete = models.CASCADE)
     quantity = models.IntegerField(default=1)
     delivary = models.CharField(max_length=255)
     date = models.DateTimeField(auto_now_add=True)
-    
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     def __str__(self):
         return f"{self.user} - ordered => {self.item} on {self.date}"
         

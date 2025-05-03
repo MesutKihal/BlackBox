@@ -271,7 +271,7 @@ function createProductCard(item) {
     // Title
     const title = document.createElement("h6");
     title.classList.add("card-title", "mb-1", "text-truncate"); 
-    title.textContent = item.name;
+    title.textContent = item.title;
 
     // Category
     const category = document.createElement("small");

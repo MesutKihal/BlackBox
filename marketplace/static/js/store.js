@@ -269,7 +269,7 @@ function createProductCard(item) {
     // Title
     const title = document.createElement("h6");
     title.classList.add("card-title", "mb-1", "text-truncate"); 
-    title.textContent = item.name;
+    title.textContent = item.title;
 
     // Category
     const category = document.createElement("small");
@@ -287,10 +287,10 @@ function createProductCard(item) {
 		stockStatusDiv.textContent = "Out of Stock";
 	}
 
-    // Badges - Best Seller
-    const bestSellerBadge = document.createElement("span");
-    bestSellerBadge.classList.add("badge", "bg-primary", "text-white", "fs-6", "p-2", "mb-2");
-    bestSellerBadge.textContent = "Best Seller"; // You can update this as needed later
+    // Item Badge
+    const itemBadge = document.createElement("span");
+    itemBadge.classList.add("badge", "bg-primary", "text-white", "fs-6", "p-2", "mb-2");
+    itemBadge.textContent = item.tag;
 
     // Ratings - 5 stars by default
     const ratingsDiv = document.createElement("div");
@@ -316,7 +316,7 @@ function createProductCard(item) {
     btn.textContent = "View Product";
 
     // Append everything
-    cardBodyDiv.append(priceDiv, title, category, stockStatusDiv, bestSellerBadge, ratingsDiv, btn);
+    cardBodyDiv.append(priceDiv, title, category, stockStatusDiv, itemBadge, ratingsDiv, btn);
 
     cardDiv.appendChild(cardBodyDiv);
     colDiv.appendChild(cardDiv);
@@ -382,14 +382,14 @@ function createProductStrip(item) {
 		stockStatusDiv.textContent = "Out of Stock";
 	}
 
-    // Best Seller Badge
-    const bestSellerBadge = document.createElement("span");
-    bestSellerBadge.classList.add("badge", "bg-primary", "text-white", "fs-6", "p-1");
-    bestSellerBadge.textContent = "Best Seller"; // You can update this as needed later
+    // Item Badge
+    const itemBadge = document.createElement("span");
+    itemBadge.classList.add("badge", "bg-primary", "text-white", "fs-6", "p-1");
+    itemBadge.textContent = item.badge;
 
     // Add badges to badges container
     badgesDiv.appendChild(stockStatusDiv);
-    badgesDiv.appendChild(bestSellerBadge);
+    badgesDiv.appendChild(itemBadge);
 
     // Ratings - 5 stars by default
     const ratingsDiv = document.createElement("div");

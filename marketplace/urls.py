@@ -21,10 +21,10 @@ urlpatterns = [
     # ADMIN URL'S
     path('hq/', views.admin, name="hq"),
     path('hq/orders', views.orders, name="hq-o"),
-    path('hq/order/<str:id>', views.view_order, name="hq-o-v"),
     path('hq/requests', views.requests, name="hq-r"),
-    path('hq/request/<str:id>', views.view_request, name="hq-r-v"),
     path('hq/products', views.view_products, name="hq-p"),
+    path('hq/add_product', views.add_product, name="hq-p-a"),
+    path('hq/edit_product/<str:id>', views.edit_product, name="hq-p-e"),
     path('hq/stats', views.stats, name="hq-st"),
     path('hq/media', views.media, name="hq-m"),
     path('hq/users', views.users, name="hq-u"),
@@ -32,7 +32,11 @@ urlpatterns = [
     path('hq/logout', views.logout, name="hq-l"),
     # API'S URL's
     path('upload/', views.upload, name="upload"),
-    path('api/update-status/', views.update_request_status, name='update-status'),
+    path('api/update_product_img/<str:id>', views.update_product_img, name="update_product_img"),
+    path('api/remove_product_img/', views.remove_product_img, name="remove_product_img"),
+    path('api/update-request-status/', views.update_request_status, name='update-request-status'),
+    path('api/update-order-status/', views.update_order_status, name='update-order-status'),
+    path('api/get-product-images/<str:id>', views.get_product_images, name='get_product_images'),
     path('store/get_products', views.products, name="products"),
     path('store/get_categories', views.get_categories, name="categories"),
 ] + staticfiles_urlpatterns()

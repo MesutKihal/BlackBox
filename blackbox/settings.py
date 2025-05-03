@@ -109,20 +109,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-
+STATIC_ROOT = 'staticfiles/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # AWS S3 MEDIA STORAGE
-"""
-AWS_ACCESS_KEY_ID = 'AKIAVVZOOB7DMXRTZIEH'
-AWS_SECERT_ACCESS_KEY = 'Ac3FclUKy5bUQ/h1g9yUscp+kHoGy1/VjtX1N3Ci' 
-
-AWS_STORAGE_BUCKET_NAME = 'blackbox-design-media-storage-bucket-2025'
+'''
+AWS_ACCESS_KEY_ID = "AKIAVVZOOB7DMXRTZIEH"
+AWS_SECERT_ACCESS_KEY = "Ac3FclUKy5bUQ/h1g9yUscp+kHoGy1/VjtX1N3Ci"
+AWS_S3_REGION_NAME = "eu-north-1"
+AWS_STORAGE_BUCKET_NAME = "blackbox-design-media-storage-bucket-2025"
 AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
 
 STORAGES = {
     "default": {
@@ -133,4 +134,4 @@ STORAGES = {
         "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
     }, 
 }
-"""
+'''

@@ -1,6 +1,6 @@
 {% extends 'marketplace/base.html' %}
+{% block title %} {{ product.title }} {% endblock %}
 {% load static %}
-
 {% block content %}
 <section class="section product-detail-section">
   <div class="container">
@@ -8,15 +8,15 @@
       <!-- Product Images -->
       <div class="col-lg-6">
         <div class="product-image-main mb-4">
-          <img id="mainProductImage" src="{{ product.images.0.url }}" alt="{{ product.title }}" class="img-fluid rounded">
+          <img id="mainProductImage" src="{{ product.images.0.file.url }}" alt="{{ product.title }}" class="img-fluid rounded">
         </div>
         <div class="product-thumbnails">
           <div class="row">
             {% for image in product.images %}
             <div class="col-3">
-              <img src="{{ image.url }}" alt="{{ product.title }} thumbnail {{ forloop.counter }}" 
+              <img src="{{ image.file.url }}" alt="{{ product.title }} thumbnail {{ forloop.counter }}" 
                    class="img-thumbnail {% if forloop.first %}active{% endif %}" 
-                   onclick="changeMainImage('{{ image.url }}')">
+                   onclick="changeMainImage('{{ image.file.url }}')">
             </div>
             {% endfor %}
           </div>
@@ -31,9 +31,9 @@
           <div class="rating mb-3">
 			{% for i in "12345" %}
 				{% if forloop.counter <= product.rating %}
-				  <i class="fas fa-star text-warning"></i>
+				  <i class="fa fa-star text-warning"></i>
 				{% else %}
-				  <i class="far fa-star text-warning"></i>
+				  <i class="fa fa-star-o text-warning"></i>
 				{% endif %}
 			{% endfor %}
 			<span class="ml-2">({{ product.reviews.count }} reviews)</span>
@@ -86,7 +86,7 @@
               </div>
               
               <button type="submit" class="btn btn-primary btn-block btn-lg">
-                <i class="fas fa-shopping-cart mr-2"></i> Purchase Now
+                <i class="fa fa-shopping-cart mr-2"></i> Purchase Now
               </button>
 			  {% else %}
 			  <a class="mt-3 d-block text-primary" href="{% url 'login' %}">
@@ -141,9 +141,9 @@
                       <div class="rating">
 						{% for i in "12345" %}
 							{% if forloop.counter <= review.rating %}
-							  <i class="fas fa-star text-warning"></i>
+							  <i class="fa fa-star text-warning"></i>
 							{% else %}
-							  <i class="far fa-star text-warning"></i>
+							  <i class="fa fa-star-o text-warning"></i>
 							{% endif %}
 						{% endfor %}
                       </div>
@@ -167,7 +167,7 @@
                   <div class="rating-input">
                     {% for i in "54321" %}
                       <input type="radio" id="star{{ i }}" name="rating" value="{{ i }}" {% if forloop.first %}checked{% endif %}>
-                      <label for="star{{ i }}" title="{{ i }} stars"><i class="fas fa-star"></i></label>
+                      <label for="star{{ i }}" title="{{ i }} stars"><i class="fa fa-star"></i></label>
                     {% endfor %}
                   </div>
                 </div>

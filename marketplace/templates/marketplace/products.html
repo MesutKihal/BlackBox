@@ -2,11 +2,30 @@
 {% block content %}
 {% load static %}
      <div class="col-lg-8">
-      <!-- Recently Favorited -->
       <div class="widget dashboard-container my-adslist">
-       <h3 class="widget-header">
+       <h2 class="widget-header">
         Products
-       </h3>
+       </h2>
+	  <div class="d-flex justify-content-between mb-3">
+		<input type="text" id="searchInput" class="form-control w-50" placeholder="Search requests...">
+		<select id="sortSelect" class="form-control w-25">
+		  <option value="date">Sort by Date</option>
+		  <option value="quantity">Sort by Quantity</option>
+		</select>
+	  </div>
+	  <div class="w-50">
+		<ul class="list-inline justify-content-center">
+		 <li class="list-inline-item">
+		 <h4>
+		  <a class="edit" href="{% url 'hq-p-a' %}">
+		   <i class="fa fa-pencil">
+		   </i>
+			Add new Product
+		  </a>
+		 </h4>
+		 </li>
+		</ul>
+       </div>
        <table class="table table-responsive product-dashboard-table">
         <thead>
          <tr>
@@ -28,7 +47,7 @@
 		{% for product in products %}
          <tr>
           <td class="product-thumb">
-           <img alt="image description" height="auto" src="{{ product.image }}" width="80px"/>
+           <img alt="image description" height="auto" src="/{{ product.image.file }}" width="80px"/>
           </td>
           <td class="product-details">
            <h3 class="title">
@@ -68,8 +87,8 @@
            <div class="">
             <ul class="list-inline justify-content-center">
              <li class="list-inline-item">
-              <a class="view" href="">
-               <i class="fa fa-eye">
+              <a class="edit" href="{% url 'hq-p-e' product.id %}">
+               <i class="fa fa-pencil">
                </i>
               </a>
              </li>
@@ -81,5 +100,15 @@
         </tbody>
        </table>
       </div>
+	  <div class="mt-3 d-flex justify-content-end">
+		<label class="mr-2">Show:</label>
+		<select id="showLimit" class="form-control w-auto">
+		  <option value="10">10</option>
+		  <option value="50">50</option>
+		  <option value="100">100</option>
+		  <option value="200">200</option>
+		</select>
+	  </div>
      </div>
 {% endblock %}
+

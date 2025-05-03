@@ -9,7 +9,7 @@ from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_POST
-from .models import UserProfile, Category, SubCategory, Item, Item_image, Order, Request, RequestFile
+from .models import UserProfile, Category, SubCategory, Item, Item_image, Order, Request, RequestFile, Review
 import re
 import json
 
@@ -64,6 +64,22 @@ def requests(request):
 
 @csrf_exempt
 @require_POST
+def update_order_status(request):
+    data = json.loads(request.body)
+
+    try:
+        ord = Order.objects.get(pk=data['id'])
+        if data['status'] in ['approved', 'declined']:
+            ord.status = data['status']
+            ord.save()
+            return JsonResponse({'success': True, 'new_status': ord.get_status_display()})
+        else:
+            return JsonResponse({'success': False, 'error': 'Invalid status'})
+    except Order.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'Order not found'})
+        
+@csrf_exempt
+@require_POST
 def update_request_status(request):
     data = json.loads(request.body)
 
@@ -83,18 +99,74 @@ def orders(request):
               }
     return render(request, 'marketplace/orders.html', context)
 
-def view_request(request, id):
-    context = {'request': Request.objects.get(id=id)}
-    return render(request, 'marketplace/view_request.html', context)
-
-def view_order(request, id):
-    context = {'request': Order.objects.get(id=id)}
-    return render(request, 'marketplace/view_order.html', context)
-
 def view_products(request):
-    context = {'products': Item.objects.all()}    
+    context = {'products': [
+                            {"id": item.id,
+                             "name": item.name,
+                             "price": item.price,
+                             "created_at": item.created_at,
+                             "inStock": item.inStock,
+                             "category": item.category,
+                             "image": list(Item_image.objects.filter(item=item))[0]} for item in Item.objects.all()]}    
     return render(request, 'marketplace/products.html', context)
 
+@csrf_exempt
+def get_product_images(request, id):
+    images = []
+    for img in Item_image.objects.filter(item=Item.objects.get(pk=int(id))):
+        images.append({"file": img.file.url,
+                       "id": img.id})
+    data = {"images": images}
+    return JsonResponse(data, safe=False)
+    
+@csrf_exempt
+def remove_product_img(request):
+    if request.POST:
+        Item_image.objects.get(pk=request.POST['id']).delete()
+        data = f"Item deleted {request.POST['id']}"
+    else:
+        data = "No request have been made"
+    return JsonResponse(data, safe=False)
+ 
+@csrf_exempt
+def edit_product(request, id):
+    product = Item.objects.get(pk=id)
+    if request.method == "POST":
+        product.title = request.POST["title"]
+        product.price = request.POST["price"]
+        if int(request.POST["stock"]) == 1:
+            product.inStock = True
+        else:
+            product.inStock = False
+        product.category = SubCategory.objects.get(title=request.POST["category"])
+        product.save()
+        
+    images = []
+    for img in Item_image.objects.filter(item=Item.objects.get(pk=int(id))):
+        images.append({"file": img.file.url,
+                       "id": img.id})
+    context = {
+        "product": product,
+        "categories": SubCategory.objects.all(),
+        "images": images,
+    }
+    return render(request, 'marketplace/edit_product.html', context)
+@csrf_exempt
+def add_product(request):
+    if request.POST:
+        title = request.POST["title"]
+        price = request.POST["price"]
+        if int(request.POST["stock"]) == 1:
+            inStock = True
+        else:
+            inStock = False
+        category = SubCategory.objects.get(title=request.POST["category"])
+        Item.objects.create(name=title, price=price, inStock=inStock, category=category) # TO DO
+        return JsonResponse(id, safe=False)
+    context = {
+        "categories": SubCategory.objects.all(),
+    }
+    return render(request, 'marketplace/add_product.html', context)
 
 def stats(request):    
     return render(request, 'marketplace/stats.html')
@@ -152,10 +224,18 @@ def services(request):
     
 # Single
 def single(request, id):
-     
+    product = Item.objects.get(id=id)
     context = {
-        "product": Item.objects.get(id=id),
-        "specification": ""
+        "product": {
+            "title": product.name,
+            "description": product.description,
+            "price": product.price,
+            "inStock": product.inStock,
+            "stock_range": range(1, 6),
+            "specification": "",
+            "reviews": list(Review.objects.filter(item=product)),
+            "images": list(Item_image.objects.filter(item=product)),
+        }
         
     }
     return render(request, "marketplace/single.html", context)
@@ -236,7 +316,8 @@ def products(request):
                    "rating": 5,
                    "inStock": "1",
                    "price": product.price,
-                   "image": [img.file.url for img in Item_image.objects.filter(item=product)][0]} for product in Item.objects.all()]
+                   "tag": "New",
+                   "image": [img.file.url for img in Item_image.objects.filter(item=product)]} for product in Item.objects.all()]
     }
     return JsonResponse(data, safe=False)
 
@@ -258,3 +339,12 @@ def upload(request):
     else:
         response = f"Request method: {request.method}"
     return JsonResponse(response, safe=False)
+
+@csrf_exempt
+def update_product_img(request, id):
+    product = Item.objects.get(pk=id)
+    image = Item_image.objects.create(abbr=str(request.FILES.getlist('file')[0]), item=product, file=request.FILES.getlist('file')[0])
+    image.save()
+    response = "Image Uploaded Successfully"
+    return JsonResponse(response, safe=False)
+    

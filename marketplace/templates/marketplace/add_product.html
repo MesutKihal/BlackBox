@@ -1,0 +1,50 @@
+{% extends 'marketplace/admin-pages.html' %}
+{% block content %}
+{% load static %}
+     <div class="col-lg-8 shadow-sm p-3 mb-5 bg-white rounded">
+		{% csrf_token %}
+		<div class="widget dashboard-container my-adslist">
+			<h3 class="widget-header">
+				Add new Product
+			</h3>
+			<label><strong>Title:</strong></label>
+			<input class="form-control" id="title" value="">
+			<label><strong>Price:</strong></label>
+			<input class="form-control" id="price" type="number" step="10" value="">
+			<label><strong>Stock Status:</strong></label>
+			<select id="stock" class="form-control mt-2 w-100">
+				<option value="0">Out of Stock</option>
+				<option value="1" selected>In Stock</option>
+			</select>
+			<label><strong>Category:</strong></label>
+			<select id="category" class="form-control mt-2 w-100">
+			 {% for category in categories %}
+				<option value="{{ category.title }}">{{ category.title }}</option>
+			 {% endfor %}
+			</select>
+			<div class="text-center mt-4">
+				<button class="col-lg-12 btn btn-outline-success" onclick="updateProductInfo('{% url 'hq-p-a' %}')">Save</button>
+			</div>
+			<br>
+
+		</div>
+     </div>
+	 <script>
+		function updateProductInfo(url) {
+			const xhr = new XMLHttpRequest();
+			const formData = new FormData();
+			formData.append("title", document.querySelector('#title').value);
+			formData.append("price", document.querySelector('#price').value);
+			formData.append("stock", document.querySelector('#stock').value);
+			formData.append("category", document.querySelector('#category').value);
+			xhr.open("POST", url, true);
+			xhr.send(formData);
+			xhr.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					let id = this.responseText;
+					location.href = `/hq/edit_product/${id}`;
+			   }
+			};
+		}
+	 </script>
+{% endblock %}
