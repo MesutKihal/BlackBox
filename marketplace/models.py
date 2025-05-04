@@ -37,10 +37,10 @@ class Item(models.Model):
     inStock = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(SubCategory, related_name="items", on_delete = models.CASCADE)
-    # rating 
-    # specification
-    # stock_range
-    # tag
+    # rating = models.IntegerField(default=1)
+    # specification = models.JSONField(default=dict)
+    # stock_range = models.IntegerField(default=5) 
+    # tag = models.CharField(default="New")
 
     def __str__(self):
         return self.name

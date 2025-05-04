@@ -8,9 +8,9 @@
 				Add new Product
 			</h3>
 			<label><strong>Title:</strong></label>
-			<input class="form-control" id="title" value="">
+			<input class="form-control" id="title" value="" required placeholder="Enter your product title">
 			<label><strong>Price:</strong></label>
-			<input class="form-control" id="price" type="number" step="10" value="">
+			<input class="form-control" id="price" type="number" step="10" value="10" required>
 			<label><strong>Stock Status:</strong></label>
 			<select id="stock" class="form-control mt-2 w-100">
 				<option value="0">Out of Stock</option>
@@ -22,8 +22,26 @@
 				<option value="{{ category.title }}">{{ category.title }}</option>
 			 {% endfor %}
 			</select>
+			<label><strong>Specification:</strong></label>
+			<table id="spec-table" class="table table-bordered">
+			  <thead>
+				<tr>
+				  <th>Key</th>
+				  <th>Value</th>
+				  <th>Action</th>
+				</tr>
+			  </thead>
+			  <tbody id="spec-body">
+				<tr>
+				  <td><input type="text" name="spec_key[]" class="form-control" /></td>
+				  <td><input type="text" name="spec_value[]" class="form-control" /></td>
+				  <td><button type="button" class="btn btn-outline-danger is-rounded btn-sm" onclick="removeRow(this)">Remove <i class="fa fa-minus" aria-hidden="true"></i></button></td>
+				</tr>
+			  </tbody>
+			</table>
+			<button type="button" class="btn btn-outline-success is-rounded" onclick="addRow()">Add <i class="fa fa-plus" aria-hidden="true"></i></button>
 			<div class="text-center mt-4">
-				<button class="col-lg-12 btn btn-outline-success" onclick="updateProductInfo('{% url 'hq-p-a' %}')">Save</button>
+				<button class="col-lg-12 btn btn-success" onclick="updateProductInfo('{% url 'hq-p-a' %}')">Save</button>
 			</div>
 			<br>
 
@@ -45,6 +63,20 @@
 					location.href = `/hq/edit_product/${id}`;
 			   }
 			};
+		}
+		function addRow() {
+		  const tbody = document.getElementById("spec-body");
+		  const row = document.createElement("tr");
+		  row.innerHTML = `
+			<td><input type="text" name="spec_key[]" class="form-control" /></td>
+			<td><input type="text" name="spec_value[]" class="form-control" /></td>
+			<td><button type="button" class="btn btn-outline-danger btn-sm" onclick="removeRow(this)">Remove <i class="fa fa-minus" aria-hidden="true"></i></button></td>
+		  `;
+		  tbody.appendChild(row);
+		}
+
+		function removeRow(button) {
+		  button.closest("tr").remove();
 		}
 	 </script>
 {% endblock %}

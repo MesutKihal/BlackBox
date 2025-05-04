@@ -161,7 +161,7 @@ def add_product(request):
         else:
             inStock = False
         category = SubCategory.objects.get(title=request.POST["category"])
-        Item.objects.create(name=title, price=price, inStock=inStock, category=category) # TO DO
+        Item.objects.create(name=title, price=price, inStock=inStock, category=category)
         return JsonResponse(id, safe=False)
     context = {
         "categories": SubCategory.objects.all(),
