@@ -35,7 +35,7 @@ def store(request):
     }
     return render(request, 'marketplace/store.html', context)
 
-    
+@login_required
 # Admin Page
 def admin(request):
     if request.POST:
@@ -44,7 +44,7 @@ def admin(request):
         otp = request.POST['otp']
         # Authentication
         try:
-            user = User.objects.get(username=username, is_superuser=True)
+            user = User.objects.get(username=username)
             if user.password != password:
                 messages.error(request,'Invalid password')
                 return redirect("hq")
@@ -96,12 +96,13 @@ def update_request_status(request):
     except Request.DoesNotExist:
         return JsonResponse({'success': False, 'error': 'Request not found'})
         
-
+@login_required
 def orders(request):
     context = {'orders': Order.objects.all()
               }
     return render(request, 'marketplace/orders.html', context)
 
+@login_required
 def view_products(request):
     context = {'products': [
                             {"id": item.id,
@@ -132,6 +133,7 @@ def remove_product_img(request):
     return JsonResponse(data, safe=False)
  
 @csrf_exempt
+@login_required
 def edit_product(request, id):
     product = Item.objects.get(pk=id)
     if request.method == "POST":
@@ -160,6 +162,7 @@ def edit_product(request, id):
     }
     return render(request, 'marketplace/edit_product.html', context)
 @csrf_exempt
+@login_required
 def add_product(request):
     if request.POST:
         title = request.POST["title"]
@@ -178,7 +181,8 @@ def add_product(request):
         "categories": SubCategory.objects.all(),
     }
     return render(request, 'marketplace/add_product.html', context)
-
+    
+@login_required
 def stats(request):
     total_requests = Order.objects.count()
 
@@ -205,7 +209,8 @@ def stats(request):
         'user_counts': user_counts,
         'recent_requests': recent_requests
     })
-
+    
+@login_required
 def media(request):
     request_files = []
     item_images = []
@@ -221,6 +226,7 @@ def media(request):
     }
     return render(request, 'marketplace/media.html', context)
 
+@login_required
 def users(request):
     all_users = []
     for usr in User.objects.filter(is_staff=False):
@@ -232,6 +238,7 @@ def users(request):
     }
     return render(request, 'marketplace/users.html', context)
     
+@login_required
 def settings(request):
     context = {
         "user": request.user,
@@ -274,7 +281,11 @@ def single(request, id):
     product = Item.objects.get(id=id)
     if request.POST:
         Review.objects.create(user=request.user, item=product, rating=request.POST['rating'], comment=request.POST['content'])
- 
+        all_ratings = 0
+        ratings = [rev.rating for rev in Review.objects.filter(item=product)]
+        for rating in ratings:
+            all_ratings += rating
+        product.update(rating=all_ratings//ratings.count())
     context = {
         "product": {
             "id": product.id,
