@@ -22,6 +22,8 @@
 				<option value="{{ category.title }}">{{ category.title }}</option>
 			 {% endfor %}
 			</select>
+			<label><strong>Description:</strong></label>
+			<textarea class="form-control" id="description"></textarea>
 			<label><strong>Specification:</strong></label>
 			<table id="spec-table" class="table table-bordered">
 			  <thead>
@@ -51,10 +53,24 @@
 		function updateProductInfo(url) {
 			const xhr = new XMLHttpRequest();
 			const formData = new FormData();
+			let key_elements = document.getElementsByName('spec_key[]');
+			let value_elements = document.getElementsByName('spec_value[]');
+			let spec_keys = [];
+			let spec_values = [];
+			
 			formData.append("title", document.querySelector('#title').value);
 			formData.append("price", document.querySelector('#price').value);
 			formData.append("stock", document.querySelector('#stock').value);
 			formData.append("category", document.querySelector('#category').value);
+			formData.append("description", document.querySelector('#description').innerText);
+			key_elements.forEach(el => {
+				spec_keys.push(el.value);
+			})
+			value_elements.forEach(el => {
+				spec_values.push(el.value);
+			})
+			formData.append("spec_keys", spec_keys);
+			formData.append("spec_values", spec_values);
 			xhr.open("POST", url, true);
 			xhr.send(formData);
 			xhr.onreadystatechange = function() {

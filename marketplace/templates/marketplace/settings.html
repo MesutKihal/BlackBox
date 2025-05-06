@@ -1,0 +1,17 @@
+{% extends 'marketplace/admin-pages.html' %}
+{% block content %}
+    <div class="col-lg-8">
+      <div class="widget dashboard-container my-adslist">
+       <h2 class="widget-header">
+        Settings
+       </h2>
+		<label><strong>Username:</strong></label>
+		<input class="form-control" id="title" value="{{ user.username }}">
+		<label><strong>Password:</strong></label>
+		<input class="form-control" id="price" type="password" value="{{ user.password }}">
+		<div class="text-center mt-4">
+			<button class="col-lg-12 btn btn-outline-success" onclick="">Save</button>
+		</div>
+	   </div>
+	</div>
+{% endblock %}

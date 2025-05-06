@@ -1,11 +1,88 @@
+
 {% extends 'marketplace/admin-pages.html' %}
 {% block content %}
-{% load static %}
-     <div class="col-lg-8">
-      <div class="widget dashboard-container my-adslist">
-       <h3 class="widget-header">
-        Statistics
-       </h3>
-      </div>
-     </div>
+	<div class="col-lg-8 mx-auto mt-4">
+	  <h2 class="mb-4">Statistics</h2>
+
+	  <div class="mb-4">
+		<h4>Total Orders: {{ total_requests }}</h4>
+	  </div>
+
+	  <div class="row justify-content-center mb-4">
+		<div class="col-md-4">
+		  <canvas id="statusChart"></canvas>
+		</div>
+		<div class="col-md-4">
+		  <canvas id="userChart"></canvas>
+		</div>
+	  </div>
+
+	  <div class="mb-4">
+		<h5>Orders Over Last 7 Days</h5>
+		<canvas id="dailyChart"></canvas>
+	  </div>
+
+	  <div class="mt-4">
+		<h5>Recent Orders</h5>
+		<table class="table table-striped">
+		  <thead>
+			<tr>
+			  <th>Item</th>
+			  <th>User</th>
+			  <th>Status</th>
+			  <th>Date</th>
+			</tr>
+		  </thead>
+		  <tbody>
+			{% for r in recent_requests %}
+			<tr>
+			  <td>{{ r.item.name }}</td>
+			  <td>{{ r.user.username }}</td>
+			  <td>{{ r.status }}</td>
+			  <td>{{ r.created_at|date:"Y-m-d H:i" }}</td>
+			</tr>
+			{% endfor %}
+		  </tbody>
+		</table>
+	  </div>
+	</div>
+
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script>
+	  const statusChart = new Chart(document.getElementById('statusChart'), {
+		type: 'doughnut',
+		data: {
+		  labels: [{% for s in status_counts %}"{{ s.status|capfirst }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+		  datasets: [{
+			label: 'Orders by Status',
+			data: [{% for s in status_counts %}{{ s.count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+			backgroundColor: ['#ffc107', '#28a745', '#dc3545']
+		  }]
+		}
+	  });
+
+	  const userChart = new Chart(document.getElementById('userChart'), {
+		type: 'pie',
+		data: {
+		  labels: [{% for u in user_counts %}"{{ u.user__username }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+		  datasets: [{
+			label: 'Top 5 Users',
+			data: [{% for u in user_counts %}{{ u.count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+			backgroundColor: ['#007bff', '#17a2b8', '#6f42c1', '#fd7e14', '#20c997']
+		  }]
+		}
+	  });
+
+	  const dailyChart = new Chart(document.getElementById('dailyChart'), {
+		type: 'bar',
+		data: {
+		  labels: [{% for d in daily_counts %}"{{ d.date }}"{% if not forloop.last %}, {% endif %}{% endfor %}],
+		  datasets: [{
+			label: 'Requests per Day',
+			data: [{% for d in daily_counts %}{{ d.count }}{% if not forloop.last %}, {% endif %}{% endfor %}],
+			backgroundColor: '#007bff'
+		  }]
+		}
+	  });
+	</script>
 {% endblock %}

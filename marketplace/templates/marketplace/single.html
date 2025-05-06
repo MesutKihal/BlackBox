@@ -85,7 +85,7 @@
                 <input type="tel" class="form-control" id="phone" name="phone" required>
               </div>
               
-              <button type="submit" class="btn btn-primary btn-block btn-lg">
+              <button class="btn btn-primary btn-block btn-lg" onclick="purchaseItem()">
                 <i class="fa fa-shopping-cart mr-2"></i> Purchase Now
               </button>
 			  {% else %}
@@ -98,7 +98,6 @@
         </div>
       </div>
     </div>
-
     <!-- Product Details Tabs -->
     <div class="row mt-5">
       <div class="col-12">
@@ -118,7 +117,8 @@
               <div class="col-md-6">
                 <table class="table table-striped">
                   <tbody>
-                    {% for key, value in specification.items %}
+					
+                    {% for key, value in product.specification.items %}
                       <tr>
                         <th>{{ key }}</th>
                         <td>{{ value }}</td>
@@ -156,11 +156,11 @@
             {% else %}
               <p>No reviews yet. Be the first to review this product!</p>
             {% endif %}
-            
+            {% if user.is_authenticated %}
             <!-- Add Review Form -->
             <div class="add-review mt-5">
               <h4>Add Your Review</h4>
-              <form method="post" action="">
+              <form method="post" action="{% url 'single' product.id %}">
                 {% csrf_token %}
                 <div class="form-group">
                   <label>Rating</label>
@@ -174,8 +174,9 @@
                 <div class="form-group">
                   <textarea class="form-control" name="content" rows="3" placeholder="Your review..." required></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit Review</button>
+					<button type="submit" class="btn btn-primary">Submit Review</button>
               </form>
+			  {% endif %}
             </div>
           </div>
         </div>

@@ -5,6 +5,8 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import LogUser, AddUser
 from django.http import JsonResponse
+from django.db.models import Count
+from django.utils.timezone import now, timedelta
 from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
@@ -93,6 +95,7 @@ def update_request_status(request):
             return JsonResponse({'success': False, 'error': 'Invalid status'})
     except Request.DoesNotExist:
         return JsonResponse({'success': False, 'error': 'Request not found'})
+        
 
 def orders(request):
     context = {'orders': Order.objects.all()
@@ -132,13 +135,17 @@ def remove_product_img(request):
 def edit_product(request, id):
     product = Item.objects.get(pk=id)
     if request.method == "POST":
-        product.title = request.POST["title"]
+        product.name = request.POST["title"]
         product.price = request.POST["price"]
         if int(request.POST["stock"]) == 1:
             product.inStock = True
         else:
             product.inStock = False
         product.category = SubCategory.objects.get(title=request.POST["category"])
+        product.description = request.POST["description"]
+        product.specification = dict(zip(request.POST['spec_keys'].split(","), request.POST['spec_values'].split(",")))
+        product.rating = request.POST['rating']
+        product.tag = request.POST['tag']
         product.save()
         
     images = []
@@ -149,6 +156,7 @@ def edit_product(request, id):
         "product": product,
         "categories": SubCategory.objects.all(),
         "images": images,
+        "specification": product.specification,
     }
     return render(request, 'marketplace/edit_product.html', context)
 @csrf_exempt
@@ -161,29 +169,68 @@ def add_product(request):
         else:
             inStock = False
         category = SubCategory.objects.get(title=request.POST["category"])
-        Item.objects.create(name=title, price=price, inStock=inStock, category=category)
-        return JsonResponse(id, safe=False)
+        product.description = request.POST["description"]
+        specification = dict(zip(request.POST['spec_keys'], request.POST['spec_values']))
+            
+        Item.objects.create(name=title, price=price, inStock=inStock, category=category, specification=specification)
+        return JsonResponse(Item.objects.get(name=title, price=price, inStock=inStock, category=category).id, safe=False)
     context = {
         "categories": SubCategory.objects.all(),
     }
     return render(request, 'marketplace/add_product.html', context)
 
-def stats(request):    
-    return render(request, 'marketplace/stats.html')
+def stats(request):
+    total_requests = Order.objects.count()
+
+    # Requests per status
+    status_counts = Order.objects.values('status').annotate(count=Count('status'))
+
+    # Requests over last 7 days
+    last_7_days = [now().date() - timedelta(days=i) for i in range(6, -1, -1)]
+    daily_counts = []
+    for day in last_7_days:
+        count = Order.objects.filter(created_at__date=day).count()
+        daily_counts.append({'date': day.strftime('%Y-%m-%d'), 'count': count})
+
+    # Requests per user
+    user_counts = Order.objects.values('user__username').annotate(count=Count('id')).order_by('-count')[:5]
+
+    # Recent requests
+    recent_requests = Order.objects.select_related('user').order_by('-created_at')[:10]
+
+    return render(request, 'marketplace/stats.html', {
+        'total_requests': total_requests,
+        'status_counts': status_counts,
+        'daily_counts': daily_counts,
+        'user_counts': user_counts,
+        'recent_requests': recent_requests
+    })
 
 def media(request):
+    request_files = []
+    item_images = []
+    for file in RequestFile.objects.all():
+        request_files.append(file)
+    for file in Item_image.objects.all():
+        item_images.append(file)
     context = {
-        "media_files": [file for file in RequestFile.objects.all()]
+        "media_files": {
+            "request_files": request_files,
+            "item_images": item_images
+        }
     }
     return render(request, 'marketplace/media.html', context)
 
 def users(request):
-    all_users = [usr for usr in User.objects.filter()]
+    all_users = []
+    for usr in User.objects.filter(is_staff=False):
+        temp = UserProfile.objects.get(user=usr)
+        all_users.append({"username": usr.username, "image": temp.image, "email": usr.email, "full_name": temp.full_name, "phone": temp.phone_number})
+    print(all_users)
     context = {
         'users': all_users,
-        'user_profiles': [profile for profile in UserProfile.objects.all() for usr in all_users if profile.user in all_users]
     }
-    return render(request, 'marketplace/users.html')
+    return render(request, 'marketplace/users.html', context)
     
 def settings(request):
     context = {
@@ -225,14 +272,18 @@ def services(request):
 # Single
 def single(request, id):
     product = Item.objects.get(id=id)
+    if request.POST:
+        Review.objects.create(user=request.user, item=product, rating=request.POST['rating'], comment=request.POST['content'])
+ 
     context = {
         "product": {
+            "id": product.id,
             "title": product.name,
             "description": product.description,
             "price": product.price,
             "inStock": product.inStock,
             "stock_range": range(1, 6),
-            "specification": "",
+            "specification": product.specification,
             "reviews": list(Review.objects.filter(item=product)),
             "images": list(Item_image.objects.filter(item=product)),
         }

@@ -1,0 +1,63 @@
+{% extends 'marketplace/admin-pages.html' %}
+{% block content %}
+{% load static %}
+     <div class="col-lg-8 shadow-sm p-3 mb-5 bg-white rounded">
+		<div class="widget dashboard-container my-adslist">
+			<h3 class="widget-header">
+				Users
+			</h3>
+		   <table class="table table-responsive table-striped product-dashboard-table">
+			<thead>
+			 <tr>
+			  <th>
+			   Profile Image
+			  </th>
+			  <th>
+			   Profile Details
+			  </th>
+			 </tr>
+			</thead>
+			<tbody>
+			{% for usr in users %}
+			 <tr>
+			  <td class="product-thumb">
+			   <img alt="image description" height="auto" src="/{{ usr.image.file }}" width="80px"/>
+			  </td>
+			  <td class="product-details">
+			   <h3 class="title">
+				{{ usr.username }}
+			   </h3>
+			   <span class="add-id">
+				<strong>
+				 Full Name:
+				</strong>
+				{{ usr.full_name }}
+			   </span>
+			   <span>
+				<strong>
+				 Email:
+				</strong>
+				<time>
+				 {{ usr.email }}
+				</time>
+			   </span>
+			   <span class="status active">
+				<strong>
+				Phone Number:
+				</strong>
+				{{ usr.phone }}
+			   </span>
+			   <span class="status active">
+				<strong>
+				Status:
+				</strong>
+				Active
+			   </span>
+			  </td>
+			 </tr>
+			 {% endfor %}
+			</tbody>
+		   </table>
+		</div>
+     </div>
+{% endblock %}

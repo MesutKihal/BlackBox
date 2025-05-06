@@ -16,7 +16,7 @@ class UserProfile(models.Model):
     
 class Category(models.Model):
     title = models.CharField(max_length=255)
-    image = models.ImageField(upload_to = "img/categories")
+    image = models.ImageField(upload_to = "media/img/categories")
     class Meta:
         verbose_name_plural = "Categories"
     def __str__(self):
@@ -37,10 +37,10 @@ class Item(models.Model):
     inStock = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(SubCategory, related_name="items", on_delete = models.CASCADE)
-    # rating = models.IntegerField(default=1)
-    # specification = models.JSONField(default=dict)
-    # stock_range = models.IntegerField(default=5) 
-    # tag = models.CharField(default="New")
+    rating = models.IntegerField(default=1)
+    specification = models.JSONField(default=dict)
+    stock_range = models.IntegerField(default=5)
+    tag = models.CharField(default="New", max_length=16)
 
     def __str__(self):
         return self.name
@@ -48,7 +48,7 @@ class Item(models.Model):
 class Item_image(models.Model):
     abbr = models.CharField(max_length=255)
     item = models.ForeignKey(Item, related_name="items_images", on_delete = models.CASCADE)
-    file = models.ImageField(upload_to = "img/items")
+    file = models.ImageField(upload_to = "media/img/items")
     
     def __str__(self):
         return self.abbr
@@ -64,6 +64,7 @@ class Order(models.Model):
     quantity = models.IntegerField(default=1)
     delivary = models.CharField(max_length=255)
     date = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     def __str__(self):
         return f"{self.user} - ordered => {self.item} on {self.date}"
@@ -93,7 +94,7 @@ class Request(models.Model):
         
 class RequestFile(models.Model):
     request = models.ForeignKey(Request, related_name="request_file", on_delete = models.CASCADE)
-    file = models.FileField(upload_to="request_files/")
+    file = models.FileField(upload_to="media/request_files/")
     
     def __str__(self):
         return self.request

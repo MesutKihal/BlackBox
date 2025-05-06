@@ -4,9 +4,37 @@
      <div class="col-lg-8">
       <!-- Recently Favorited -->
       <div class="widget dashboard-container my-adslist">
-       <h3 class="widget-header">
-        Media
-       </h3>
+       <h2 class="widget-header">
+        Media Files
+       </h2>
       </div>
+
+	  <div id="gallery" class="gallery">
+	  {% for image in request_files %}
+		<div class="img-container">
+			<img src="/{{ image.file }}"></img>
+			<button class="rm btn btn-outline-danger" onclick="removeRequestFile({{ image.request.id }})">Remove</button>
+		</div>
+	  {% endfor %}
+	  {% for image in media_files.item_images %}
+		<div class="img-container">
+			<img src="/{{ image.file }}"></img>
+			<button class="rm btn btn-outline-danger" onclick="removeProductImg({{ image.item.id }})">Remove</button>
+		</div>
+	  {% endfor %}
+	  </div>
      </div>
+	 <script>
+		function removeProductImg(id) {
+			const xhr = new XMLHttpRequest();
+			const formData = new FormData();
+			formData.append("id", Number(id));
+			xhr.open("POST", "{% url 'remove_product_img' %}", true);
+			xhr.send(formData);
+			location.reload();
+		}
+		function removeRequestFile(id) {
+			return;
+		}
+	 </script>
 {% endblock %}

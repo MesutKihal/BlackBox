@@ -30,7 +30,7 @@
     <div class="row">
      <div class="col-md-12">
       <nav class="navbar navbar-expand-lg navbar-light navigation">
-       <a class="navbar-brand" href="index.html">
+       <a class="navbar-brand" href="{% url 'main' %}">
         <img alt="" src="{% static 'images/BlackBox.png'%}"/>
        </a>
        <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
@@ -98,11 +98,11 @@
            </li>
           </ul>
          </li>
-		 <li class="nav-item">
-			<a class="nav-link" href="{% url 'about' %}">
-				About
-			</a>
-		 </li>
+		 <!-- <li class="nav-item"> -->
+			<!-- <a class="nav-link" href="{% url 'about' %}"> -->
+				<!-- About -->
+			<!-- </a> -->
+		 <!-- </li> -->
         </ul>
 		{% if request.user.is_authenticated %}
         <ul class="navbar-nav ml-auto mt-10">

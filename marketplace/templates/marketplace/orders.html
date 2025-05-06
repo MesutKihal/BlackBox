@@ -59,12 +59,12 @@
             <ul>
               <li><strong>Item:</strong> {{ order.item }}</li>
               <li><strong>Price:</strong> {{ order.item.price }}</li>
-              <li><strong>Description:</strong> {{ order.item_description }}</li>
+              <li><strong>Description:</strong> {{ order.item.description }}</li>
               <li><strong>User:</strong> {{ order.user }}</li>
               <li><strong>Email:</strong> {{ order.user.email }}</li>
               <li><strong>Location:</strong> {{ order.delivary }}</li>
-              <li><strong>Status:</strong> {{ order.get_status_display }}</li>
-              <li><strong>Created:</strong> {{ order.date_created|date:"Y-m-d H:i" }}</li>
+              <li><strong>Status:</strong> {{ order.status }}</li>
+              <li><strong>Created:</strong> {{ order.created_at|date:"Y-m-d H:i" }}</li>
             </ul>
 			<div class="text-center mt-3">
 			  <button class="btn btn-success" onclick="updateStatus({{ order.id }}, 'approved')">Approve</button>
