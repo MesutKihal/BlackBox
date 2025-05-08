@@ -1,21 +1,23 @@
 
 from pathlib import Path
-import environ
+import psycopg2
+from environs import Env
+import dj_database_url
 import os
+
+
+
+env = Env()
+env.read_env()
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
-env = environ.Env(
-    DEBUG=(bool, False)
-)
-
-environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
-
-DEBUG = env('DEBUG')
-
-SECRET_KEY = env('SECRET_KEY')
+ENVIRONMENT = env.str('ENVIRONMENT', 'development')
+DATABASE_URL = env.str('DATABASE_URL')
+SECRET_KEY = env.str('SECRET_KEY')
+DEBUG = env.str('DEBUG')
 
 ALLOWED_HOSTS = ["blackbox-delicate-resonance-5521.fly.dev/", "localhost", "127.0.0.1", "blackboxisdesign.com"]
 
@@ -66,9 +68,15 @@ WSGI_APPLICATION = 'blackbox.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': env.db()
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
+# DATABASES = {
+    # 'default': dj_database_url.parse(DATABASE_URL)
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
