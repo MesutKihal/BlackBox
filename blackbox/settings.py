@@ -19,7 +19,7 @@ DATABASE_URL = env.str('DATABASE_URL')
 SECRET_KEY = env.str('SECRET_KEY')
 DEBUG = env.str('DEBUG')
 
-ALLOWED_HOSTS = ["blackbox-delicate-resonance-5521.fly.dev/", "localhost", "127.0.0.1", "blackboxisdesign.com"]
+ALLOWED_HOSTS = ["blackbox-j4e5.onrender.com", "localhost", "127.0.0.1", "blackboxisdesign.com"]
 
 INSTALLED_APPS = [
     'django.contrib.admin',
