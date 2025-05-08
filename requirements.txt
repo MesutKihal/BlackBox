@@ -9,3 +9,4 @@ psycopg==3.2.1
 requests
 django-environ
 whitenoise
+psycopg2
