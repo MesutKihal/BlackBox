@@ -22,21 +22,13 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
-class SubCategory(models.Model):
-    title = models.CharField(max_length=255)
-    parent = models.ForeignKey(Category, related_name="subcategories", on_delete = models.CASCADE)
-    class Meta:
-        verbose_name_plural = "Sub Categories"
-    def __str__(self):
-        return self.title
-     
 class Item(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     price = models.FloatField(default = 0.0)
     inStock = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    category = models.ForeignKey(SubCategory, related_name="items", on_delete = models.CASCADE)
+    category = models.ForeignKey(Category, related_name="items", on_delete = models.CASCADE)
     rating = models.IntegerField(default=1)
     specification = models.JSONField(default=dict)
     stock_range = models.IntegerField(default=5)

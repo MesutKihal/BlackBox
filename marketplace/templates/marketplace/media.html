@@ -19,7 +19,7 @@
 	  {% for image in media_files.item_images %}
 		<div class="img-container">
 			<img src="/{{ image.file }}"></img>
-			<button class="rm btn btn-outline-danger" onclick="removeProductImg({{ image.item.id }})">Remove</button>
+			<button class="rm btn btn-outline-danger" onclick="removeProductImg({{ image.id }})">Remove</button>
 		</div>
 	  {% endfor %}
 	  </div>

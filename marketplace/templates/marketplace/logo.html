@@ -88,16 +88,6 @@
           </div>
          </div>
         </div>
-        <div class="text-center my-4 py-4 rounded bg-white">
-		  <h3>Select the files you want to upload</h3>
-         <label for="file-upload">
-          <input class="form-control" id="formFileSm" name="file" type="file" enctype="multipart/form-data" />
-		  <progress id="progress-bar" class="w-100" value="0" max="100"></progress>
-		  <br/>
-		  <span class="text-white bg-success rounded" style="padding: 5px;">Upload more files + </span>
-		   
-		 </label>
-        </div>
        </div>
       </div>
      </fieldset>
@@ -214,76 +204,58 @@
 	}
 	
 	// Commune Select
-	<!-- let changeCommuneUp = document.querySelector('#commune-up'); -->
-	<!-- let changeCommuneDown = document.querySelector('#commune-down'); -->
-	<!-- let currentCommune = document.querySelector('#currentCommune'); -->
+	let changeCommuneUp = document.querySelector('#commune-up');
+	let changeCommuneDown = document.querySelector('#commune-down');
+	let currentCommune = document.querySelector('#currentCommune');
 
-	<!-- let Commune = ["Select Commune"] -->
-	<!-- index = 1 -->
-	<!-- let temp = "" -->
+	let Commune = ["Select Commune"]
+	index = 1
+	let temp = ""
 	
-	<!-- function getCommune() { -->
-		<!-- Commune = ["Select Commune"] -->
-		<!-- {% for c in communes %} -->
-			<!-- temp = "{{ c.wilaya_id }}" -->
-			<!-- {% if currentWilaya.dataset.wilayaId != 0 %} -->
-				<!-- {% if currentWilaya.dataset.wilayaId == temp %} -->
-					<!-- Commune[index] = "{{ c.name }}" -->
-					<!-- index += 1 -->
-				<!-- {% endif %} -->
-			<!-- {% endif %} -->
-		<!-- {% endfor %} -->
-		<!-- console.log(Commune); -->
-		<!-- return Commune; -->
-	<!-- } -->
+	function getCommune() {
+		Commune = ["Select Commune"]
+		{% for c in communes %}
+			temp = "{{ c.wilaya_id }}"
+			{% if currentWilaya.dataset.wilayaId != 0 %}
+				{% if currentWilaya.dataset.wilayaId == temp %}
+					Commune[index] = "{{ c.name }}"
+					index += 1
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+		console.log(Commune);
+		return Commune;
+	}
 	
-	<!-- changeCommuneUp.onclick = (event) => { -->
-		<!-- Commune = getCommune(); -->
-		<!-- if (Commune.length > 1) -->
-		<!-- { -->
-		  <!-- if (Number(currentCommune.dataset.communeId) > 1) { -->
-			<!-- currentCommune.innerText = Commune[Number(currentCommune.dataset.communeId)-1]; -->
-			<!-- currentCommune.dataset.communeId = `${Number(currentCommune.dataset.communeId) - 1}`; -->
-		  <!-- } else if (Number(currentCommune.dataset.communeId) == 1){ -->
-			<!-- currentCommune.innerText = Commune[Commune.length-1]; -->
-			<!-- currentCommune.dataset.communeId = `${Number(Commune.length) - 1}`; -->
-		  <!-- } else { -->
-			<!-- currentCommune.innerText = Commune[Commune.length-1]; -->
-			<!-- currentCommune.dataset.communeId = `${Number(Commune.length) - 1}`; -->
-		  <!-- } -->
-		<!-- } -->
-	<!-- } -->
+	changeCommuneUp.onclick = (event) => {
+		Commune = getCommune();
+		if (Commune.length > 1)
+		{
+		  if (Number(currentCommune.dataset.communeId) > 1) {
+			currentCommune.innerText = Commune[Number(currentCommune.dataset.communeId)-1];
+			currentCommune.dataset.communeId = `${Number(currentCommune.dataset.communeId) - 1}`;
+		  } else if (Number(currentCommune.dataset.communeId) == 1){
+			currentCommune.innerText = Commune[Commune.length-1];
+			currentCommune.dataset.communeId = `${Number(Commune.length) - 1}`;
+		  } else {
+			currentCommune.innerText = Commune[Commune.length-1];
+			currentCommune.dataset.communeId = `${Number(Commune.length) - 1}`;
+		  }
+		}
+	}
 
-	<!-- changeCommuneDown.onclick = (event) => { -->
-		<!-- Commune = getCommune() -->
-		<!-- if (Commune.length > 1) -->
-		<!-- { -->
-		  <!-- if (Number(currentCommune.dataset.communeId) == Commune.length-1) { -->
-			<!-- currentCommune.innerText = Commune[1]; -->
-			<!-- currentCommune.dataset.communeId = "1"; -->
-		  <!-- } else { -->
-			<!-- currentCommune.innerText = Commune[Number(currentCommune.dataset.communeId)+1]; -->
-			<!-- currentCommune.dataset.communeId = `${Number(currentCommune.dataset.communeId)+1}`; -->
-		  <!-- } -->
-		<!-- } -->
-	<!-- } -->
-	let fileSelector = document.querySelector('#formFileSm');
-	const progress = document.getElementById('progress-bar');
-	fileSelector.onchange = (event) => {
-		const file = fileSelector.files[0];
-		const payload = new FormData();
-		payload.append('file', file);
-		const req = new XMLHttpRequest();
-		req.open('POST', "https://httpbin.org/post");
-		req.upload.addEventListener('progress', function(e) {
-			const percentComplete = (e.loaded / e.total) * 100;
-			progress.value = percentComplete;
-		})
-		req.addEventListener('load', function() {
-			console.log(req.status); // Response status code
-			console.log(req.response); // Request response
-		})
-		req.send(payload);
+	changeCommuneDown.onclick = (event) => {
+		Commune = getCommune()
+		if (Commune.length > 1)
+		{
+		  if (Number(currentCommune.dataset.communeId) == Commune.length-1) {
+			currentCommune.innerText = Commune[1];
+			currentCommune.dataset.communeId = "1";
+		  } else {
+			currentCommune.innerText = Commune[Number(currentCommune.dataset.communeId)+1];
+			currentCommune.dataset.communeId = `${Number(currentCommune.dataset.communeId)+1}`;
+		  }
+		}
 	}
   </script>
 {% endblock %}

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
-from django.contrib.auth import login as auth_login, logout as auth_logout
+from django.contrib.auth import login as auth_login, logout as auth_logout, authenticate
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 from .forms import LogUser, AddUser
 from django.http import JsonResponse
 from django.db.models import Count
@@ -11,7 +11,7 @@ from django.core.paginator import Paginator
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.models import User
 from django.views.decorators.http import require_POST
-from .models import UserProfile, Category, SubCategory, Item, Item_image, Order, Request, RequestFile, Review
+from .models import UserProfile, Category, Item, Item_image, Order, Request, RequestFile, Review
 import re
 import json
 
@@ -19,8 +19,8 @@ import json
 
 # Main Page
 def main(request):
-    categories = [{"category": category.title, "image": category.image.url, "subs": [sub.title for sub in SubCategory.objects.filter(parent=category)]} for category in Category.objects.all()]
-    items = [{"title": product.name, "category": product.category.title, "price": product.price, "rating": range(5), "description": str(product.description)[:50] + "..","image": list(Item_image.objects.filter(item=product))[0].file.url} for product in Item.objects.all()]
+    categories = [{"title": category.title, "image": category.image.url} for category in Category.objects.all()]
+    items = [{"id": product.id,"title": product.name, "category": product.category.title, "price": product.price, "rating": range(product.rating), "description": str(product.description)[:50] + "..","image": list(Item_image.objects.filter(item=product))[0].file.url} for product in Item.objects.all()]
     context = {"items": items,
                 "categories": categories
                 }
@@ -30,36 +30,35 @@ def main(request):
 def store(request):
     context = {
         "categories": [
-            {"title": category.title, "subs": [sub.title for sub in SubCategory.objects.filter(parent=category)]} for category in Category.objects.all()
+            {"title": category.title} for category in Category.objects.all()
         ]
     }
     return render(request, 'marketplace/store.html', context)
 
-@login_required
+
 # Admin Page
 def admin(request):
     if request.POST:
         username = request.POST['username']
         password = request.POST['password']
-        otp = request.POST['otp']
         # Authentication
         try:
             user = User.objects.get(username=username)
-            if user.password != password:
-                messages.error(request,'Invalid password')
-                return redirect("hq")
-        except User.DoesNotExist:
-            user = None
-        # If authentication is successful Login
-        if user is not None:
-            auth_login(request, user)
-            messages.success(request, f"{username} Logged In Successfully!")
-            return redirect("hq-r")
+            # If authentication is successful Login
+            if user is not None:
+                authenticate(request, username=username, password=password)
+                auth_login(request, user)
+                messages.success(request, f"{username} Logged In Successfully!")
+                return redirect("hq-o")
+        except:
+             messages.error(request, "Cannot Login!!!")
+             return redirect("hq")
         else:
             messages.error(request, "Cannot Log In!")
             return redirect("hq")
     return render(request, 'marketplace/admin.html')
-    
+
+@login_required(login_url="/hq/")
 def requests(request):
     requests = Request.objects.all().order_by('-date_created')
     return render(request, 'marketplace/requests.html', {'requests': requests})
@@ -96,13 +95,13 @@ def update_request_status(request):
     except Request.DoesNotExist:
         return JsonResponse({'success': False, 'error': 'Request not found'})
         
-@login_required
+@login_required(login_url="/hq/")
 def orders(request):
     context = {'orders': Order.objects.all()
               }
     return render(request, 'marketplace/orders.html', context)
 
-@login_required
+@login_required(login_url="/hq/")
 def view_products(request):
     context = {'products': [
                             {"id": item.id,
@@ -126,14 +125,14 @@ def get_product_images(request, id):
 @csrf_exempt
 def remove_product_img(request):
     if request.POST:
-        Item_image.objects.get(pk=request.POST['id']).delete()
+        Item_image.objects.get(id=int(request.POST['id'])).delete()
         data = f"Item deleted {request.POST['id']}"
     else:
         data = "No request have been made"
     return JsonResponse(data, safe=False)
  
 @csrf_exempt
-@login_required
+@login_required(login_url="/hq/")
 def edit_product(request, id):
     product = Item.objects.get(pk=id)
     if request.method == "POST":
@@ -162,7 +161,7 @@ def edit_product(request, id):
     }
     return render(request, 'marketplace/edit_product.html', context)
 @csrf_exempt
-@login_required
+@login_required(login_url="/hq/")
 def add_product(request):
     if request.POST:
         title = request.POST["title"]
@@ -182,7 +181,7 @@ def add_product(request):
     }
     return render(request, 'marketplace/add_product.html', context)
     
-@login_required
+@login_required(login_url="/hq/")
 def stats(request):
     total_requests = Order.objects.count()
 
@@ -210,7 +209,7 @@ def stats(request):
         'recent_requests': recent_requests
     })
     
-@login_required
+@login_required(login_url="/hq/")
 def media(request):
     request_files = []
     item_images = []
@@ -226,19 +225,19 @@ def media(request):
     }
     return render(request, 'marketplace/media.html', context)
 
-@login_required
+@login_required(login_url="/hq/")
 def users(request):
     all_users = []
     for usr in User.objects.filter(is_staff=False):
         temp = UserProfile.objects.get(user=usr)
-        all_users.append({"username": usr.username, "image": temp.image, "email": usr.email, "full_name": temp.full_name, "phone": temp.phone_number})
+        all_users.append({"username": usr.username, "image": f"/{temp.image.file}", "email": usr.email, "full_name": temp.full_name, "phone": temp.phone_number})
     print(all_users)
     context = {
         'users': all_users,
     }
     return render(request, 'marketplace/users.html', context)
     
-@login_required
+@login_required(login_url="/hq/")
 def settings(request):
     context = {
         "user": request.user,
@@ -388,7 +387,7 @@ def products(request):
 def get_categories(request):
     data = {
         "categories": [
-            {"title": category.title, "subs": [sub.title for sub in SubCategory.objects.filter(parent=category)]} for category in Category.objects.all()
+            {"title": category.title} for category in Category.objects.all()
         ]
     }
     return JsonResponse(data, safe=False)

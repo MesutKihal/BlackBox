@@ -25,21 +25,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			return;
 		}
 	}
-	// Check for checked checkboxes ""A lot of checks hhh""
-	function categoryFilter() {
-		let filters = document.getElementsByName('categoryFilter');
-		let isChecked = []
-		filters.forEach(filter => {
-			if (filter.checked == true)
-			{
-				isChecked.push(filter.id);
-			}
-		})
-		return isChecked;
-	}
 	// Update the products view
 	function updateProducts() {
-		let categories = categoryFilter();
 		let values = priceFilter.value.split(',');
 		let page = [];
 		if (sortBy.value == "1")
@@ -59,8 +46,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			document.getElementById('searchQuery').innerText = "";
 			document.getElementById('resultCount').innerText = "";
 			list.innerHTML = '';
-			// products.length = 0;
-			// products.push(...originalProducts);
 			page = paginate(filteredProducts(products));
 			if (page)
 			{
@@ -118,24 +103,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			//.join('');
 		}
 	}
-	// Update Checkboxes
-	function updateCheckBoxes() {
-		if (categorySelect.value == "0")
-		{
-			return;
-		} else {
-			subCategories.style.display = "block";
-			subCategories.innerText = "";
-			categories.forEach(category => {
-				if (category.title == categorySelect.value)
-				{
-					subCategories.appendChild(createCategoryCheckbox(category.subs));
-				}
-			})
-		}
-	}
 	function filteredProducts(products) {
-		let categories = categoryFilter();
+		let selectedCategory = document.getElementById('categorySelect');
 		let values = priceFilter.value.split(',');
 		let isAvailable = document.getElementById('filter2');
 		const min = Number(values[0]);
@@ -144,7 +113,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		return products.filter(product => {
 			const priceMatch = product.price >= min && product.price <= max;
 			const stockMatch = isAvailable.value === "both" || isAvailable.value == product.inStock;
-			const categoryMatch = categories.length === 0 || categories.includes(product.category);
+			const categoryMatch = selectedCategory.value === "all"  || selectedCategory.value == product.category
 
 			return priceMatch && stockMatch && categoryMatch;
 		});
@@ -175,13 +144,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	getCategories().then(data => {
 		categories = data["categories"];
 		categorySelect.onchange = (event) => {
-			updateCheckBoxes();
-			categoryFilters = document.getElementsByName('categoryFilter');
-			categoryFilters.forEach(filter => {
-				filter.onchange = (event) => {
-					updateProducts();
-				}			
-			})
+			updateProducts();
 		}
 	})
 	
@@ -425,42 +388,6 @@ function createProductStrip(item) {
     rowDiv.appendChild(colDetailsDiv);
 
     return rowDiv;
-}
-
-// Create a category checkbox
-function createCategoryCheckbox(categories) {
-	const containerDiv = document.createElement('div');
-	containerDiv.classList.add('d-flex', 'align-items-start', 'flex-column');
-	let i = 0;
-	categories.forEach(category => {
-	  const formCheckDiv = document.createElement('div');
-	  formCheckDiv.classList.add('form-check');
-
-	  const checkboxInput = document.createElement('input');
-	  checkboxInput.classList.add('form-check-input');
-	  checkboxInput.type = 'checkbox';
-	  checkboxInput.name = 'categoryFilter';
-	  checkboxInput.id = category;
-
-	  const label = document.createElement('label');
-	  label.classList.add('form-check-label', 'text-dark');
-	  label.setAttribute('for', category);
-	  label.textContent = category;
-
-	  formCheckDiv.appendChild(checkboxInput);
-	  formCheckDiv.appendChild(label);
-	  formCheckDiv.animate([
-			{ transform: 'translateX(-50px)' },
-			{ transform: 'translateX(0)' }
-		  ], {
-			duration: (500*i) + 500,
-			easing: 'ease',
-		});
-	  containerDiv.appendChild(formCheckDiv);
-	  i++
-	});
-	
-	return containerDiv;
 }
 
 // Switch view 
