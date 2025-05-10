@@ -12,11 +12,11 @@ env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ENVIRONMENT = "production"
-DEBUG = "False"
+DEBUG = False
 SECRET_KEY = "django-insecure-v!w2vzv(s$598ze4nqu!e=ri02)@@o1!xnw-y*3)lit)+=*^g&"
 DATABASE_URL = "postgresql://neondb_owner:npg_GF4ZvDeXiah9@ep-bold-pond-a4pnnhhk-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
 CLOUD_NAME = "dkarpr0pz"
-API_KEY = "958764194811163"
+API_KEY = 958764194811163
 API_SECRET = "ZuI2toQwV2U83QUWqUowkDq8FVU"
 CLOUDINARY_URL = "cloudinary://958764194811163:ZuI2toQwV2U83QUWqUowkDq8FVU@dkarpr0pz"
 
