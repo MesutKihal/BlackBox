@@ -10,10 +10,15 @@ env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-ENVIRONMENT = env.str('ENVIRONMENT', 'development')
-DATABASE_URL = env.str('DATABASE_URL')
-SECRET_KEY = env.str('SECRET_KEY')
-DEBUG = env.str('DEBUG')
+
+ENVIRONMENT = "production"
+DEBUG = "False"
+SECRET_KEY = "django-insecure-v!w2vzv(s$598ze4nqu!e=ri02)@@o1!xnw-y*3)lit)+=*^g&"
+DATABASE_URL = "postgresql://neondb_owner:npg_GF4ZvDeXiah9@ep-bold-pond-a4pnnhhk-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
+CLOUD_NAME = "dkarpr0pz"
+API_KEY = "958764194811163"
+API_SECRET = "ZuI2toQwV2U83QUWqUowkDq8FVU"
+CLOUDINARY_URL = "cloudinary://958764194811163:ZuI2toQwV2U83QUWqUowkDq8FVU@dkarpr0pz"
 
 ALLOWED_HOSTS = ["blackbox-j4e5.onrender.com", "localhost", "127.0.0.1", "blackboxisdesign.com"]
 
@@ -120,7 +125,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env.str('CLOUD_NAME'),
-    'API_KEY': env.str('API_KEY'),
-    'API_SECRET': env.str('API_SECRET')
+    'CLOUD_NAME': CLOUD_NAME,
+    'API_KEY': API_KEY,
+    'API_SECRET': API_SECRET
 }

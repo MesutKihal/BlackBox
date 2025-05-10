@@ -85,7 +85,7 @@
                 <input type="tel" class="form-control" id="phone" name="phone" required>
               </div>
               
-              <button class="btn btn-primary btn-block btn-lg" onclick="purchaseItem()">
+              <button class="btn btn-primary btn-block btn-lg" onclick="purchaseItem({% url 'create_order' product.id %})">
                 <i class="fa fa-shopping-cart mr-2"></i> Purchase Now
               </button>
 			  {% else %}
@@ -186,82 +186,95 @@
 </section>
 
 <script>
-function changeMainImage(src) {
-  document.getElementById('mainProductImage').src = src;
-  // Update active thumbnail
-  const thumbnails = document.querySelectorAll('.product-thumbnails img');
-  thumbnails.forEach(thumb => thumb.classList.remove('active'));
-  event.target.classList.add('active');
-}
+	function changeMainImage(src) {
+	  document.getElementById('mainProductImage').src = src;
+	  // Update active thumbnail
+	  const thumbnails = document.querySelectorAll('.product-thumbnails img');
+	  thumbnails.forEach(thumb => thumb.classList.remove('active'));
+	  event.target.classList.add('active');
+	}
+	function purchaseItem(url)
+	{
+		const xhr = new XMLHttpRequest();
+		const formData = new FormData();
+		
+		formData.append("name", document.querySelector('#name').value);
+		formData.append("email", document.querySelector('#email').value);
+		formData.append("address", document.querySelector('#address').value);
+		formData.append("phone", document.querySelector('#phone').value);
+		formData.append("quantity", document.querySelector('#quantity').value);
+		xhr.open("POST", url, true);
+		xhr.send(formData);
+	}
 </script>
 
 <style>
-.product-detail-section {
-  padding: 3rem 0;
-}
+	.product-detail-section {
+	  padding: 3rem 0;
+	}
 
-.product-info-card {
-  background: #fff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.05);
-}
+	.product-info-card {
+	  background: #fff;
+	  padding: 2rem;
+	  border-radius: 8px;
+	  box-shadow: 0 0 15px rgba(0,0,0,0.05);
+	}
 
-.product-title {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
+	.product-title {
+	  font-size: 2rem;
+	  font-weight: 700;
+	  margin-bottom: 1rem;
+	}
 
-.price-section h2 {
-  font-size: 2.2rem;
-  font-weight: 700;
-}
+	.price-section h2 {
+	  font-size: 2.2rem;
+	  font-weight: 700;
+	}
 
-.product-thumbnails img {
-  cursor: pointer;
-  transition: all 0.3s;
-  border: 2px solid transparent;
-}
+	.product-thumbnails img {
+	  cursor: pointer;
+	  transition: all 0.3s;
+	  border: 2px solid transparent;
+	}
 
-.product-thumbnails img:hover, 
-.product-thumbnails img.active {
-  border-color: #007bff;
-}
+	.product-thumbnails img:hover, 
+	.product-thumbnails img.active {
+	  border-color: #007bff;
+	}
 
-.rating-input {
-  direction: rtl;
-  unicode-bidi: bidi-override;
-}
+	.rating-input {
+	  direction: rtl;
+	  unicode-bidi: bidi-override;
+	}
 
-.rating-input input {
-  display: none;
-}
+	.rating-input input {
+	  display: none;
+	}
 
-.rating-input label {
-  color: #ddd;
-  font-size: 1.5rem;
-  padding: 0 3px;
-  cursor: pointer;
-}
+	.rating-input label {
+	  color: #ddd;
+	  font-size: 1.5rem;
+	  padding: 0 3px;
+	  cursor: pointer;
+	}
 
-.rating-input input:checked ~ label,
-.rating-input label:hover,
-.rating-input label:hover ~ label {
-  color: #ffc107;
-}
+	.rating-input input:checked ~ label,
+	.rating-input label:hover,
+	.rating-input label:hover ~ label {
+	  color: #ffc107;
+	}
 
-.review-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
+	.review-header {
+	  display: flex;
+	  align-items: center;
+	  justify-content: space-between;
+	}
 
-.purchase-form {
-  background: #f9f9f9;
-  padding: 1.5rem;
-  border-radius: 8px;
-  margin-top: 2rem;
-}
+	.purchase-form {
+	  background: #f9f9f9;
+	  padding: 1.5rem;
+	  border-radius: 8px;
+	  margin-top: 2rem;
+	}
 </style>
 {% endblock %}

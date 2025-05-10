@@ -54,8 +54,10 @@ class Order(models.Model):
     user = models.ForeignKey(User, related_name="order_user", on_delete = models.CASCADE)
     item = models.ForeignKey(Item, related_name="order_item", on_delete = models.CASCADE)
     quantity = models.IntegerField(default=1)
+    name = models.CharField(max_length=255, default="Empty")
+    phone = models.CharField(max_length=255, default="XXX XXXX XXX")
+    email = models.CharField(max_length=255, default="test@example.com")
     delivary = models.CharField(max_length=255)
-    date = models.DateTimeField(auto_now_add=True)
     created_at = models.DateTimeField(default=timezone.now)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     def __str__(self):

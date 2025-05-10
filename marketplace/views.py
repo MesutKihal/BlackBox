@@ -142,7 +142,7 @@ def edit_product(request, id):
             product.inStock = True
         else:
             product.inStock = False
-        product.category = SubCategory.objects.get(title=request.POST["category"])
+        product.category = Category.objects.get(title=request.POST["category"])
         product.description = request.POST["description"]
         product.specification = dict(zip(request.POST['spec_keys'].split(","), request.POST['spec_values'].split(",")))
         product.rating = request.POST['rating']
@@ -155,7 +155,7 @@ def edit_product(request, id):
                        "id": img.id})
     context = {
         "product": product,
-        "categories": SubCategory.objects.all(),
+        "categories": Category.objects.all(),
         "images": images,
         "specification": product.specification,
     }
@@ -170,14 +170,14 @@ def add_product(request):
             inStock = True
         else:
             inStock = False
-        category = SubCategory.objects.get(title=request.POST["category"])
+        category = Category.objects.get(title=request.POST["category"])
         product.description = request.POST["description"]
         specification = dict(zip(request.POST['spec_keys'], request.POST['spec_values']))
             
         Item.objects.create(name=title, price=price, inStock=inStock, category=category, specification=specification)
         return JsonResponse(Item.objects.get(name=title, price=price, inStock=inStock, category=category).id, safe=False)
     context = {
-        "categories": SubCategory.objects.all(),
+        "categories": Category.objects.all(),
     }
     return render(request, 'marketplace/add_product.html', context)
     
@@ -382,6 +382,20 @@ def products(request):
     }
     return JsonResponse(data, safe=False)
 
+@csrf_exempt
+def create_order(request, id):
+    if request.POST:
+        product = Item.objects.get(pk=id)
+        name = request.POST['name']
+        email = request.POST['email']
+        address = request.POST['address']
+        phone = request.POST['phone']
+        quantity = int(request.POST['quantity'])
+        Order.objects.create(user=request.user, item = product, quantity = quantity, delivary = address, email = email, phone = phone, name = name)
+    data = {
+        
+    }
+    return JsonResponse(data, safe=False)
 
 @csrf_exempt
 def get_categories(request):

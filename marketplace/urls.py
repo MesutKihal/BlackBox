@@ -32,6 +32,7 @@ urlpatterns = [
     path('hq/logout', views.logout, name="hq-l"),
     # API'S URL's
     path('upload/', views.upload, name="upload"),
+    path('api/create_order/<str:id>', views.create_order, name="create_order"),
     path('api/update_product_img/<str:id>', views.update_product_img, name="update_product_img"),
     path('api/remove_product_img/', views.remove_product_img, name="remove_product_img"),
     path('api/update-request-status/', views.update_request_status, name='update-request-status'),
