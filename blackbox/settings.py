@@ -119,24 +119,14 @@ STATIC_ROOT = 'staticfiles/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-AWS_ACCESS_KEY_ID = 'AKIAVVZOOB7DPECFD3LE'
-AWS_SECRET_ACCESS_KEY = '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'
-AWS_STORAGE_BUCKET_NAME = 'almaarefa-media-storage-bucket-mbm41'
-AWS_S3_REGION_NAME = 'eu-north-1'
-AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-AWS_S3_URL_PROTOCOL = 'https:'
-AWS_S3_USE_SSL = True
-AWS_S3_VERIFY = True
 
-MEDIA_URL = os.path.join(AWS_S3_URL_PROTOCOL, AWS_S3_CUSTOM_DOMAIN, "media/")
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-"""
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': CLOUD_NAME,
     'API_KEY': API_KEY,
     'API_SECRET': API_SECRET
 }
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-"""
+if environment == "development": 
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+else:
+    MEDIA_URL = f"https://res.cloudinary.com/{CLOUD_NAME}/image/upload/v1/"
