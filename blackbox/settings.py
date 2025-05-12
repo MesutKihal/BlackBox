@@ -117,10 +117,10 @@ STATIC_ROOT = 'staticfiles/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': CLOUD_NAME,
     'API_KEY': API_KEY,
     'API_SECRET': API_SECRET
 }
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
