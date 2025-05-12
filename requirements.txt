@@ -10,4 +10,5 @@ requests
 django-environ
 whitenoise
 psycopg2
+cloudinary
 django-cloudinary-storage
