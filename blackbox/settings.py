@@ -44,6 +44,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
 ROOT_URLCONF = 'blackbox.urls'
@@ -123,5 +124,5 @@ CLOUDINARY_STORAGE = {
     'API_KEY': API_KEY,
     'API_SECRET': API_SECRET
 }
-print(cloudinary.config().cloud_name)
+
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
