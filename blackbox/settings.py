@@ -126,7 +126,7 @@ CLOUDINARY_STORAGE = {
     'API_SECRET': API_SECRET
 }
 
-if environment == "development": 
+if ENVIRONMENT == "development": 
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 else:
     MEDIA_URL = f"https://res.cloudinary.com/{CLOUD_NAME}/image/upload/v1/"
