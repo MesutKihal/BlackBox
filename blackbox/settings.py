@@ -1,13 +1,11 @@
 
 from pathlib import Path
 import psycopg2
-from environs import Env
 import dj_database_url
 import os
+from django.core.files.storage import storages
 
-env = Env()
-env.read_env()
-
+print(storages.backends)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -15,11 +13,6 @@ ENVIRONMENT = "production"
 DEBUG = False
 SECRET_KEY = "django-insecure-v!w2vzv(s$598ze4nqu!e=ri02)@@o1!xnw-y*3)lit)+=*^g&"
 DATABASE_URL = "postgresql://neondb_owner:npg_GF4ZvDeXiah9@ep-bold-pond-a4pnnhhk-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
-CLOUD_NAME = "dkarpr0pz"
-API_KEY = 958764194811163
-API_SECRET = "ZuI2toQwV2U83QUWqUowkDq8FVU"
-CLOUDINARY_URL = "cloudinary://958764194811163:ZuI2toQwV2U83QUWqUowkDq8FVU@dkarpr0pz"
-
 ALLOWED_HOSTS = ["blackbox-j4e5.onrender.com", "localhost", "127.0.0.1", "blackboxisdesign.com"]
 
 INSTALLED_APPS = [
