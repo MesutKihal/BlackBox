@@ -3,9 +3,8 @@ from pathlib import Path
 import psycopg2
 import dj_database_url
 import os
-from django.core.files.storage import storages
 
-print(storages.backends)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -109,8 +108,6 @@ STATIC_ROOT = 'staticfiles/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-
 AWS_ACCESS_KEY_ID = "8D7K5X51PBBF10UWNRW3"
 AWS_SECRET_ACCESS_KEY = "JTlDJp0ZpzzKGc2sbOAK3oH3TzQftBg1FsVgUvr1"
 AWS_STORAGE_BUCKET_NAME = "blackbox-bucket-wasabi"
@@ -120,3 +117,13 @@ AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 AWS_QUERYSTRING_AUTH = False
 MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/"
+
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.S3boto3.S3Storage"
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    }
+}
