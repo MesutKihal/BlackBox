@@ -171,10 +171,10 @@ def add_product(request):
         else:
             inStock = False
         category = Category.objects.get(title=request.POST["category"])
-        product.description = request.POST["description"]
+        description = request.POST["description"]
         specification = dict(zip(request.POST['spec_keys'], request.POST['spec_values']))
             
-        Item.objects.create(name=title, price=price, inStock=inStock, category=category, specification=specification)
+        Item.objects.create(name=title, description=description, price=price, inStock=inStock, category=category, specification=specification)
         return JsonResponse(Item.objects.get(name=title, price=price, inStock=inStock, category=category).id, safe=False)
     context = {
         "categories": Category.objects.all(),

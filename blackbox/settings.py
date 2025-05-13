@@ -9,7 +9,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ENVIRONMENT = "production"
-DEBUG = True
+DEBUG = False
 SECRET_KEY = "django-insecure-v!w2vzv(s$598ze4nqu!e=ri02)@@o1!xnw-y*3)lit)+=*^g&"
 DATABASE_URL = "postgresql://neondb_owner:npg_GF4ZvDeXiah9@ep-bold-pond-a4pnnhhk-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
 ALLOWED_HOSTS = ["blackbox-j4e5.onrender.com", "localhost", "127.0.0.1", "blackboxisdesign.com"]
