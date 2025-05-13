@@ -4,7 +4,6 @@ import psycopg2
 from environs import Env
 import dj_database_url
 import os
-import cloudinary
 
 env = Env()
 env.read_env()
@@ -13,7 +12,7 @@ env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 ENVIRONMENT = "production"
-DEBUG = False
+DEBUG = True
 SECRET_KEY = "django-insecure-v!w2vzv(s$598ze4nqu!e=ri02)@@o1!xnw-y*3)lit)+=*^g&"
 DATABASE_URL = "postgresql://neondb_owner:npg_GF4ZvDeXiah9@ep-bold-pond-a4pnnhhk-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require"
 CLOUD_NAME = "dkarpr0pz"
@@ -119,12 +118,13 @@ STATIC_ROOT = 'staticfiles/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DEFAULT_FILE_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': CLOUD_NAME,
-    'API_KEY': API_KEY,
-    'API_SECRET': API_SECRET
-}
-
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-MEDIA_URL = f"https://res.cloudinary.com/{CLOUD_NAME}/image/upload/v1/"
+AWS_ACCESS_KEY_ID = "8D7K5X51PBBF10UWNRW3"
+AWS_SECRET_ACCESS_KEY = "JTlDJp0ZpzzKGc2sbOAK3oH3TzQftBg1FsVgUvr1"
+AWS_STORAGE_BUCKET_NAME = "blackbox-bucket-wasabi"
+AWS_S3_REGION_NAME = "eu-central-2"
+AWS_S3_ENDPOINT_URL = f"https://s3.{AWS_S3_REGION_NAME}.wasabisys.com"
+AWS_S3_FILE_OVERWRITE = False
+AWS_DEFAULT_ACL = None
+AWS_QUERYSTRING_AUTH = False

@@ -24,7 +24,7 @@
   <link href="{% static 'plugins/jquery-nice-select/css/nice-select.css'%}" rel="stylesheet"/>
   <link href="{% static 'css/style.css'%}" rel="stylesheet"/>
  </head>
- <body class="body-wrapper">
+ <body class="body-wrapper text-white" style="background: #000;">
   <header style="background: #000;">
    <div class="container">
     <div class="row">
@@ -60,12 +60,12 @@
           <!-- Dropdown list -->
           <ul class="dropdown-menu" style="background: #000;">
            <li>
-            <a class="dropdown-item text-white" href="{% url 'ondemand' 'framed' %}">
+            <a class="btn text-light text-center" href="{% url 'ondemand' 'framed' %}">
              Framed Art
             </a>
            </li>
            <li>
-            <a class="dropdown-item text-white" href="{% url 'ondemand' 'logo' %}">
+            <a class="btn text-light text-center" href="{% url 'ondemand' 'logo' %}">
               Logo Design
             </a>
            </li>
@@ -82,17 +82,17 @@
           <!-- Dropdown list -->
           <ul class="dropdown-menu" style="background: #000;">
            <li>
-            <a class="dropdown-item nav-link">
+            <a class="btn text-light text-center">
              Web Development
             </a>
            </li>
            <li>
-            <a class="dropdown-item text-white">
+            <a class="btn text-light text-center">
              Video Editing
             </a>
            </li>
            <li>
-            <a class="dropdown-item text-white">
+            <a class="btn text-light text-center">
              Photo Editing
             </a>
            </li>
@@ -105,29 +105,27 @@
 		 <!-- </li> -->
         </ul>
 		{% if request.user.is_authenticated %}
-        <ul class="navbar-nav ml-auto mt-10">
-         <li class="nav-item">
-          <a class="nav-link login-button" href="">
-			{{ request.user }}
-          </a>
-		  <a class="nav-link text-danger login-button" href="{% url 'logout' %}">
-			Logout
-          </a>
-         </li>
-        </ul>
+		<div class="container" style="width: 30%;">
+			<div class="row w-100">
+				<a class="col btn-light text-center text-dark" href="{% url 'login' %}">
+				  {{ request.user }}
+				</a>
+				<a class="col btn-danger text-center text-white" href="{% url 'logout' %}">
+				  Logout
+				</a>
+			</div>
+		</div>
 		{% else %}
-        <ul class="navbar-nav inline-table ml-auto mt-10">
-         <li class="nav-item w">
-          <a class="nav-link login-button" href="{% url 'login' %}">
-           Login
-          </a>
-         </li>
-         <li class="nav-item">
-          <a class="nav-link text-white add-button" href="{% url 'signup' %}">
-           Sign up
-          </a>
-         </li>
-        </ul>
+		<div class="container" style="width: 30%;">
+			<div class="row w-100">
+				<a class="col btn-light text-center text-dark" href="{% url 'login' %}">
+				  Login
+				</a>
+				<a class="col btn-success text-center text-white" href="{% url 'signup' %}">
+				  Sign up
+				</a>
+			</div>
+		</div>
 		{% endif %}
        </div>
       </nav>
