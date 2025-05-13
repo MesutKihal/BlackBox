@@ -30,8 +30,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'marketplace',
-    'cloudinary',
-    'cloudinary_storage',
     'storages'
 ]
 
@@ -128,4 +126,4 @@ AWS_S3_ENDPOINT_URL = f"https://s3.{AWS_S3_REGION_NAME}.wasabisys.com"
 AWS_S3_FILE_OVERWRITE = False
 AWS_DEFAULT_ACL = None
 AWS_QUERYSTRING_AUTH = False
-MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/" 
+MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/{AWS_STORAGE_BUCKET_NAME}/"
