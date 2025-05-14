@@ -20,7 +20,20 @@ import json
 # Main Page
 def main(request):
     categories = [{"title": category.title, "image": category.image.url} for category in Category.objects.all()]
-    items = [{"id": product.id,"title": product.name, "category": product.category.title, "price": product.price, "rating": range(product.rating), "description": str(product.description)[:50] + "..","image": list(Item_image.objects.filter(item=product))[0].file.url} for product in Item.objects.all()]
+    items = []
+    for product in Item.objects.all().order_by("-rating"):
+        temp = {"id": product.id,
+                "title": product.name,
+                "category": product.category.title,
+                "price": product.price,
+                "rating": range(product.rating), 
+                "description": str(product.description)[:50] + ".."}
+        try:
+            temp["image"] = list(Item_image.objects.filter(item=product))[0].file.url
+        except IndexError:
+            temp["image"] = "/static/images/noimage.png"
+        items.append(temp)
+    
     context = {"items": items,
                 "categories": categories
                 }
@@ -103,14 +116,22 @@ def orders(request):
 
 @login_required(login_url="/hq/")
 def view_products(request):
-    context = {'products': [
-                            {"id": item.id,
-                             "name": item.name,
-                             "price": item.price,
-                             "created_at": item.created_at,
-                             "inStock": item.inStock,
-                             "category": item.category,
-                             "image": list(Item_image.objects.filter(item=item))[0]} for item in Item.objects.all()]}    
+    items = []
+    for product in Item.objects.all().order_by("-rating"):
+        temp = {"id": product.id,
+                "title": product.name,
+                "category": product.category.title,
+                "price": product.price,
+                "rating": range(product.rating), 
+                "description": str(product.description)[:50] + "..",
+                "created_at": product.created_at,
+                "inStock": product.inStock}
+        try:
+            temp["image"] = list(Item_image.objects.filter(item=product))[0].file.url
+        except IndexError:
+            temp["image"] = "/static/images/noimage.png"
+        items.append(temp)
+    context = {'products': items}
     return render(request, 'marketplace/products.html', context)
 
 @csrf_exempt
@@ -174,7 +195,7 @@ def add_product(request):
         description = request.POST["description"]
         specification = dict(zip(request.POST['spec_keys'], request.POST['spec_values']))
             
-        Item.objects.create(name=title, description=description, price=price, inStock=inStock, category=category, specification=specification)
+        # Item.objects.create(name=title, description=description, price=price, inStock=inStock, category=category, specification=specification)
         return JsonResponse(Item.objects.get(name=title, price=price, inStock=inStock, category=category).id, safe=False)
     context = {
         "categories": Category.objects.all(),

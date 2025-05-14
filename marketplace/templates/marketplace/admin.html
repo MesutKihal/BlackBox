@@ -24,33 +24,33 @@
   <link href="{% static 'plugins/jquery-nice-select/css/nice-select.css'%}" rel="stylesheet"/>
   <link href="{% static 'css/style.css'%}" rel="stylesheet"/>
  </head>
- <body class="body-wrapper">
-  <header>
+ <body class="body-wrapper bg-charcoal">
+  <header class="bg-charcoal">
    <div class="container">
     <div class="row">
      <div class="col-md-12">
       <nav class="navbar navbar-expand-lg navbar-light navigation">
-       <a class="navbar-brand" href="index.html">
-        <img alt="" src="{% static 'images/BlackBox.png'%}"/>
+       <a class="navbar-brand w-25" href="{% url 'main' %}">
+        <img class="w-100" src="{% static 'images/bbd.png'%}"/>
        </a>
-       <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
+       <button aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler bg-white" data-target="#navbarSupportedContent" data-toggle="collapse" type="button">
         <span class="navbar-toggler-icon">
         </span>
        </button>
-       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+       <div class="collapse navbar-collapse w-75"  id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto main-nav">
          <li class="nav-item">
-          <a class="nav-link" href="{% url 'main' %}">
+          <a class="nav-link text-white" href="{% url 'main' %}">
            Home
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link" href="{% url 'store' %}">
+          <a class="nav-link text-white" href="{% url 'store' %}">
            Store
           </a>
 		 </li>
-         <li class="nav-item dropdown dropdown-slide @@pages">
-          <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">
+         <li class="nav-item dropdown dropdown-slide">
+          <a aria-expanded="false" aria-haspopup="true" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">
            On Demand
            <span>
             <i class="fa fa-angle-down">
@@ -58,21 +58,21 @@
            </span>
           </a>
           <!-- Dropdown list -->
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu bg-charcoal">
            <li>
-            <a class="dropdown-item @@framedArt" href="">
+            <a class="btn text-light text-center" href="{% url 'ondemand' 'framed' %}">
              Framed Art
             </a>
            </li>
            <li>
-            <a class="dropdown-item @@logoDesign">
+            <a class="btn text-light text-center" href="{% url 'ondemand' 'logo' %}">
               Logo Design
             </a>
            </li>
           </ul>
          </li>
-         <li class="nav-item dropdown dropdown-slide @@listing">
-          <a aria-expanded="false" aria-haspopup="true" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#!">
+         <li class="nav-item dropdown dropdown-slide">
+          <a aria-expanded="false" aria-haspopup="true" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" href="#!">
            Services
            <span>
             <i class="fa fa-angle-down">
@@ -80,25 +80,53 @@
            </span>
           </a>
           <!-- Dropdown list -->
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu bg-charcoal">
            <li>
-            <a class="dropdown-item @@WebDev">
+            <a class="btn text-light text-center">
              Web Development
             </a>
            </li>
            <li>
-            <a class="dropdown-item @@VideoEditing">
+            <a class="btn text-light text-center">
              Video Editing
             </a>
            </li>
            <li>
-            <a class="dropdown-item @@Photo Editing">
+            <a class="btn text-light text-center">
              Photo Editing
             </a>
            </li>
           </ul>
          </li>
+		 <!-- <li class="nav-item"> -->
+			<!-- <a class="nav-link" href="{% url 'about' %}"> -->
+				<!-- About -->
+			<!-- </a> -->
+		 <!-- </li> -->
         </ul>
+		{% if request.user.is_authenticated %}
+		<div class="container" style="width: 30%;">
+			<div class="row w-100">
+				<a class="col btn-light text-center text-dark" href="{% url 'login' %}">
+				  {{ request.user }}
+				</a>
+				<a class="col btn-danger text-center text-white" href="{% url 'logout' %}">
+				  Logout
+				</a>
+			</div>
+		</div>
+		{% else %}
+		<div class="container" style="width: 30%;">
+			<div class="row w-100">
+				<a class="col btn-light text-center text-dark" href="{% url 'login' %}">
+				  Login
+				</a>
+				<a class="col btn-success text-center text-white" href="{% url 'signup' %}">
+				  Sign up
+				</a>
+			</div>
+		</div>
+		{% endif %}
        </div>
       </nav>
      </div>
@@ -137,8 +165,8 @@
        <form method="post" action="{% url 'hq' %}">
 		{% csrf_token %}
         <fieldset class="p-4">
-         <input class="form-control mb-3" name="username" placeholder="Username" required="" type="text"/>
-         <input class="form-control mb-3" name="password" placeholder="Password" required="" type="password"/>
+         <input class="form-control mb-3 text-white" name="username" placeholder="Username" required="" type="text"/>
+         <input class="form-control mb-3 text-white" name="password" placeholder="Password" required="" type="password"/>
          <button class="btn btn-primary font-weight-bold mt-3" type="submit">
           Log in
          </button>
@@ -152,7 +180,7 @@
   <!--============================
 =            Footer            =
 =============================-->
-  <footer class="footer section section-sm">
+  <footer class="footer section section-sm bg-charcoal">
    <!-- Container Start -->
    <div class="container">
     <div class="row">
@@ -160,7 +188,7 @@
       <!-- About -->
       <div class="block about">
        <!-- footer logo -->
-       <img alt="logo" src="{% static 'images/BlackBox.png'%}"/>
+       <img alt="logo" class="w-100" src="{% static 'images/bbd.png'%}"/>
        <!-- description -->
        <p>
         Explore our vibrant collection of framed A4 photos, featuring bold designs, 
@@ -173,67 +201,22 @@
      <div class="col-lg-2 offset-lg-1 col-md-3 col-6 mb-4 mb-lg-0">
       <div class="block">
        <h4>
-        Site Pages
-       </h4>
-       <ul>
+		Contact	& Information
+	   </h4>
+	   <ul>
         <li>
-         <a href="dashboard-my-ads.html">
-          My Ads
+         <a href="">
+          Contact
          </a>
         </li>
         <li>
-         <a href="dashboard-favourite-ads.html">
-          Favourite Ads
+         <a href="">
+          About Us
          </a>
         </li>
         <li>
-         <a href="dashboard-archived-ads.html">
-          Archived Ads
-         </a>
-        </li>
-        <li>
-         <a href="dashboard-pending-ads.html">
-          Pending Ads
-         </a>
-        </li>
-        <li>
-         <a href="terms-condition.html">
+         <a href="">
           Terms &amp; Conditions
-         </a>
-        </li>
-       </ul>
-      </div>
-     </div>
-     <!-- Link list -->
-     <div class="col-lg-2 col-md-3 offset-md-1 offset-lg-0 col-6 mb-4 mb-md-0">
-      <div class="block">
-       <h4>
-        Admin Pages
-       </h4>
-       <ul>
-        <li>
-         <a href="category.html">
-          Category
-         </a>
-        </li>
-        <li>
-         <a href="single.html">
-          Single Page
-         </a>
-        </li>
-        <li>
-         <a href="store.html">
-          Store Single
-         </a>
-        </li>
-        <li>
-         <a href="single-blog.html">
-          Single Post
-         </a>
-        </li>
-        <li>
-         <a href="blog.html">
-          Blog
          </a>
         </li>
        </ul>

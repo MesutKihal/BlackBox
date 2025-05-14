@@ -2583,3 +2583,15 @@ form textarea {
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
+
+.bg-charcoal {
+	background: #000;
+}
+
+.bg-transparent {
+	box-sizing: border-box;
+}
+
+.border-px {
+	border: 1px solid #fff;
+}

@@ -2,11 +2,11 @@
 {% block content %}
 {% load static %}
      <div class="col-lg-8">
-      <div class="widget dashboard-container my-adslist">
-       <h2 class="widget-header">
+      <div class="widget dashboard-container my-adslist bg-charcoal">
+       <h2 class="text-white">
         Products
        </h2>
-	  <div class="d-flex justify-content-between mb-3">
+	  <div class="d-flex justify-content-between mb-3 bg-transparent">
 		<input type="text" id="searchInput" class="form-control w-50" placeholder="Search requests...">
 		<select id="sortSelect" class="form-control w-25">
 		  <option value="date">Sort by Date</option>
@@ -17,7 +17,7 @@
 		<ul class="list-inline justify-content-center">
 		 <li class="list-inline-item">
 		 <h4>
-		  <a class="edit" href="{% url 'hq-p-a' %}">
+		  <a class="edit text-white" href="{% url 'hq-p-a' %}">
 		   <i class="fa fa-pencil">
 		   </i>
 			Add new Product
