@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
  {% load static %}
  <head>
   <!-- ** Basic Page Needs ** -->
@@ -23,9 +23,10 @@
   <link href="{% static 'plugins/slick/slick-theme.css'%}" rel="stylesheet"/>
   <link href="{% static 'plugins/jquery-nice-select/css/nice-select.css'%}" rel="stylesheet"/>
   <link href="{% static 'css/style.css'%}" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&amp;display=swap" rel="stylesheet">
  </head>
  <body class="body-wrapper text-white bg-charcoal">
-  <header class="bg-charcoal">
+  <header class="bg-charcoal" dir="rtl">
    <div class="container">
     <div class="row">
      <div class="col-md-12">
@@ -40,18 +41,18 @@
        <div class="collapse navbar-collapse w-75"  id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto main-nav">
          <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'main' %}">
-           Home
+          <a class="nav-link zain text-white" href="{% url 'main' %}">
+           الرئيسية
           </a>
          </li>
          <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'store' %}">
-           Store
+          <a class="nav-link zain text-white" href="{% url 'store' %}">
+           المتجر
           </a>
 		 </li>
          <li class="nav-item dropdown dropdown-slide">
-          <a aria-expanded="false" aria-haspopup="true" class="nav-link text-white dropdown-toggle" data-toggle="dropdown">
-           On Demand
+          <a aria-expanded="false" aria-haspopup="true" class="nav-link zain text-white dropdown-toggle" data-toggle="dropdown">
+           طلبيات خاصة
            <span>
             <i class="fa fa-angle-down">
             </i>
@@ -60,20 +61,20 @@
           <!-- Dropdown list -->
           <ul class="dropdown-menu bg-charcoal">
            <li>
-            <a class="btn text-light text-center" href="{% url 'ondemand' 'framed' %}">
-             Framed Art
+            <a class="btn text-light zain text-center" href="{% url 'ondemand' 'framed' %}">
+             لوحة تزينية
             </a>
            </li>
            <li>
-            <a class="btn text-light text-center" href="{% url 'ondemand' 'logo' %}">
-              Logo Design
+            <a class="btn text-light zain text-center" href="{% url 'ondemand' 'logo' %}">
+              تصميم logo
             </a>
            </li>
           </ul>
          </li>
          <li class="nav-item dropdown dropdown-slide">
-          <a aria-expanded="false" aria-haspopup="true" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" href="#!">
-           Services
+          <a aria-expanded="false" aria-haspopup="true" class="nav-link zain text-white dropdown-toggle" data-toggle="dropdown" href="#!">
+           خدمات
            <span>
             <i class="fa fa-angle-down">
             </i>
@@ -82,18 +83,18 @@
           <!-- Dropdown list -->
           <ul class="dropdown-menu bg-charcoal">
            <li>
-            <a class="btn text-light text-center">
-             Web Development
+            <a class="btn text-light zain text-center">
+             تطوير الويب
             </a>
            </li>
            <li>
-            <a class="btn text-light text-center">
-             Video Editing
+            <a class="btn text-light zain text-center">
+             مونتاج
             </a>
            </li>
            <li>
-            <a class="btn text-light text-center">
-             Photo Editing
+            <a class="btn text-light zain text-center">
+             تعديل الصور
             </a>
            </li>
           </ul>
@@ -110,19 +111,19 @@
 				<a class="col btn-light text-center text-dark" href="{% url 'login' %}">
 				  {{ request.user }}
 				</a>
-				<a class="col btn-danger text-center text-white" href="{% url 'logout' %}">
-				  Logout
+				<a class="col btn-danger text-center zain text-white" href="{% url 'logout' %}">
+				  تسجيل الخروج
 				</a>
 			</div>
 		</div>
 		{% else %}
 		<div class="container" style="width: 30%;">
 			<div class="row w-100">
-				<a class="col btn-light text-center text-dark" href="{% url 'login' %}">
-				  Login
+				<a class="col btn-light text-center zain text-dark" href="{% url 'login' %}">
+				  تسجيل الدخول
 				</a>
-				<a class="col btn-success text-center text-white" href="{% url 'signup' %}">
-				  Sign up
+				<a class="col btn-success text-center zain text-white" href="{% url 'signup' %}">
+				  إنشاء حساب
 				</a>
 			</div>
 		</div>
@@ -160,7 +161,7 @@
   <!--============================
 =            Footer            =
 =============================-->
-  <footer class="footer section section-sm bg-charcoal">
+  <footer dir="rtl" class="footer section section-sm bg-charcoal">
    <!-- Container Start -->
    <div class="container">
     <div class="row">
@@ -171,9 +172,7 @@
        <img alt="logo" class="w-100" src="{% static 'images/bbd.png'%}"/>
        <!-- description -->
        <p>
-        Explore our vibrant collection of framed A4 photos, featuring bold designs, 
-        <br/>
-        personalized artwork, and sleek vector prints perfect for any space
+   استكشف مجموعتنا النابضة بالحياة من اللوحات التزينية، والتي تتميز بتصميمات خلابة،أعمال فنية مخصصة ومطبوعات مثالية لتزيين أي مكان
        </p>
       </div>
      </div>
@@ -181,12 +180,12 @@
      <div class="col-lg-2 offset-lg-1 col-md-3 col-6 mb-4 mb-lg-0">
       <div class="block">
        <h4>
-		Contact	& Information
+		شروط و ارشادات
 	   </h4>
 	   <ul>
         <li>
          <a href="">
-          Contact
+          إتصل بنا
          </a>
         </li>
         <li>

@@ -1,27 +1,27 @@
 {% extends 'marketplace/admin-pages.html' %}
 {% block content %}
 {% load static %}
-     <div class="col-lg-8 shadow-sm p-3 mb-5 rounded">
+     <div align="right" dir="rtl" class="col-lg-8 shadow-sm p-3 mb-5 rounded">
 		{% csrf_token %}
 		<div class="widget dashboard-container bg-charcoal my-adslist">
 			<h3 class="widget-header text-white">
 				{{ product.name }}
 			</h3>
-			<label class="text-white"><strong>Title:</strong></label>
+			<label class="text-white"><strong>العنوان:</strong></label>
 			<input class="form-control text-white" id="title" value="{{ product.name }}">
-			<label class="text-white"><strong>Price:</strong></label>
+			<label class="text-white"><strong>السعر:</strong></label>
 			<input class="form-control text-white" id="price" type="number" step="10" value="{{ product.price }}">
-			<label class="text-white"><strong>Stock Status:</strong></label>
+			<label class="text-white"><strong>المنتج:</strong></label>
 			<select id="stock" class="form-control text-white mt-2 w-100">
 			 {% if product.inStock %}
-				<option value="0">Out of Stock</option>
-				<option value="1" selected>In Stock</option>
+				<option value="0">غير متوفر</option>
+				<option value="1" selected>متوفر</option>
 			 {% else %}
-				<option value="0" selected>Out of Stock</option>
-				<option value="1">In Stock</option>
+				<option value="0" selected>غير متوفر</option>
+				<option value="1">متوفر</option>
 			 {% endif %}
 			</select>
-			<label class="text-white"><strong>Category:</strong></label>
+			<label class="text-white"><strong>الفئة:</strong></label>
 			<select id="category" class="form-control text-white mt-2 w-100">
 			 {% for category in categories %}
 				{% if category.title == product.category %}
@@ -33,19 +33,19 @@
 				{% endif %}
 			 {% endfor %}
 			</select>
-			<label class="text-white"><strong>Description:</strong></label>
+			<label class="text-white"><strong>الشرح:</strong></label>
 			<textarea class="form-control text-white" id="description">{{ product.description }}</textarea>
-			<label class="text-white"><strong>Rating:</strong></label>
+			<label class="text-white"><strong>التقييم:</strong></label>
 			<input class="form-control text-white" id="rating" type="number" step="1" value="{{ product.rating }}">
-			<label class="text-white"><strong>Tag:</strong></label>
+			<label class="text-white"><strong>العلامة:</strong></label>
 			<input class="form-control text-white" id="tag" value="{{ product.tag }}">
-			<label class="text-white"><strong>Specification:</strong></label>
+			<label class="text-white"><strong>المواصفات:</strong></label>
 			<table id="spec-table" class="table table-bordered mt-2">
 			  <thead>
 				<tr>
-				  <th class="text-white">Key</th>
-				  <th class="text-white">Value</th>
-				  <th class="text-white">Action</th>
+				  <th class="text-white">الصفة</th>
+				  <th class="text-white">القيمة</th>
+				  <th class="text-white">...</th>
 				</tr>
 			  </thead>
 			  <tbody id="spec-body">
@@ -53,23 +53,23 @@
 					<tr>
 					  <td><input type="text" name="spec_key" class="form-control text-white" value="{{ key }}"/></td>
 					  <td><input type="text" name="spec_value" class="form-control text-white" value="{{ value }}"/></td>
-					  <td><button type="button" class="btn btn-outline-danger is-rounded btn-sm" onclick="removeRow(this)">Remove <i class="fa fa-minus" aria-hidden="true"></i></button></td>
+					  <td><button type="button" class="btn btn-outline-danger is-rounded btn-sm" onclick="removeRow(this)">حذف <i class="fa fa-minus" aria-hidden="true"></i></button></td>
 					</tr>
 				{% endfor %}
 			  </tbody>
 			</table>
-			<button type="button" class="btn btn-outline-success is-rounded" onclick="addRow()">Add <i class="fa fa-plus" aria-hidden="true"></i></button>
+			<button type="button" class="btn btn-outline-success is-rounded" onclick="addRow()">أضف <i class="fa fa-plus" aria-hidden="true"></i></button>
 			<div class="text-center mt-4">
 				<button class="col-lg-12 btn btn-outline-success" onclick="updateProductInfo('{% url 'hq-p-e' product.id %}')">Save</button>
 			</div>
 			<br>
-			<h3 clas="text-white">Change Images</h3>
+			<h3 clas="text-white">تغيير الصور</h3>
 			<div id="gallery" class="gallery">
 			</div>
 			<br>
 			<div class="file-uploader bg-charcoal mt-4">
 			  <div class="uploader-header">
-				<h5 class="uploader-title">Upload New Images</h5>
+				<h5 class="uploader-title">رفع صور جديدة</h5>
 				<p class="file-completed-status"></p>
 			  </div>
 			  <ul class="file-list"></ul>
@@ -266,7 +266,7 @@
 		  row.innerHTML = `
 			<td><input type="text" name="spec_key" class="form-control text-white" /></td>
 			<td><input type="text" name="spec_value" class="form-control text-white" /></td>
-			<td><button type="button" class="btn btn-outline-danger btn-sm" onclick="removeRow(this)">Remove <i class="fa fa-minus" aria-hidden="true"></i></button></td>
+			<td><button type="button" class="btn btn-outline-danger btn-sm" onclick="removeRow(this)">حذف <i class="fa fa-minus" aria-hidden="true"></i></button></td>
 		  `;
 		  tbody.appendChild(row);
 		}

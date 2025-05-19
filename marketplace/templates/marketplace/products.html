@@ -1,10 +1,10 @@
 {% extends 'marketplace/admin-pages.html' %}
 {% block content %}
 {% load static %}
-     <div class="col-lg-8">
+     <div dir="rtl" class="col-lg-8">
       <div class="widget dashboard-container my-adslist bg-charcoal">
-       <h2 class="text-white">
-        Products
+       <h2 align="right" class="text-white">
+        المنتجات
        </h2>
 	  <div class="d-flex justify-content-between mb-3 bg-transparent">
 		<input type="text" id="searchInput" class="form-control w-50" placeholder="Search requests...">
@@ -13,14 +13,14 @@
 		  <option value="quantity">Sort by Quantity</option>
 		</select>
 	  </div>
-	  <div class="w-50">
+	  <div align="right" class="w-50">
 		<ul class="list-inline justify-content-center">
 		 <li class="list-inline-item">
 		 <h4>
 		  <a class="edit text-white" href="{% url 'hq-p-a' %}">
 		   <i class="fa fa-pencil">
 		   </i>
-			Add new Product
+			أضف منتج جديد
 		  </a>
 		 </h4>
 		 </li>
@@ -30,22 +30,22 @@
         <thead>
          <tr>
           <th class="text-center text-white">
-           Image
+           الصورة
           </th>
           <th class="text-center text-white">
-           Product Title
+           العنوان
           </th>
           <th class="text-center text-white">
-           Category
+           الفئة
           </th>
           <th class="text-center text-white">
-           Action
+           ...
           </th>
          </tr>
         </thead>
         <tbody>
 		{% for product in products %}
-         <tr>
+         <tr align="right">
           <td class="product-thumb">
            <img alt="image description" height="auto" src="{{ product.image }}" width="80px"/>
           </td>
@@ -55,13 +55,13 @@
            </h3>
            <span class="add-id">
             <strong class="text-white">
-             Price:
+             السعر:
             </strong>
             {{ product.price }}
            </span>
            <span>
             <strong class="text-white">
-             Created at:
+             التاريخ:
             </strong>
             <time>
              {{ product.created_at }}
@@ -69,7 +69,7 @@
            </span>
            <span class="status {% if product.inStock %}active{% endif %}">
             <strong class="text-white">
-             Status
+             الحالة:
             </strong>
             {% if product.inStock %}
 			In Stock

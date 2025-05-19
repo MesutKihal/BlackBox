@@ -1,49 +1,49 @@
 {% extends 'marketplace/admin-pages.html' %}
 {% block content %}
 {% load static %}
-     <div class="col-lg-8 shadow-sm p-3 mb-5 rounded">
+     <div dir="rtl" align="right" class="col-lg-8 shadow-sm p-3 mb-5 rounded">
 		{% csrf_token %}
 		<div class="widget dashboard-container bg-charcoal my-adslist">
 			<h3 class="widget-header text-white">
-				Add new Product
+				إضافة منتج جديد
 			</h3>
-			<label class="text-white"><strong>Title:</strong></label>
+			<label class="text-white"><strong>العنوان:</strong></label>
 			<input class="form-control text-white" id="title" value="" required placeholder="Enter your product title">
-			<label class="text-white"><strong>Price:</strong></label>
+			<label class="text-white"><strong>السعر:</strong></label>
 			<input class="form-control text-white" id="price" type="number" step="10" value="10" required>
-			<label class="text-white"><strong>Stock Status:</strong></label>
+			<label class="text-white"><strong>المنتج:</strong></label>
 			<select id="stock" class="form-control text-white mt-2 w-100">
-				<option value="0">Out of Stock</option>
-				<option value="1" selected>In Stock</option>
+				<option value="0">غير متوفر</option>
+				<option value="1" selected>متوفر</option>
 			</select>
-			<label class="text-white"><strong>Category:</strong></label>
+			<label class="text-white"><strong>الفئة:</strong></label>
 			<select id="category" class="form-control text-white mt-2 w-100">
 			 {% for category in categories %}
 				<option value="{{ category.title }}">{{ category.title }}</option>
 			 {% endfor %}
 			</select>
-			<label class="text-white"><strong>Description:</strong></label>
+			<label class="text-white"><strong>الشرح:</strong></label>
 			<textarea class="form-control" id="description"></textarea>
-			<label class="text-white"><strong>Specification:</strong></label>
+			<label class="text-white"><strong>المواصفات:</strong></label>
 			<table id="spec-table" class="table table-bordered">
 			  <thead>
 				<tr>
-				  <th class="text-white">Key</th>
-				  <th class="text-white">Value</th>
-				  <th class="text-white">Action</th>
+				  <th class="text-white">الصفة</th>
+				  <th class="text-white">القيمة</th>
+				  <th class="text-white">...</th>
 				</tr>
 			  </thead>
 			  <tbody id="spec-body">
 				<tr>
 				  <td><input type="text" name="spec_key[]" class="form-control text-white" /></td>
 				  <td><input type="text" name="spec_value[]" class="form-control text-white" /></td>
-				  <td><button type="button" class="btn btn-outline-danger is-rounded btn-sm" onclick="removeRow(this)">Remove <i class="fa fa-minus" aria-hidden="true"></i></button></td>
+				  <td><button type="button" class="btn btn-outline-danger is-rounded btn-sm" onclick="removeRow(this)">حذف <i class="fa fa-minus" aria-hidden="true"></i></button></td>
 				</tr>
 			  </tbody>
 			</table>
-			<button type="button" class="btn btn-outline-success is-rounded" onclick="addRow()">Add <i class="fa fa-plus" aria-hidden="true"></i></button>
+			<button type="button" class="btn btn-outline-success is-rounded" onclick="addRow()">أضف <i class="fa fa-plus" aria-hidden="true"></i></button>
 			<div class="text-center mt-4">
-				<button class="col-lg-12 btn btn-success" onclick="updateProductInfo('{% url 'hq-p-a' %}')">Save</button>
+				<button class="col-lg-12 btn btn-success" onclick="updateProductInfo('{% url 'hq-p-a' %}')">حفظ</button>
 			</div>
 			<br>
 

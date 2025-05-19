@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 {% load static %}
  <head>
   <!-- ** Basic Page Needs ** -->
@@ -73,6 +73,8 @@
    <div class="container">
     <!-- Row Start -->
     <div class="row">
+	 {% block content %}
+	 {% endblock %}
      <div class="col-lg-4 shadow p-3 mb-5 bg-charcoal rounded border-px">
       <div class="sidebar">
        <!-- User Widget -->
@@ -91,64 +93,62 @@
        </div>
        <!-- Dashboard Links -->
        <div class="widget bg-charcoal user-dashboard-menu">
-        <ul>
+        <ul align="right">
          <li class="{% if request.path == '/hq/orders' %}active{% endif %}">
           <a class="text-white" href='{% url "hq-o" %}'>
            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-           Orders 
+           الطلبيات 
           </a>
          </li>
          <li class="{% if request.path == '/hq/requests' %}active{% endif %}">
           <a class="text-white" href='{% url "hq-r" %}'>
            <i class="fa fa-tasks" aria-hidden="true"></i>
-           Requests 
+           الطلبيات الخاصة 
           </a>
          </li>
          <li class="{% if request.path == '/hq/products' %}active{% endif %}">
           <a class="text-white" href='{% url "hq-p" %}'>
            <i class="fa fa-archive" aria-hidden="true"></i>
-           Products
+           المنتجات
           </a>
          </li>
          <li class="{% if request.path == '/hq/stats' %}active{% endif %}">
           <a class="text-white" href='{% url "hq-st" %}'>
            <i class="fa fa-bar-chart" aria-hidden="true"></i>
-           Statistics
+           الإحصائيات
           </a>
          </li>
          <li class="{% if request.path == '/hq/media' %}active{% endif %}">
           <a class="text-white" href="{% url 'hq-m' %}">
            <i class="fa fa-film" aria-hidden="true"></i>
-           Media Files
+           الصور
           </a>
          </li>
          <li class="{% if request.path == '/hq/users' %}active{% endif %}">
           <a class="text-white" href="{% url 'hq-u' %}">
            <i class="fa fa-user">
            </i>
-           Users
+           المستخدمين
           </a>
          </li>
          <li class="{% if request.path == '/hq/settings' %}active{% endif %}">
           <a class="text-white" href="{% url 'hq-s' %}">
            <i class="fa fa-cog">
            </i>
-           Settings
+           الإعدادات
           </a>
          </li>
          <li>
           <a class="text-white" href="{% url 'hq-l' %}">
            <i class="fa fa-power-off">
            </i>
-           Log Out
+           تسجيل الخروج
           </a>
          </li>
         </ul>
        </div>
       </div>
      </div>
-	 {% block content %}
-	 {% endblock %}
 	</div>
    </div>
   </section>
