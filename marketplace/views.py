@@ -193,10 +193,10 @@ def add_product(request):
             inStock = False
         category = Category.objects.get(title=request.POST["category"])
         description = request.POST["description"]
-        specification = dict(zip(request.POST['spec_keys'], request.POST['spec_values']))
-            
-        # Item.objects.create(name=title, description=description, price=price, inStock=inStock, category=category, specification=specification)
-        return JsonResponse(Item.objects.get(name=title, price=price, inStock=inStock, category=category).id, safe=False)
+        specification = dict(zip(request.POST['spec_keys'].split(','), request.POST['spec_values'].split(',')))
+        Item.objects.create(name=title, description=description, price=price, inStock=inStock, category=category, specification=specification)
+        new = Item.objects.get(name=title, price=price, inStock=inStock, category=category)
+        return JsonResponse(new.id, safe=False)
     context = {
         "categories": Category.objects.all(),
     }

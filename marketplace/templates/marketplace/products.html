@@ -29,16 +29,16 @@
        <table class="table table-responsive product-dashboard-table">
         <thead>
          <tr>
-          <th>
+          <th class="text-center text-white">
            Image
           </th>
-          <th>
+          <th class="text-center text-white">
            Product Title
           </th>
-          <th class="text-center">
+          <th class="text-center text-white">
            Category
           </th>
-          <th class="text-center">
+          <th class="text-center text-white">
            Action
           </th>
          </tr>
@@ -47,20 +47,20 @@
 		{% for product in products %}
          <tr>
           <td class="product-thumb">
-           <img alt="image description" height="auto" src="/{{ product.image.file }}" width="80px"/>
+           <img alt="image description" height="auto" src="{{ product.image }}" width="80px"/>
           </td>
           <td class="product-details">
            <h3 class="title">
             {{ product.name }}
            </h3>
            <span class="add-id">
-            <strong>
+            <strong class="text-white">
              Price:
             </strong>
             {{ product.price }}
            </span>
            <span>
-            <strong>
+            <strong class="text-white">
              Created at:
             </strong>
             <time>
@@ -68,7 +68,7 @@
             </time>
            </span>
            <span class="status {% if product.inStock %}active{% endif %}">
-            <strong>
+            <strong class="text-white">
              Status
             </strong>
             {% if product.inStock %}
@@ -79,7 +79,7 @@
            </span>
           </td>
           <td class="product-category">
-           <span class="categories">
+           <span class="categories text-white">
             {{ product.category }}
            </span>
           </td>
@@ -101,12 +101,12 @@
        </table>
       </div>
 	  <div class="mt-3 d-flex justify-content-end">
-		<label class="mr-2">Show:</label>
-		<select id="showLimit" class="form-control w-auto">
-		  <option value="10">10</option>
-		  <option value="50">50</option>
-		  <option value="100">100</option>
-		  <option value="200">200</option>
+		<label class="mr-2 text-white">Show:</label>
+		<select id="showLimit" class="form-control w-auto text-white">
+		  <option class="bg-charcoal text-white" value="10">10</option>
+		  <option class="bg-charcoal text-white" value="50">50</option>
+		  <option class="bg-charcoal text-white" value="100">100</option>
+		  <option class="bg-charcoal text-white" value="200">200</option>
 		</select>
 	  </div>
      </div>

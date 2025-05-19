@@ -39,45 +39,42 @@
     <div class="row">
      <div class="col-lg-3 col-md-4">
       <div class="category-sidebar">
-	   <div class="widget category-list">
-		<h4 class="widget-header">
+	   <div class="widget category-list bg-charcoal border-px">
+		<h4 class="widget-header text-white">
          Categories
         </h4>
-		<select id="categorySelect" class="w-100">
-		 <option value="all">Select Category</option>
+		<select id="categorySelect" class="w-100 bg-charcoal border-px text-white">
+		 <option class="bg-charcoal border-px text-white" value="all">Select Category</option>
 		 {% for category in categories %}
-			<option value="{{ category.title }}">{{ category.title }}</option>
+			<option class="bg-charcoal border-px text-white" value="{{ category.title }}">{{ category.title }}</option>
 		 {% endfor %}
 		</select>
 	   </div>
-       <div id="subCategories" class="widget category-list" style="display: none;">
-		
-       </div>
-       <div class="widget price-range w-100">
-        <h4 class="widget-header">
+       <div class="widget price-range w-100 bg-charcoal border-px">
+        <h4 class="widget-header text-white">
          Price Range
         </h4>
         <div class="block">
-         <input id="Price" class="range-track w-100" data-slider-max="5000" data-slider-min="500" data-slider-step="5" data-slider-value="[500,5000]" type="text"/>
+         <input id="Price" class="range-track w-100" data-slider-max="20000" data-slider-min="500" data-slider-step="5" data-slider-value="[500,20000]" type="text"/>
          <div class="d-flex justify-content-between mt-2">
           <span class="value">
-           500 DZD -  5000 DZD
+           500 DZD -  20000 DZD
           </span>
          </div>
         </div>
        </div>
-       <div class="widget filter">
-        <h4 class="widget-header">
+       <div class="widget filter bg-charcoal border-px">
+        <h4 class="widget-header text-white">
          Availability
         </h4>
-        <select id="filter2">
-		 <option value="both">
+        <select id="filter2" class=" bg-charcoal border-px text-white">
+		 <option class="bg-charcoal border-px text-white" value="both">
           In stock / Out of Stock
          </option>
-         <option value="1">
+         <option class="bg-charcoal border-px text-white" value="1">
           In stock
          </option>
-         <option value="0">
+         <option class="bg-charcoal border-px text-white" value="0">
           Out of Stock
          </option>
         </select>
@@ -85,10 +82,10 @@
       </div>
      </div>
      <div class="col-lg-9 col-md-8">
-      <div class="category-search-filter">
+      <div class="bg-charcoal border-px category-search-filter">
        <div class="row">
         <div class="col-md-6 text-center text-md-left">
-		  <div class="search-result bg-gray">
+		  <div class="search-result bg-charcoal text-white">
 		   <h3 id="searchQuery">
 		   </h3>
 		   <p id="resultCount">
@@ -97,7 +94,7 @@
         </div>
         <div class="col-md-6 text-center text-md-right mt-2 mt-md-0">
          <div class="view">
-          <strong>
+          <strong class="text-white">
            Views
           </strong>
           <ul class="list-inline view-switcher">
@@ -127,7 +124,7 @@
        <nav aria-label="Page navigation example">
         <ul id="pagination" class="pagination"  data-page-number="1" data-page-count="1">
          <li class="page-item">
-          <a class="page-link" id="previousPage">
+          <a class="page-link  bg-charcoal text-white" id="previousPage">
            <span>
 			&lt;
            </span>
@@ -137,12 +134,12 @@
           </a>
          </li>
          <li class="page-item active">
-          <a class="page-link" id="CurrentPage">
+          <a class="page-link  bg-charcoal text-white" id="CurrentPage">
 			
           </a>
          </li>
          <li class="page-item">
-          <a class="page-link"  id="nextPage">
+          <a class="page-link  bg-charcoal text-white"  id="nextPage">
            <span>
             &gt;
            </span>

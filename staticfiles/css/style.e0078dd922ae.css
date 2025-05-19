@@ -637,7 +637,7 @@ ul.pagination .active a {
 }
 
 .bg-1 {
-  background: url("../images/home/hero2.jpg");
+  background: url("../images/home/hero2.fcab668d2c84.jpg");
   background-size: 200% 300%;
   background-position: 25% 25%;
   background-repeat: no-repeat;
@@ -681,13 +681,13 @@ ul.pagination .active a {
 	overflow: clip;
 }
 .bg-2 {
-  background: url(../images/subscription/subscription-back.jpg);
+  background: url("../images/subscription/subscription-back.4cc2624c7ea1.jpg");
   background-size: cover;
   background-repeat: no-repeat;
 }
 
 .bg-3 {
-  background: url(../images/call-to-action/ondemand-background.png);
+  background: url("../images/call-to-action/ondemand-background.4a811af10eb9.png");
   background-repeat: no-repeat;
   background-size: cover;
 }

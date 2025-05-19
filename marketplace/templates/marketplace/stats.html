@@ -2,35 +2,35 @@
 {% extends 'marketplace/admin-pages.html' %}
 {% block content %}
 	<div class="col-lg-8 mx-auto mt-4">
-	  <h2 class="mb-4">Statistics</h2>
+	  <h2 class="mb-4 text-white">Statistics</h2>
 
 	  <div class="mb-4">
-		<h4>Total Orders: {{ total_requests }}</h4>
+		<h4 class="text-white">Total Orders: {{ total_requests }}</h4>
 	  </div>
 
 	  <div class="row justify-content-center mb-4">
-		<div class="col-md-4">
+		<div class="col-md-4 text-white">
 		  <canvas id="statusChart"></canvas>
 		</div>
-		<div class="col-md-4">
+		<div class="col-md-4 text-white">
 		  <canvas id="userChart"></canvas>
 		</div>
 	  </div>
 
 	  <div class="mb-4">
-		<h5>Orders Over Last 7 Days</h5>
+		<h5 class="text-white">Orders Over Last 7 Days</h5>
 		<canvas id="dailyChart"></canvas>
 	  </div>
 
 	  <div class="mt-4">
-		<h5>Recent Orders</h5>
+		<h5 class="text-white">Recent Orders</h5>
 		<table class="table table-striped">
 		  <thead>
 			<tr>
-			  <th>Item</th>
-			  <th>User</th>
-			  <th>Status</th>
-			  <th>Date</th>
+			  <th class="text-white">Item</th>
+			  <th class="text-white">User</th>
+			  <th class="text-white">Status</th>
+			  <th class="text-white">Date</th>
 			</tr>
 		  </thead>
 		  <tbody>

@@ -2595,3 +2595,7 @@ form textarea {
 .border-px {
 	border: 1px solid #fff;
 }
+
+.white-shadow {
+	box-shadow: 0 0 50px 15px #fff;
+}

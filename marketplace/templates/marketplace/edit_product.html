@@ -1,18 +1,18 @@
 {% extends 'marketplace/admin-pages.html' %}
 {% block content %}
 {% load static %}
-     <div class="col-lg-8 shadow-sm p-3 mb-5 bg-white rounded">
+     <div class="col-lg-8 shadow-sm p-3 mb-5 rounded">
 		{% csrf_token %}
-		<div class="widget dashboard-container my-adslist">
-			<h3 class="widget-header">
+		<div class="widget dashboard-container bg-charcoal my-adslist">
+			<h3 class="widget-header text-white">
 				{{ product.name }}
 			</h3>
-			<label><strong>Title:</strong></label>
-			<input class="form-control" id="title" value="{{ product.name }}">
-			<label><strong>Price:</strong></label>
-			<input class="form-control" id="price" type="number" step="10" value="{{ product.price }}">
-			<label><strong>Stock Status:</strong></label>
-			<select id="stock" class="form-control mt-2 w-100">
+			<label class="text-white"><strong>Title:</strong></label>
+			<input class="form-control text-white" id="title" value="{{ product.name }}">
+			<label class="text-white"><strong>Price:</strong></label>
+			<input class="form-control text-white" id="price" type="number" step="10" value="{{ product.price }}">
+			<label class="text-white"><strong>Stock Status:</strong></label>
+			<select id="stock" class="form-control text-white mt-2 w-100">
 			 {% if product.inStock %}
 				<option value="0">Out of Stock</option>
 				<option value="1" selected>In Stock</option>
@@ -21,8 +21,8 @@
 				<option value="1">In Stock</option>
 			 {% endif %}
 			</select>
-			<label><strong>Category:</strong></label>
-			<select id="category" class="form-control mt-2 w-100">
+			<label class="text-white"><strong>Category:</strong></label>
+			<select id="category" class="form-control text-white mt-2 w-100">
 			 {% for category in categories %}
 				{% if category.title == product.category %}
 					<option value="{{ category.title }}" selected>{{ category.title }}</option>
@@ -33,26 +33,26 @@
 				{% endif %}
 			 {% endfor %}
 			</select>
-			<label><strong>Description:</strong></label>
-			<textarea class="form-control" id="description">{{ product.description }}</textarea>
-			<label><strong>Rating:</strong></label>
-			<input class="form-control" id="rating" type="number" step="1" value="{{ product.rating }}">
-			<label><strong>Tag:</strong></label>
-			<input class="form-control" id="tag" value="{{ product.tag }}">
-			<label><strong>Specification:</strong></label>
+			<label class="text-white"><strong>Description:</strong></label>
+			<textarea class="form-control text-white" id="description">{{ product.description }}</textarea>
+			<label class="text-white"><strong>Rating:</strong></label>
+			<input class="form-control text-white" id="rating" type="number" step="1" value="{{ product.rating }}">
+			<label class="text-white"><strong>Tag:</strong></label>
+			<input class="form-control text-white" id="tag" value="{{ product.tag }}">
+			<label class="text-white"><strong>Specification:</strong></label>
 			<table id="spec-table" class="table table-bordered mt-2">
 			  <thead>
 				<tr>
-				  <th>Key</th>
-				  <th>Value</th>
-				  <th>Action</th>
+				  <th class="text-white">Key</th>
+				  <th class="text-white">Value</th>
+				  <th class="text-white">Action</th>
 				</tr>
 			  </thead>
 			  <tbody id="spec-body">
 				{% for key,value in specification.items %}
 					<tr>
-					  <td><input type="text" name="spec_key" class="form-control" value="{{ key }}"/></td>
-					  <td><input type="text" name="spec_value" class="form-control" value="{{ value }}"/></td>
+					  <td><input type="text" name="spec_key" class="form-control text-white" value="{{ key }}"/></td>
+					  <td><input type="text" name="spec_value" class="form-control text-white" value="{{ value }}"/></td>
 					  <td><button type="button" class="btn btn-outline-danger is-rounded btn-sm" onclick="removeRow(this)">Remove <i class="fa fa-minus" aria-hidden="true"></i></button></td>
 					</tr>
 				{% endfor %}
@@ -63,11 +63,11 @@
 				<button class="col-lg-12 btn btn-outline-success" onclick="updateProductInfo('{% url 'hq-p-e' product.id %}')">Save</button>
 			</div>
 			<br>
-			<h3>Change Images</h3>
+			<h3 clas="text-white">Change Images</h3>
 			<div id="gallery" class="gallery">
 			</div>
 			<br>
-			<div class="file-uploader mt-4">
+			<div class="file-uploader bg-charcoal mt-4">
 			  <div class="uploader-header">
 				<h5 class="uploader-title">Upload New Images</h5>
 				<p class="file-completed-status"></p>
@@ -264,8 +264,8 @@
 		  const tbody = document.getElementById("spec-body");
 		  const row = document.createElement("tr");
 		  row.innerHTML = `
-			<td><input type="text" name="spec_key" class="form-control" /></td>
-			<td><input type="text" name="spec_value" class="form-control" /></td>
+			<td><input type="text" name="spec_key" class="form-control text-white" /></td>
+			<td><input type="text" name="spec_value" class="form-control text-white" /></td>
 			<td><button type="button" class="btn btn-outline-danger btn-sm" onclick="removeRow(this)">Remove <i class="fa fa-minus" aria-hidden="true"></i></button></td>
 		  `;
 		  tbody.appendChild(row);

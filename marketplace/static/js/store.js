@@ -206,7 +206,7 @@ function createProductCard(item) {
     colDiv.classList.add("col-lg-4", "col-md-4", "mb-4");
 
     const cardDiv = document.createElement("div");
-    cardDiv.classList.add("card", "h-100", "border-0", "shadow", "product-card", "overflow-hidden");
+    cardDiv.classList.add("bg-charcoal", "white-shadow", "text-white",	"h-100", "shadow", "product-card", "overflow-hidden");
 
     // Product image
     const imgLink = document.createElement("a");
@@ -231,7 +231,7 @@ function createProductCard(item) {
 
     // Title
     const title = document.createElement("h6");
-    title.classList.add("card-title", "mb-1", "text-truncate"); 
+    title.classList.add("card-title", "mb-1", "text-truncate", "text-white"); 
     title.textContent = item.title;
 
     // Category
@@ -290,7 +290,7 @@ function createProductCard(item) {
 // Create Product Strip
 function createProductStrip(item) {
     const rowDiv = document.createElement("div");
-    rowDiv.classList.add("row", "mb-4", "product-list-item", "shadow", "ml-4");
+    rowDiv.classList.add("row", "mb-4", "product-list-item", "shadow", "ml-4", "bg-charcoal", "white-shadow", "text-white");
 
     // Left side: Product Image
     const colImgDiv = document.createElement("div");
