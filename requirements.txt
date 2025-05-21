@@ -1,14 +1,9 @@
 boto3
+psycopg2-binary==2.9.5
 dj-database-url
 Django
 django-storages
 environs
-gunicorn==23.0.0
 pillow==10.3.0
-psycopg==3.2.1
 requests
 django-environ
-whitenoise
-psycopg2
-cloudinary
-django-cloudinary-storage
