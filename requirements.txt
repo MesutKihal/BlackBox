@@ -1,9 +1,9 @@
-boto3
+boto3==1.38.12
 psycopg2-binary==2.9.5
-dj-database-url
-Django
-django-storages
-environs
+dj-database-url==2.3.0
+Django==4.2.20
+environs==14.1.1
+django-storages==1.14.6
 pillow==10.3.0
 requests
-django-environ
+django-environ==0.12.0
